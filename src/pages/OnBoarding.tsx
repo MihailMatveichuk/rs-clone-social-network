@@ -82,14 +82,19 @@ export const OnBoarding = () => {
         )}
         {type === AuthType.EMAIL && step === 2 && (
           <StepOne
-            title="What’s your email?"
+            title="What’s your email and password?"
             text="We’ll send you a sign-in code"
             onSubmit={onSubmitHandler}
           >
             <input
-              type="text"
+              type="email"
               placeholder="email"
               className="input on-boarding__email"
+            />
+            <input
+              type="password"
+              placeholder="password"
+              className="input on-boarding__password"
             />
           </StepOne>
         )}
