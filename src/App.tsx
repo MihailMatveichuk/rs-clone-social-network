@@ -12,7 +12,7 @@ export const App = () => {
   console.log(currentUser);
   return (
     <BrowserRouter>
-      {/* <OnBoarding /> */}
+      <OnBoarding />
       <Routes>
         <Route path="/">
           <Route
