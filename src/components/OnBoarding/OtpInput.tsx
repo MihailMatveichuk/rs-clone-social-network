@@ -82,23 +82,23 @@ export default function OtpInput({ value, valueLength, onChange }: Props) {
     }
     target.setSelectionRange(0, target.value.length);
   };
-	return (
-	  <div className="otp-group">
-		{valueItems.map((digit, idx) => (
-		  <input
-			key={idx}
-			type="text"
-			inputMode="numeric"
-			autoComplete="one-time-code"
-			pattern="\d{1}"
-			maxLength={valueLength}
-			className="otp-input"
-			value={digit}
-			onChange={(e) => inputOnChange(e, idx)}
-			onKeyDown={inputOnKeyDown}
-			onFocus={inputOnFocus}
-		  />
-		))}
-	  </div>
-	);
-  }
+  return (
+    <div className="otp-group">
+      {valueItems.map((digit, idx) => (
+        <input
+          key={idx}
+          type="text"
+          inputMode="numeric"
+          autoComplete="one-time-code"
+          pattern="\d{1}"
+          maxLength={valueLength}
+          className="otp-input"
+          value={digit}
+          onChange={(e) => inputOnChange(e, idx)}
+          onKeyDown={inputOnKeyDown}
+          onFocus={inputOnFocus}
+        />
+      ))}
+    </div>
+  );
+}
