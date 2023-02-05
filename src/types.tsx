@@ -4,5 +4,5 @@ export interface IMessage {
 
 export enum AuthType {
   EMAIL,
-  PHONE
+  PHONE,
 }
