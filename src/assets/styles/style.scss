@@ -1,0 +1,90 @@
+@import 'variables';
+@import 'reset';
+@import 'on-boarding';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1460px;
+  padding: 0 30px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  text-align: center;
+  letter-spacing: 0.36px;
+  color: $main-text;
+}
+
+.text {
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: -0.24px;
+  color: $grey-text;
+}
+
+.btn {
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: -0.24px;
+  transition: all .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  border: none;
+  outline: none;
+  padding: 8px 24px;
+
+  &--primary {
+    background-color: $primary;
+    color: #fff;
+    &.active {
+      background-color: $primary-active;
+    }
+  }
+
+  &--grey {
+    color: $grey-text;
+    background-color: $grey-background;
+
+    &:active {
+      background-color: $grey-background-active;
+    }
+  }
+
+}
+
+.input {
+  background: rgba(201, 204, 209, 0.24);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: -0.24px;
+  &::placeholder {
+    color: $input-placeholder;
+  }
+}
+
+@media screen and (hover: hover) {
+  .btn {
+
+    &--primary:hover {
+      background-color: $primary-hovered;
+    }
+
+    &--grey:hover {
+      background-color: $grey-background-hovered;
+    }
+
+  }
+}

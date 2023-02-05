@@ -1,3 +1,5 @@
+import './assets/styles/style.scss';
+import { OnBoarding } from "./pages/OnBoarding"
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import Register from './components/Register';
 import Home from './components/Home';
@@ -9,6 +11,7 @@ export const App = () => {
   const { currentUser } = useContext(AuthContext);
   console.log(currentUser);
   return (
+    <OnBoarding/>
     <BrowserRouter>
       <Routes>
         <Route path="/">
