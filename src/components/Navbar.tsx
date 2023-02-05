@@ -4,6 +4,8 @@ import { Button } from './Login';
 import Searchbar from './Searchbar';
 
 import { Link } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase';
 const Navbar = () => {
   return (
     <div className="navbar">
@@ -59,6 +61,7 @@ const Navbar = () => {
                 padding: '0px',
               }}
               className={'log-out-button'}
+              onClick={() => signOut(auth)}
             >
               Log out
             </Button>

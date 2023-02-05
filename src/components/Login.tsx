@@ -3,7 +3,13 @@ import Header from './Header';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  browserSessionPersistence,
+  signInWithEmailAndPassword,
+  setPersistence,
+  getAuth,
+  browserLocalPersistence,
+} from 'firebase/auth';
 import { auth } from '../firebase';
 
 export const Button = styled.button`
@@ -35,12 +41,16 @@ const Login = () => {
     target: any;
     preventDefault: () => void;
   }) => {
+    console.log('target: ', e.target);
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      // const auth = getAuth();
+      console.log('auth: ', auth);
       navigate('/');
+      setPersistence(auth, browserLocalPersistence);
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       setErr(true);
     }

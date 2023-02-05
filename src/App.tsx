@@ -9,10 +9,10 @@ import { AuthContext } from './context/AuthContext';
 
 export const App = () => {
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser);
+  console.log('gffhfghfghfg++++', currentUser);
   return (
     <BrowserRouter>
-      <OnBoarding />
+      {/* <OnBoarding /> */}
       <Routes>
         <Route path="/">
           <Route
