@@ -7,7 +7,6 @@ import { db } from '../firebase';
 
 const Searchbar = () => {
   const { currentUser } = useContext(AuthContext);
-  console.log('currentUser: ', currentUser);
   const [userName, setUserName] = useState('');
   const [user, setUser] = useState({});
   const [err, setError] = useState(false);

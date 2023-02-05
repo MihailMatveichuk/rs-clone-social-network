@@ -9,7 +9,6 @@ import { AuthContext } from './context/AuthContext';
 
 export const App = () => {
   const { currentUser } = useContext(AuthContext);
-  console.log('gffhfghfghfg++++', currentUser);
   return (
     <BrowserRouter>
       {/* <OnBoarding /> */}
@@ -17,10 +16,16 @@ export const App = () => {
         <Route path="/">
           <Route
             index
-            element={currentUser ? <Home /> : <Navigate to="/login" />}
+            element={!currentUser ? <Navigate to="/login" /> : <Home />}
           />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+          <Route
+            path="login"
+            element={currentUser ? <Navigate to="/" /> : <Login />}
+          />
+          <Route
+            path="register"
+            element={currentUser ? <Navigate to="/" /> : <Register />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -7,8 +7,6 @@ import {
   browserSessionPersistence,
   signInWithEmailAndPassword,
   setPersistence,
-  getAuth,
-  browserLocalPersistence,
 } from 'firebase/auth';
 import { auth } from '../firebase';
 
@@ -41,16 +39,14 @@ const Login = () => {
     target: any;
     preventDefault: () => void;
   }) => {
-    console.log('target: ', e.target);
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
     try {
-      // const auth = getAuth();
-      console.log('auth: ', auth);
+      await setPersistence(auth, browserSessionPersistence);
+      const res = await signInWithEmailAndPassword(auth, email, password);
       navigate('/');
-      setPersistence(auth, browserLocalPersistence);
-      await signInWithEmailAndPassword(auth, email, password);
+      return res;
     } catch (err) {
       setErr(true);
     }
