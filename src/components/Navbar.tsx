@@ -6,7 +6,10 @@ import Searchbar from './Searchbar';
 import { Link } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 const Navbar = () => {
+  const { currentUser } = useContext(AuthContext);
   return (
     <div className="navbar">
       <div className="navbar_top">

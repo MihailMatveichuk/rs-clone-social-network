@@ -44,9 +44,8 @@ const Login = () => {
     const password = e.target[1].value;
     try {
       await setPersistence(auth, browserSessionPersistence);
-      const res = await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       navigate('/');
-      return res;
     } catch (err) {
       setErr(true);
     }
