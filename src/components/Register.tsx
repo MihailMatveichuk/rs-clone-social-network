@@ -35,7 +35,7 @@ const Register = () => {
     preventDefault: () => void;
   }) => {
     e.preventDefault();
-    const file = e.target[0].file;
+    const file = e.target[0].files[0];
     const displayName: string = e.target[1].value;
     const email: string = e.target[2].value;
     const password: string = e.target[3].value;
@@ -58,10 +58,9 @@ const Register = () => {
               photoURL: downloadURL,
             });
 
-            await setDoc(doc(db, 'userChats', res.user.uid), {});
             navigate('/');
+            await setDoc(doc(db, 'userChats', res.user.uid), {});
           } catch (err) {
-            console.log(err);
             setError(true);
           }
         });
