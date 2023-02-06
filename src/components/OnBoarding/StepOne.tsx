@@ -17,7 +17,7 @@ const StepOne = ({ title, text, children, onSubmit }: StepOneProps) => {
     <div className="on-boarding__step">
       <h1 className="on-boarding__title title">{title}</h1>
       <div className="on-boarding__text text">{text}</div>
-      <form onSubmit={onSubmitHandler}>
+      <form onSubmit={onSubmitHandler} className="on-boarding__form">
         {children}
         <div className="on-boarding__btn-container">
           <button className="btn btn--primary" type="submit">
