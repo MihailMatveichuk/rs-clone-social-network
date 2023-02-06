@@ -44,7 +44,7 @@
     letter-spacing: 0.36px
 }
 
-.title {
+/* .title {
     font-family: 'SF Pro Text';
     font-style: normal;
     font-weight: 400;
@@ -53,7 +53,7 @@
     color: #71747A;
     text-align: center;
     letter-spacing: -0.24px;
-}
+} */
 
 .registra-form input {
     background: rgba(201, 204, 209, 0.24);

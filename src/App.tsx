@@ -12,7 +12,7 @@ export const App = () => {
   return (
     <BrowserRouter>
       <OnBoarding />
-      <Routes>
+      {/* <Routes>
         <Route path="/">
           <Route
             index
@@ -27,7 +27,7 @@ export const App = () => {
             element={currentUser ? <Navigate to="/" /> : <Register />}
           />
         </Route>
-      </Routes>
+      </Routes> */}
     </BrowserRouter>
   );
 };

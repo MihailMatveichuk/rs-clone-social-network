@@ -1,16 +1,24 @@
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 import { useState } from 'react';
 import logoSrc from '../assets/images/logo.png';
+import Home from '../components/Home';
+import InputFile from '../components/InputFile';
 import OtpInput from '../components/OnBoarding/OtpInput';
 import StepOne from '../components/OnBoarding/StepOne';
+import { auth } from '../firebase';
 import { AuthType } from '../types';
+
 export const OnBoarding = () => {
   const [step, setStep] = useState<number>(1);
   const [type, setAuthType] = useState<AuthType | null>(null);
   const [otp, setOtp] = useState<string>('');
+  const [err, setErr] = useState(false);
 
   const onSubmitHandler = () => {
     setStep((previousStep) => previousStep + 1);
-    console.log(step);
   };
 
   const goToNextStep = (type: AuthType) => {
@@ -22,6 +30,24 @@ export const OnBoarding = () => {
       setAuthType(AuthType.PHONE);
       setStep((previousStep) => previousStep + 1);
     }
+  };
+  const handleSubmit = async (e: {
+    target: any;
+    preventDefault: () => void;
+  }) => {
+    e.preventDefault();
+    console.log(step);
+    const email = e.target[0].value;
+    const password = e.target[1].value;
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      setErr(true);
+    } catch (err) {
+      console.log(err);
+      await createUserWithEmailAndPassword(auth, email, password);
+      setErr(false);
+    }
+    setStep((previousStep) => previousStep + 1);
   };
 
   return (
@@ -81,22 +107,31 @@ export const OnBoarding = () => {
           </div>
         )}
         {type === AuthType.EMAIL && step === 2 && (
-          <StepOne
-            title="What’s your email and password?"
-            text="We’ll send you a sign-in code"
-            onSubmit={onSubmitHandler}
-          >
-            <input
-              type="email"
-              placeholder="email"
-              className="input on-boarding__email"
-            />
-            <input
-              type="password"
-              placeholder="password"
-              className="input on-boarding__password"
-            />
-          </StepOne>
+          <div className="on-boarding__step">
+            <span className="on-boarding__title title">
+              What’s your email and password?
+            </span>
+            <span className="on-boarding__text text">
+              We’ll send you a sign-in code"
+            </span>
+            <form className="on-boarding__form" onSubmit={handleSubmit}>
+              <input
+                type="email"
+                placeholder="email"
+                className="input on-boarding__email"
+              />
+              <input
+                type="password"
+                placeholder="password"
+                className="input on-boarding__password"
+              />
+              <div className="on-boarding__btn-container">
+                <button className="btn btn--primary" type="submit">
+                  Next
+                </button>
+              </div>
+            </form>
+          </div>
         )}
         {type === AuthType.PHONE && step === 2 && (
           <StepOne
@@ -111,19 +146,6 @@ export const OnBoarding = () => {
             />
           </StepOne>
         )}
-        {type === AuthType.EMAIL && step === 2 && (
-          <StepOne
-            title="What’s your email?"
-            text="We’ll send you a sign-in code"
-            onSubmit={onSubmitHandler}
-          >
-            <input
-              type="text"
-              placeholder="email"
-              className="input on-boarding__email"
-            />
-          </StepOne>
-        )}
         {type === AuthType.PHONE && step === 3 && (
           <StepOne
             title="Enter sign-in code?"
@@ -133,14 +155,54 @@ export const OnBoarding = () => {
             <OtpInput value={otp} valueLength={6} onChange={setOtp}></OtpInput>
           </StepOne>
         )}
-        {type === AuthType.EMAIL && step === 3 && (
-          <StepOne
-            title="Enter sign-in code"
-            text="We just sent it to mail@pvashenko.com Haven’t received? Resend"
-            onSubmit={onSubmitHandler}
-          >
-            <OtpInput value={otp} valueLength={6} onChange={setOtp}></OtpInput>
-          </StepOne>
+        {type === AuthType.EMAIL &&
+          step === 3 &&
+          (!err ? (
+            <StepOne
+              title="Enter sign-in code"
+              text="We just sent it to mail@pvashenko.com Haven’t received? Resend"
+              onSubmit={onSubmitHandler}
+            >
+              <OtpInput
+                value={otp}
+                valueLength={6}
+                onChange={setOtp}
+              ></OtpInput>
+            </StepOne>
+          ) : (
+            <Home />
+          ))}
+        {type === AuthType.PHONE && step === 4 && (
+          <div className="form-container">
+            <div className="form-wrapper">
+              <span className="logo">New account</span>
+              <span className="title">Introduce yourself</span>
+              <form className="registra-form" onSubmit={onSubmitHandler}>
+                <InputFile />
+                <input type="text" placeholder="First name" />
+                <input type="text" placeholder="Last name" />
+                <button className="btn btn--primary" type="submit">
+                  Next
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
+        {type === AuthType.EMAIL && step === 4 && (
+          <div className="form-container">
+            <div className="form-wrapper">
+              <span className="logo">New account</span>
+              <span className="title">Introduce yourself</span>
+              <form className="registra-form" onSubmit={onSubmitHandler}>
+                <InputFile />
+                <input type="text" placeholder="First name" />
+                <input type="text" placeholder="Last name" />
+                <button className="btn btn--primary" type="submit">
+                  Next
+                </button>
+              </form>
+            </div>
+          </div>
         )}
       </div>
     </div>

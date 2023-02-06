@@ -57,6 +57,7 @@ const Register = () => {
               email,
               photoURL: downloadURL,
             });
+            console.log(db);
 
             navigate('/');
             await setDoc(doc(db, 'userChats', res.user.uid), {});
