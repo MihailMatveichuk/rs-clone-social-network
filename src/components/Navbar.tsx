@@ -1,12 +1,21 @@
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
+import { auth } from '../firebase';
 import Chat from './Chat';
 import { Button } from './Login';
 import Searchbar from './Searchbar';
 
-import { Link } from 'react-router-dom';
-import { signOut } from 'firebase/auth';
-import { auth } from '../firebase';
 const Navbar = () => {
+  const navigate = useNavigate();
+  const logOut = async () => {
+    await signOut(auth).then(() => {
+      console.log(123);
+      navigate('/');
+    });
+  };
+
+  console.log(auth);
   return (
     <div className="navbar">
       <div className="navbar_top">
@@ -52,20 +61,18 @@ const Navbar = () => {
               fill="#71747A"
             />
           </svg>
-          <Link to={'/login'}>
-            <Button
-              style={{
-                width: '40px',
-                height: '20px',
-                fontSize: '10px',
-                padding: '0px',
-              }}
-              className={'log-out-button'}
-              onClick={() => signOut(auth)}
-            >
-              Log out
-            </Button>
-          </Link>
+          <Button
+            style={{
+              width: '40px',
+              height: '20px',
+              fontSize: '10px',
+              padding: '0px',
+            }}
+            className={'log-out-button'}
+            onSubmit={logOut}
+          >
+            Log out
+          </Button>
         </div>
       </div>
       <div>

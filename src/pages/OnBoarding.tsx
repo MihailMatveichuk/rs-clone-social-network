@@ -2,7 +2,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import logoSrc from '../assets/images/logo.png';
 import Home from '../components/Home';
 import InputFile from '../components/InputFile';
@@ -36,7 +36,6 @@ export const OnBoarding = () => {
     preventDefault: () => void;
   }) => {
     e.preventDefault();
-    console.log(step);
     const email = e.target[0].value;
     const password = e.target[1].value;
     try {
@@ -49,6 +48,12 @@ export const OnBoarding = () => {
     }
     setStep((previousStep) => previousStep + 1);
   };
+
+  useEffect(() => {
+    return () => {
+      setStep(1);
+    };
+  }, []);
 
   return (
     <div className="on-boarding">

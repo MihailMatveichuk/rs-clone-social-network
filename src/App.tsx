@@ -11,13 +11,10 @@ export const App = () => {
   const { currentUser } = useContext(AuthContext);
   return (
     <BrowserRouter>
-      <OnBoarding />
-      {/* <Routes>
+      {/* <OnBoarding /> */}
+      <Routes>
         <Route path="/">
-          <Route
-            index
-            element={!currentUser ? <Navigate to="/login" /> : <Home />}
-          />
+          <Route index element={!currentUser ? <OnBoarding /> : <Home />} />
           <Route
             path="login"
             element={currentUser ? <Navigate to="/" /> : <Login />}
@@ -27,7 +24,7 @@ export const App = () => {
             element={currentUser ? <Navigate to="/" /> : <Register />}
           />
         </Route>
-      </Routes> */}
+      </Routes>
     </BrowserRouter>
   );
 };
