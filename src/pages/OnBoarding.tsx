@@ -123,10 +123,12 @@ export const OnBoarding = () => {
               <input
                 type="email"
                 placeholder="email"
+                required
                 className="input on-boarding__email"
               />
               <input
                 type="password"
+                required
                 placeholder="password"
                 className="input on-boarding__password"
               />
@@ -145,9 +147,13 @@ export const OnBoarding = () => {
             onSubmit={onSubmitHandler}
           >
             <input
-              type="text"
-              placeholder="phone"
-              className="input on-boarding__email"
+              id="phone"
+              type="tel"
+              name="phone"
+              placeholder="+375__ ___ __ __"
+              pattern="^\+375(\s+)?\(?(17|25|29|33|44)\)?(\s+)?[0-9]{3}-?[0-9]{2}-?[0-9]{2}$"
+              required
+              className="input on-boarding__phone"
             />
           </StepOne>
         )}
@@ -178,37 +184,59 @@ export const OnBoarding = () => {
             <Home />
           ))}
         {type === AuthType.PHONE && step === 4 && (
-          <div className="form-container">
-            <div className="form-wrapper">
-              <span className="logo">New account</span>
-              <span className="title">Introduce yourself</span>
-              <form className="registra-form" onSubmit={onSubmitHandler}>
-                <InputFile />
-                <input type="text" placeholder="First name" />
-                <input type="text" placeholder="Last name" />
+          <div className="on-boarding__step">
+            <span className="logo">New account</span>
+            <span className="on-boarding__title title">Introduce yourself</span>
+            <form className="on-boarding__form" onSubmit={onSubmitHandler}>
+              <InputFile />
+              <input
+                type="text"
+                placeholder="First name"
+                required
+                className="input on-boarding__email"
+              />
+              <input
+                type="text"
+                placeholder="Last name"
+                required
+                className="input on-boarding__email"
+              />
+              <div className="on-boarding__btn-container">
                 <button className="btn btn--primary" type="submit">
                   Next
                 </button>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
         )}
         {type === AuthType.EMAIL && step === 4 && (
-          <div className="form-container">
-            <div className="form-wrapper">
-              <span className="logo">New account</span>
-              <span className="title">Introduce yourself</span>
-              <form className="registra-form" onSubmit={onSubmitHandler}>
-                <InputFile />
-                <input type="text" placeholder="First name" />
-                <input type="text" placeholder="Last name" />
+          <div className="on-boarding__step">
+            <span className="logo">New account</span>
+            <span className="on-boarding__title title">Introduce yourself</span>
+            <form className="on-boarding__form" onSubmit={onSubmitHandler}>
+              <InputFile />
+              <input
+                type="text"
+                placeholder="First name"
+                required
+                className="input on-boarding__email"
+              />
+              <input
+                type="text"
+                placeholder="Last name"
+                required
+                className="input on-boarding__email"
+              />
+              <div className="on-boarding__btn-container">
                 <button className="btn btn--primary" type="submit">
                   Next
                 </button>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
         )}
+        {type === AuthType.PHONE && step === 5 && <Home />}
+        {type === AuthType.EMAIL && step === 5 && <Home />}
       </div>
     </div>
   );

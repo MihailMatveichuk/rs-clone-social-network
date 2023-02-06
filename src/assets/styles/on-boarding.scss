@@ -36,9 +36,9 @@
   &__step {
     height: calc(100% - 72px);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
   }
 
   &__go-back {
@@ -53,10 +53,14 @@
   &__email, &__password {
     width: 320px;
   }
+  &__phone {
+    width: 200px;
+  }
 
   &__form{
     display: flex;
     flex-direction: column;
+    align-items:center;
     row-gap: 10px;
   }
 
