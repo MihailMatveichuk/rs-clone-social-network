@@ -19,6 +19,10 @@ export function App() {
 
   return (
     <BrowserRouter>
+
+
+      <OnBoarding />
+
       <Routes>
         <Route path="/">
           <Route
