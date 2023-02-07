@@ -44,7 +44,7 @@ const Register = () => {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       const storageRef = ref(storage, displayName);
 
-      await uploadBytesResumable(storageRef, file).then(() => {
+      await uploadBytesResumable(storageRef, file).then(async () => {
         getDownloadURL(storageRef).then(async (downloadURL) => {
           try {
             await updateProfile(res.user, {
@@ -58,8 +58,8 @@ const Register = () => {
               photoURL: downloadURL,
             });
 
-            navigate('/');
             await setDoc(doc(db, 'userChats', res.user.uid), {});
+            navigate('/');
           } catch (err) {
             setError(true);
           }
