@@ -1,4 +1,3 @@
-import '../App.css';
 import Chat from './Chat';
 import { Button } from './Login';
 import Searchbar from './Searchbar';

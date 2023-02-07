@@ -8,15 +8,15 @@ import InputPanel from './InputPanel';
 const Chats = () => {
   return (
     <div className="chats">
-      <div className="chatInfo">
-        <div className="chatDescription">
+      <div className="chat-info">
+        <div className="chat-description">
           <img src={Tesla} alt="" />
-          <div className="chatText">
+          <div className="chat-text">
             <span className="name-chat">Tesla Board</span>
             <span className="amount-members">12 members</span>
           </div>
         </div>
-        <div className="chatIcons">
+        <div className="chat-icons">
           <img src={Add} alt="" />
           <img src={Call} alt="" />
           <img src={Menu} alt="" />

@@ -97,6 +97,7 @@ export default function OtpInput({ value, valueLength, onChange }: Props) {
           onChange={(e) => inputOnChange(e, idx)}
           onKeyDown={inputOnKeyDown}
           onFocus={inputOnFocus}
+          required
         />
       ))}
     </div>

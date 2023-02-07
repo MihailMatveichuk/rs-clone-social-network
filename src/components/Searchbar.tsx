@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 // const Avatar = require('./assets/images/Avatar1.png');
-import '../App.css';
+import '../assets/styles/chat.scss';
 import { AuthContext } from '../context/AuthContext';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
@@ -62,13 +62,9 @@ const Searchbar = () => {
       />
       {err && <span>User not found</span>}
       {user && (
-        <div className="userChat">
-          <img
-            className="userChatImg"
-            src={currentUser?.photoURL || ''}
-            alt="photoURL"
-          />
-          <div className="userChatInfo">
+        <div className="user-chat">
+          <img src={currentUser?.photoURL || ''} alt="photoURL" />
+          <div className="user-chat-info">
             <span className="user-name">{currentUser?.displayName}</span>
           </div>
         </div>

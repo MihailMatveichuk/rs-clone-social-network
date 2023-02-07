@@ -1,4 +1,4 @@
-import '../App.css';
+import '../assets/styles/register.scss';
 import Header from './Header';
 import styled from 'styled-components';
 import { useState } from 'react';

@@ -1,5 +1,4 @@
-import '../App.css';
-import Header from './Header';
+import '../assets/styles/register.scss';
 import InputFile from './InputFile';
 import styled from 'styled-components';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
@@ -71,15 +70,14 @@ const Register = () => {
   };
   return (
     <div className="form-container">
-      <Header />
       <div className="form-wrapper">
-        <span className="logo">New account</span>
-        <span className="title">Introduce yourself</span>
-        <form className="registra-form" onSubmit={handleSubmit}>
+        <span className="form-wrapper__logo">New account</span>
+        <span className="form-wrapper__title">Introduce yourself</span>
+        <form className="form-wrapper__registra-form" onSubmit={handleSubmit}>
           <InputFile />
-          <input type="text" placeholder="First name" />
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
+          <input type="text" placeholder="First name" required />
+          <input type="email" placeholder="Email" required />
+          <input type="password" placeholder="Password" required />
           <Button>Sign up</Button>
           {error && <span style={{ color: 'red' }}>This user is existed</span>}
         </form>

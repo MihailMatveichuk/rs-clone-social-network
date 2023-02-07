@@ -1,0 +1,261 @@
+.home {
+  display: flex;
+
+  .container {
+    border: rgba(117, 117, 121, 0.504) 0.1px solid;
+    height: 95vh;
+    width: 100%;
+    border-radius: 5px;
+    display: flex;
+    overflow: hidden;
+
+    .sidebar {
+      flex: 1;
+      border-right: rgba(117, 117, 121, 0.504) 0.1px solid;
+
+      .navbar {
+        display: flex;
+        flex-direction: column;
+        margin-left: 5px;
+        margin-right: 10px;
+
+        &_top {
+          display: flex;
+          align-items: start;
+          justify-content: space-between;
+          margin-top: 5px;
+
+          span {
+            font-family: 'SF Pro Display';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 24px;
+            color: #171a1f;
+          }
+
+          &_right {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            cursor: pointer;
+            column-gap: 5px;
+          }
+        }
+        .search-bar {
+          display: flex;
+          flex-direction: column;
+
+          .search {
+            background: rgba(201, 204, 209, 0.751);
+            border-radius: 8px;
+            border: none;
+            height: 40px;
+            outline: none;
+
+            &::placeholder {
+              color: rgba(190, 182, 182, 0.76);
+            }
+          }
+          .user-chat {
+            display: flex;
+            align-items: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            gap: 10px;
+            border-bottom: #c7cad0 0.1px solid;
+            cursor: pointer;
+            transition: all 0.5s;
+
+            &:hover {
+              background-color: rgba(225, 225, 236, 0.432);
+              border-radius: 8px;
+            }
+
+            img {
+              width: 50px;
+              height: 50px;
+            }
+
+            .user-chat-info {
+              display: flex;
+              flex-direction: column;
+
+              .user-name {
+                font-family: 'SF Pro Text';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 15px;
+                line-height: 24px;
+              }
+            }
+          }
+        }
+
+        .user-chat {
+          display: flex;
+          align-items: center;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          gap: 10px;
+          border-bottom: #c7cad0 0.1px solid;
+          cursor: pointer;
+          transition: all 0.5s;
+
+          &:hover {
+            background-color: rgba(225, 225, 236, 0.432);
+            border-radius: 8px;
+          }
+
+          .user-chat-info {
+            display: flex;
+            flex-direction: column;
+
+            .user-name {
+              font-family: 'SF Pro Text';
+              font-style: normal;
+              font-weight: 600;
+              font-size: 15px;
+              line-height: 24px;
+            }
+
+            .user-descr {
+              font-family: 'SF Pro Text';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+
+    .chats {
+      flex: 2;
+
+      .chat-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        background-color: rgba(225, 225, 236, 0.432);
+
+        .chat-icons {
+          display: flex;
+          column-gap: 10px;
+
+          img {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+          }
+        }
+
+        .chat-description {
+          display: flex;
+          width: 30%;
+          column-gap: 10px;
+
+          img {
+            width: 30px;
+            height: 30px;
+          }
+
+          .chat-text {
+            display: flex;
+            flex-direction: column;
+
+            .name-chat {
+              font-family: 'SF Pro Text';
+              font-style: normal;
+              font-weight: 600;
+              font-size: 15px;
+            }
+
+            .amount-members {
+              font-family: 'SF Pro Text';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 12px;
+              color: #71747a7e;
+            }
+          }
+        }
+      }
+
+      .input-panel {
+        height: 50px;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        img {
+          width: 16px;
+          height: 16px;
+          cursor: pointer;
+        }
+
+        .input_container {
+          width: 90%;
+          height: 40px;
+          border-radius: 8px;
+          border: rgba(222, 213, 213, 0.614) 0.1px solid;
+          overflow: hidden;
+
+          input {
+            height: 100%;
+            width: 95%;
+            border: none;
+            outline: none;
+
+            &::placeholder {
+              color: rgba(190, 182, 182, 0.76);
+            }
+          }
+        }
+      }
+
+      .messages {
+        padding: 10px;
+        height: calc(100% - 140px);
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+        height: calc(100% - 160px);
+        overflow: scroll;
+
+        .message {
+          display: flex;
+          gap: 10px;
+
+          .message-info {
+            display: flex;
+            flex-direction: column;
+            max-width: 80%;
+
+            img {
+              width: 40px;
+              height: 40px;
+            }
+          }
+          .message-content {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            .message-text {
+              max-width: 70%;
+              font-size: 12px;
+              border-radius: 0px 10px 10px 10px;
+              padding: 5px;
+              border: solid 0.1px rgba(166, 161, 161, 0.718);
+              font-family: 'SF Pro Text';
+              font-style: normal;
+              font-weight: 400;
+            }
+          }
+        }
+      }
+    }
+  }
+}

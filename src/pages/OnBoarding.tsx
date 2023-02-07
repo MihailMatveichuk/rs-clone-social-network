@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import logoSrc from '../assets/images/logo.png';
+import Home from '../components/Home';
+const logoSrc = require('../assets/images/logo.png');
 import OtpInput from '../components/OnBoarding/OtpInput';
 import StepOne from '../components/OnBoarding/StepOne';
+import Register from '../components/Register';
 import { AuthType } from '../types';
 export const OnBoarding = () => {
   const [step, setStep] = useState<number>(1);
@@ -10,6 +12,9 @@ export const OnBoarding = () => {
 
   const onSubmitHandler = () => {
     setStep((previousStep) => previousStep + 1);
+    // if (step == 3) {
+    //   navigate('/register');
+    // }
     console.log(step);
   };
 
@@ -90,11 +95,13 @@ export const OnBoarding = () => {
               type="email"
               placeholder="email"
               className="input on-boarding__email"
+              required
             />
             <input
               type="password"
               placeholder="password"
               className="input on-boarding__password"
+              required
             />
           </StepOne>
         )}
@@ -108,10 +115,11 @@ export const OnBoarding = () => {
               type="text"
               placeholder="phone"
               className="input on-boarding__email"
+              required
             />
           </StepOne>
         )}
-        {type === AuthType.EMAIL && step === 2 && (
+        {/* {type === AuthType.EMAIL && step === 2 && (
           <StepOne
             title="What’s your email?"
             text="We’ll send you a sign-in code"
@@ -123,11 +131,11 @@ export const OnBoarding = () => {
               className="input on-boarding__email"
             />
           </StepOne>
-        )}
+        )} */}
         {type === AuthType.PHONE && step === 3 && (
           <StepOne
             title="Enter sign-in code?"
-            text="We just sent it to +7 999 205-65-34. Haven’t received? Wait for 57 sec"
+            text="We just sent it to your. Haven’t received?"
             onSubmit={onSubmitHandler}
           >
             <OtpInput value={otp} valueLength={6} onChange={setOtp}></OtpInput>
@@ -136,12 +144,14 @@ export const OnBoarding = () => {
         {type === AuthType.EMAIL && step === 3 && (
           <StepOne
             title="Enter sign-in code"
-            text="We just sent it to mail@pvashenko.com Haven’t received? Resend"
+            text="We just sent it to your mail."
             onSubmit={onSubmitHandler}
           >
             <OtpInput value={otp} valueLength={6} onChange={setOtp}></OtpInput>
           </StepOne>
         )}
+        {type === AuthType.EMAIL && step === 4 && <Register />}
+        {type === AuthType.PHONE && step === 4 && <Register />}
       </div>
     </div>
   );

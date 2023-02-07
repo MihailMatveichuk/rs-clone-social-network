@@ -1,6 +1,6 @@
 import React from 'react';
 import SideBar from './SideBar';
-import '../App.css';
+import '../assets/styles/chat.scss';
 import Chats from './Chats';
 
 const Home = () => {

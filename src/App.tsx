@@ -19,10 +19,7 @@ export function App() {
 
   return (
     <BrowserRouter>
-
-
-      <OnBoarding />
-
+      {/* <OnBoarding /> */}
       <Routes>
         <Route path="/">
           <Route
@@ -33,7 +30,7 @@ export function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="login" element={<Login />} />
+          <Route path="login" element={<OnBoarding />} />
           <Route path="register" element={<Register />} />
         </Route>
       </Routes>

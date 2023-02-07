@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from './Navbar';
-import '../App.css';
+import '../assets/styles/chat.scss';
 
 const SideBar = () => {
   return (
