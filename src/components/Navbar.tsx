@@ -1,15 +1,13 @@
 import '../App.css';
-import Chat from './Chat';
 import { Button } from './Login';
 import Searchbar from './Searchbar';
 
 import { Link } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+
+import Chats from './Chats';
 const Navbar = () => {
-  const { currentUser } = useContext(AuthContext);
   return (
     <div className="navbar">
       <div className="navbar_top">
@@ -73,7 +71,7 @@ const Navbar = () => {
       </div>
       <div>
         <Searchbar />
-        <Chat />
+        <Chats />
       </div>
     </div>
   );
