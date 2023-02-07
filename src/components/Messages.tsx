@@ -2,6 +2,7 @@ import { doc, onSnapshot } from 'firebase/firestore';
 import React, { useContext, useEffect, useState } from 'react';
 import { ChatContext } from '../context/Chatcontext';
 import { db } from '../firebase';
+import Message from './Message';
 //import Message from './Message';
 
 const Messages = () => {
@@ -22,10 +23,9 @@ const Messages = () => {
 
   return (
     <div className="messages">
-      {/* {messages.map((m) => (
+      {messages.map((m) => (
         <Message message={m} key={m.id} />
-
-      ))} */}
+      ))}
       <span className="user-name">Jeff Besos</span>
       <span className="user-descr">
         I don’t know how to spend all my money. Any ideas? 😚

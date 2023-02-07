@@ -1,9 +1,3 @@
-// const Tesla = require('./assets/images/Tesla.png');
-// const Add = require('./assets/images/Add.png');
-// const Call = require('./assets/images/Call.png');
-// const Menu = require('./assets/images/Menu.png');
-// import Messages from './Messages';
-// import InputPanel from './InputPanel';
 import { useContext, useEffect, useState } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
@@ -18,16 +12,19 @@ const Chats = () => {
 
   useEffect(() => {
     const getChats = () => {
-      const unsub = onSnapshot(doc(db, 'userChats', currentUser.uid), (doc) => {
-        setChats(doc.data());
-      });
+      const unsub = onSnapshot(
+        doc(db, 'userChats', currentUser!.uid),
+        (doc) => {
+          setChats(doc.data());
+        }
+      );
 
       return () => {
         unsub();
       };
     };
-    currentUser.uid && getChats();
-  }, [currentUser.uid]);
+    currentUser!.uid && getChats();
+  }, [currentUser!.uid]);
   console.log('chats___________', Object.entries(chats));
 
   const handleSelect = (u) => {
@@ -42,6 +39,7 @@ const Chats = () => {
             className="userChat"
             key={chat[0]}
             onClick={() => handleSelect(chat[1].userInfo)}
+            role="presentation"
           >
             <img
               className="userChatImg"
@@ -56,26 +54,6 @@ const Chats = () => {
         ))}
     </div>
   );
-
-  // <div className="chats">
-  {
-    /* <div className="chatInfo">
-        <div className="chatDescription">
-          <img src={Tesla} alt="" />
-          <div className="chatText">
-            <span className="name-chat">Tesla Board</span>
-            <span className="amount-members">12 members</span>
-          </div>
-        </div>
-        <div className="chatIcons">
-          <img src={Add} alt="" />
-          <img src={Call} alt="" />
-          <img src={Menu} alt="" />
-        </div>
-      </div>
-      <Messages />
-      <InputPanel /> */
-  }
 };
 
 export default Chats;
