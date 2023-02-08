@@ -1,18 +1,15 @@
 import React from 'react';
 import SideBar from './SideBar';
 import '../App.css';
-import './Leftbar/Leftbar.scss';
+
 import Chat from './Chat';
-import LeftBar from './Leftbar/LeftBar';
-import Chats from './Chats';
 
 const Home = () => {
   return (
     <div className="home">
-      <div className="content">
-        <LeftBar />
+      <div className="container">
         <SideBar />
-        <Chats />
+        <Chat />
       </div>
     </div>
   );

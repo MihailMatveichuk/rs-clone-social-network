@@ -1,9 +1,7 @@
 import { useState } from 'react';
-export const logoSrc = require('../assets/images/logo.png');
-import Home from '../components/Home';
+import logoSrc from '../assets/images/logo.png';
 import OtpInput from '../components/OnBoarding/OtpInput';
 import StepOne from '../components/OnBoarding/StepOne';
-import Register from '../components/Register';
 import { AuthType } from '../types';
 export const OnBoarding = () => {
   const [step, setStep] = useState<number>(1);

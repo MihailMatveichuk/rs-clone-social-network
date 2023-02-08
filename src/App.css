@@ -1,325 +1,326 @@
 .form-container {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .registra-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  width: 72%;
-  border-radius: 20px;
-  margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    gap: 15px;
+    width: 72%;
+    border-radius: 20px;
+    margin-top: 10px;
 }
 
-.header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 50px;
-  width: 100%;
+.header{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
 }
 
 .form-wrapper {
-  background-color: white;
-  border-radius: 15px;
-  width: 30%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    background-color: white;
+    border-radius: 15px;
+    width: 30%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
 }
 
 .logo {
-  font-family: 'SF Pro Display';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 32px;
-  text-align: center;
-  letter-spacing: 0.36px;
+    font-family: 'SF Pro Display';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+    letter-spacing: 0.36px
 }
 
 .title {
-  font-family: 'SF Pro Text';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 24px;
-  color: #71747a;
-  text-align: center;
-  letter-spacing: -0.24px;
+    font-family: 'SF Pro Text';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 24px;
+    color: #71747A;
+    text-align: center;
+    letter-spacing: -0.24px;
 }
 
 .registra-form input {
-  background: rgba(201, 204, 209, 0.24);
-  border-radius: 8px;
-  border: none;
-  width: 320px;
-  height: 56px;
-  padding-left: 10px;
-  outline: none;
+    background: rgba(201, 204, 209, 0.24);
+    border-radius: 8px;
+    border: none;
+    width: 320px;
+    height: 56px;
+    padding-left: 10px;
+    outline: none;
 }
 
-.form-wrapper p {
-  color: rgb(126, 126, 204);
-  font-size: small;
-  margin: 0 auto;
-  margin-top: 10px;
+
+.form-wrapper p{
+    color:rgb(126, 126, 204);
+    font-size: small;
+    margin: 0 auto;
+    margin-top: 10px;
 }
 
-.form-wrapper label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  column-gap: 10%;
-  color: rgba(21, 22, 22, 0.582);
-  font-size: small;
+.form-wrapper label{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10%;
+    color:rgba(21, 22, 22, 0.582);
+    font-size: small;
 }
 
-.home {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.home{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
 }
 
-.content {
-  border: rgba(117, 117, 121, 0.504) 0.1px solid;
-  height: 80%;
-  width: 65%;
-  border-radius: 5px;
-  display: flex;
-  overflow: hidden;
+.container{
+    border:rgba(117, 117, 121, 0.504) 0.1px solid;
+    height: 80%;
+    width: 65%;
+    border-radius: 5px;
+    display: flex;
+    overflow: hidden;
 }
 
-.sidebar {
-  flex: 1;
-  border-right: rgba(117, 117, 121, 0.504) 0.1px solid;
+.sidebar{
+    flex:1;
+    border-right:rgba(117, 117, 121, 0.504) 0.1px solid;
 }
 
-.chats {
-  flex: 3;
+.chat{
+    flex: 2;
 }
 
-.chats__content {
-  width: 90%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
+.navbar{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+    margin-right: 10px;
 }
 
-.navbar {
-  display: flex;
-  flex-direction: column;
-  margin-left: 5px;
-  margin-right: 10px;
+.navbar_top{
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    margin-top: 5px;
 }
 
-.navbar_top {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  margin-top: 5px;
+.navbar_top span{
+    font-family: 'SF Pro Display';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    color: #171A1F;
 }
 
-.navbar_top span {
-  font-family: 'SF Pro Display';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  color: #171a1f;
+.navbar_top_right{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    cursor:pointer;
+    column-gap: 5px;
+}
+.search-bar{
+    display: flex;
+    flex-direction: column;
+}
+.search{
+    background: rgba(201, 204, 209, 0.751);
+    border-radius: 8px;
+    border: none;
+    height: 40px;
+    outline: none;
+}
+.search::placeholder{
+    color:rgba(190, 182, 182, 0.76);
 }
 
-.navbar_top_right {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  cursor: pointer;
-  column-gap: 5px;
-}
-.search-bar {
-  display: flex;
-  flex-direction: column;
-}
-.search {
-  background: rgba(201, 204, 209, 0.24);
-  border-radius: 8px;
-  border: none;
-  height: 40px;
-  outline: none;
-  padding-left: 10%;
-}
 
-.search::placeholder {
-  color: rgba(190, 182, 182, 0.76);
-}
+.userChat{
 
-.userChat {
-  display: flex;
-  align-items: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  gap: 10px;
-  border-bottom: #c7cad0 0.1px solid;
-  cursor: pointer;
-  transition: all 0.5s;
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    gap: 10px;
+    border-bottom: #c7cad0 0.1px solid;
+    cursor: pointer;
+    transition: all 0.5s;
+
 }
-.userChatImg {
+.userChatImg{
   width: 50px;
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
 }
-.userChatInfo {
-  display: flex;
-  flex-direction: column;
+.userChatInfo{
+    display: flex;
+    flex-direction: column;
 }
 
-.userChat:hover {
-  background-color: rgba(225, 225, 236, 0.432);
-  border-radius: 8px;
+.userChat:hover{
+    background-color: rgba(225, 225, 236, 0.432);
+    border-radius: 8px;
 }
 
-.user-name {
-  font-family: 'SF Pro Text';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 24px;
+.user-name{
+    font-family: 'SF Pro Text';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 24px;
 }
 
-.user-descr {
-  font-family: 'SF Pro Text';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
+.user-descr{
+    font-family: 'SF Pro Text';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
 }
 
-.chatInfo {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  margin-bottom: 10px;
+
+.chatInfo{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color:rgba(225, 225, 236, 0.432);
 }
 
-.chatDescription {
-  display: flex;
-  width: 30%;
-  column-gap: 10px;
+.chatDescription{
+    display: flex;
+    width: 30%;
+    column-gap: 10px;
 }
 
-.chatDescription img {
-  width: 30px;
-  height: 30px;
+.chatDescription img{
+    width: 30px;
+    height: 30px;
 }
 
-.chatText {
-  display: flex;
-  flex-direction: column;
+.chatText{
+    display: flex;
+    flex-direction: column;
 }
-.chatIcons {
-  display: flex;
-  column-gap: 10px;
-}
-
-.chatIcons img {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
+.chatIcons{
+    display: flex;
+    column-gap: 10px;
 }
 
-.messages {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
-  height: 62vh;
+.chatIcons img{
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
 }
 
-.input-panel {
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.messages{
+    padding: 10px;
+    height: calc(100% - 140px);
 }
 
-.input-panel img {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
+.input-panel{
+    height: 50px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.input_container {
-  width: 90%;
-  height: 40px;
-  border-radius: 8px;
-  border: rgba(222, 213, 213, 0.614) 0.1px solid;
-  overflow: hidden;
+.input-panel img{
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
 }
 
-.input_container input {
-  height: 100%;
-  width: 95%;
-  padding-left: 10px;
-  border: none;
-  outline: none;
+.input_container{
+    width: 90%;
+    height: 40px;
+    border-radius: 8px;
+    border:rgba(222, 213, 213, 0.614) 0.1px solid;
+    overflow: hidden;
 }
 
-.input_container input::placeholder {
-  color: rgba(190, 182, 182, 0.76);
+.input_container input{
+    height: 100%;
+    width: 95%;
+    border: none;
+    outline: none;
 }
 
-.name-chat {
-  font-family: 'SF Pro Text';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 15px;
+.input_container input::placeholder{
+    color:rgba(190, 182, 182, 0.76);
 }
 
-.amount-members {
-  font-family: 'SF Pro Text';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  color: #71747a7e;
+.name-chat{
+    font-family: 'SF Pro Text';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
 }
 
-.message {
-  display: flex;
-  gap: 10px;
+.amount-members{
+    font-family: 'SF Pro Text';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    color: #71747a7e;
 }
 
-.message-info {
-  display: flex;
-  flex-direction: column;
-  max-width: 80%;
+.messages{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    height: calc(100% - 160px);
+    overflow: scroll;
 }
 
-.message-info img {
+.message{
+    display: flex;
+    gap: 10px;
+}
+
+.message-info{
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+}
+
+.message-info img{
   width: 40px;
   height: 40px;
 }
 
-.message-content {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+.message-content{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
-.message-text {
-  max-width: 70%;
-  font-size: 12px;
-  border-radius: 0px 10px 10px 10px;
-  padding: 5px;
-  border: solid 0.1px rgba(166, 161, 161, 0.718);
-  font-family: 'SF Pro Text';
-  font-style: normal;
-  font-weight: 400;
+.message-text{
+    max-width: 70%;
+    font-size: 12px;
+    border-radius: 0px 10px 10px 10px;
+    padding: 5px;
+    border: solid 0.1px rgba(166, 161, 161, 0.718);
+    font-family: 'SF Pro Text';
+    font-style: normal;
+    font-weight: 400;
 }

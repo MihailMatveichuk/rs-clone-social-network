@@ -5,7 +5,8 @@ import Searchbar from './Searchbar';
 import { Link } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
-import Chat from './Chat';
+
+import Chats from './Chats';
 const Navbar = () => {
   return (
     <div className="navbar">
@@ -70,7 +71,7 @@ const Navbar = () => {
       </div>
       <div>
         <Searchbar />
-        <Chat />
+        <Chats />
       </div>
     </div>
   );
