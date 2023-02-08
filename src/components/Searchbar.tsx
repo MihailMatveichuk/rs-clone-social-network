@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 // const Avatar = require('./assets/images/Avatar1.png');
 import '../App.css';
+const zoom = require('./assets/images/zoom.png');
 import { AuthContext } from '../context/AuthContext';
 import {
   collection,
@@ -87,6 +88,7 @@ const Searchbar = () => {
         onChange={(e) => setUserName(e.target.value)}
         value={userName}
       />
+
       {err && <span>User not found</span>}
       {user && (
         <div className="userChat" onClick={handleSelect}>
