@@ -104,7 +104,7 @@
     border-right:rgba(117, 117, 121, 0.504) 0.1px solid;
 }
 
-.chats{
+.chat{
     flex: 2;
 }
 
@@ -168,6 +168,8 @@
 .userChatImg{
   width: 50px;
   height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 .userChatInfo{
     display: flex;
