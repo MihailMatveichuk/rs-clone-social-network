@@ -18,7 +18,8 @@ import { db } from '../firebase';
 const Searchbar = () => {
   const { currentUser } = useContext(AuthContext);
   const [userName, setUserName] = useState('');
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
+  console.log('user_______________: ', user);
   const [err, setError] = useState(false);
 
   const handleSearch = async () => {
@@ -90,11 +91,7 @@ const Searchbar = () => {
       {err && <span>User not found</span>}
       {user && (
         <div className="userChat" onClick={handleSelect}>
-          <img
-            className="userChatImg"
-            src={user?.photoURL || ''}
-            alt="photoURL"
-          />
+          <img className="userChatImg" src={user.photoURL || ''} alt="" />
           <div className="userChatInfo">
             <span className="user-name">{user?.displayName}</span>
           </div>

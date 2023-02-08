@@ -1,20 +1,33 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { ChatContext } from '../context/Chatcontext';
 const Rogan = require('./assets/images/Rogan.png');
 
-const Message = ({message}) => {
+const Message = ({ message }) => {
+  console.log('message: ', message);
+  const { currentUser } = useContext(AuthContext);
+  const { data } = useContext(ChatContext);
+
   return (
     <div className="message">
       <div className="message-info">
-        <img src={Rogan} alt="" />
+        <img
+          src={
+            message.senderId === currentUser?.uid
+              ? currentUser?.photoURL
+              : data.user.photoURL
+          }
+          alt=""
+        />
       </div>
       <div className="message-content">
         <span style={{ fontSize: '14px', fontWeight: 700 }}>
-          Joe Rogan{' '}
-          <span style={{ fontSize: '10px', fontWeight: 300 }}>9:59 PM</span>
+          {message.img && <img src={message.img} alt="" />}
+          <span style={{ fontSize: '10px', fontWeight: 300 }}>
+            {message.date.seconds}
+          </span>
         </span>
-        <span className="message-text">
-          Thanks for doing this, Elon Musk. Really appreciate it.
-        </span>
+        <span className="message-text">{message.text}</span>
       </div>
     </div>
   );
