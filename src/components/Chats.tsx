@@ -1,8 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
+const Tesla = require('./assets/images/Tesla.png');
+const Add = require('./assets/images/Add.png');
+const Call = require('./assets/images/Call.png');
+const Menu = require('./assets/images/Menu.png');
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/Chatcontext';
+import InputPanel from './InputPanel';
+import Messages from './Messages';
 
 const Chats = () => {
   const [chats, setChats] = useState([]);
@@ -27,32 +33,56 @@ const Chats = () => {
   }, [currentUser!.uid]);
   console.log('chats___________', Object.entries(chats));
 
-  const handleSelect = (u) => {
-    dispatch({ type: 'CHANGE_USER', payload: u });
-  };
+  // const handleSelect = (u) => {
+  //   dispatch({ type: 'CHANGE_USER', payload: u });
+  // };
   return (
     <div className="chats">
-      {Object.entries(chats)
-        ?.sort((a, b) => b[1].date - a[1].date)
-        .map((chat) => (
-          <div
-            className="userChat"
-            key={chat[0]}
-            onClick={() => handleSelect(chat[1].userInfo)}
-            role="presentation"
-          >
-            <img
-              className="userChatImg"
-              src={chat[1].userInfo.photoURL}
-              alt=""
-            />
-            <div className="userChatInfo">
-              <span>{chat[1].userInfo.displayName}</span>
-              <p>{chat[1].lastMessage?.text}</p>
+      <div className="chats__content">
+        <div className="chat__high">
+          <div className="chatInfo">
+            <div className="chatDescription">
+              <img src={Tesla} alt="" />
+              <div className="chatText">
+                <span className="name-chat">Tesla Board</span>
+                <span className="amount-members">12 members</span>
+              </div>
+            </div>
+            <div className="chatIcons">
+              <img src={Add} alt="" />
+              <img src={Call} alt="" />
+              <img src={Menu} alt="" />
             </div>
           </div>
-        ))}
+          <Messages />
+        </div>
+        <div className="chat__low">
+          <InputPanel />
+        </div>
+      </div>
     </div>
+    // <div className="chats">
+    //   {Object.entries(chats)
+    //     ?.sort((a, b) => b[1].date - a[1].date)
+    //     .map((chat) => (
+    //       <div
+    //         className="userChat"
+    //         key={chat[0]}
+    //         onClick={() => handleSelect(chat[1].userInfo)}
+    //         role="presentation"
+    //       >
+    //         <img
+    //           className="userChatImg"
+    //           src={chat[1].userInfo.photoURL}
+    //           alt=""
+    //         />
+    //         <div className="userChatInfo">
+    //           <span>{chat[1].userInfo.displayName}</span>
+    //           <p>{chat[1].lastMessage?.text}</p>
+    //         </div>
+    //       </div>
+    //     ))}
+    // </div>
   );
 };
 
