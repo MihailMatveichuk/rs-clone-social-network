@@ -141,7 +141,7 @@
   flex-direction: column;
 }
 .search {
-  background: rgba(201, 204, 209, 0.751);
+  background: rgba(224, 223, 221, 0.696);
   border-radius: 8px;
   border: none;
   height: 40px;
@@ -226,11 +226,6 @@
   cursor: pointer;
 }
 
-.messages {
-  padding: 10px;
-  height: calc(100% - 140px);
-}
-
 .input-panel {
   height: 50px;
   padding: 10px;
@@ -280,11 +275,11 @@
 }
 
 .messages {
+  padding: 10px;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-  height: calc(100% - 160px);
-  overflow: scroll;
+  height: 58vh;
 }
 
 .message {
