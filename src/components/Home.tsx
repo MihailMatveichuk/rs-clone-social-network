@@ -3,11 +3,13 @@ import SideBar from './SideBar';
 import '../App.css';
 
 import Chat from './Chat';
+import Leftsidebar from './Leftsidebar/Leftsidebar';
 
 const Home = () => {
   return (
     <div className="home">
-      <div className="container">
+      <div className="home__content">
+        <Leftsidebar />
         <SideBar />
         <Chat />
       </div>
