@@ -15,13 +15,13 @@
     margin-top: 10px;
 }
 
-.header{
+/* .header{
     position: absolute;
     top: 0;
     left: 0;
     height: 50px;
     width: 100%;
-}
+} */
 
 .form-wrapper {
     background-color: white;
@@ -34,7 +34,7 @@
     align-items:center;
 }
 
-.logo {
+/* .logo {
     font-family: 'SF Pro Display';
     font-style: normal;
     font-weight: 700;
@@ -42,9 +42,9 @@
     line-height: 32px;
     text-align: center;
     letter-spacing: 0.36px
-}
+} */
 
-.title {
+/* .title {
     font-family: 'SF Pro Text';
     font-style: normal;
     font-weight: 400;
@@ -53,7 +53,7 @@
     color: #71747A;
     text-align: center;
     letter-spacing: -0.24px;
-}
+} */
 
 .registra-form input {
     background: rgba(201, 204, 209, 0.24);
