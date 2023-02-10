@@ -18,6 +18,7 @@ const Send = require('./assets/images/Send.png');
 const InputPanel = () => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
+  console.log('data: ', data);
   const [text, setText] = useState('');
   const handleSend = async () => {
     await updateDoc(doc(db, 'chats', data.chatId), {
@@ -28,7 +29,7 @@ const InputPanel = () => {
         date: Timestamp.now(),
       }),
     });
-    await updateDoc(doc(db, 'userChats', currentUser.uid), {
+    await updateDoc(doc(db, 'userChats', currentUser!.uid), {
       [data.chatId + '.lastMessage']: {
         text,
       },
