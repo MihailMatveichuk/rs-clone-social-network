@@ -141,31 +141,37 @@
   flex-direction: column;
 }
 .search {
-  background: rgba(224, 223, 221, 0.696);
+  background: rgba(241, 240, 236, 0.696);
   border-radius: 8px;
   border: none;
   height: 40px;
   outline: none;
 }
 .search::placeholder {
-  color: rgba(190, 182, 182, 0.76);
+  color: rgba(197, 189, 189, 0.76);
+  padding-left: 10px;
 }
 
 .userChat {
   display: flex;
   align-items: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
   gap: 10px;
   border-bottom: #c7cad0 0.1px solid;
   cursor: pointer;
   transition: all 0.5s;
 }
+
+.navChat {
+  display: flex;
+  align-items: center;
+  border-bottom: #c7cad076 0.1px solid;
+}
+
 .userChatImg {
   width: 50px;
   height: 50px;
+  padding: 10px;
   border-radius: 50%;
-  object-fit: cover;
 }
 .userChatInfo {
   display: flex;
@@ -232,6 +238,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 }
 
 .input-panel img {
@@ -257,6 +264,7 @@
 
 .input_container input::placeholder {
   color: rgba(190, 182, 182, 0.76);
+  padding-left: 10px;
 }
 
 .name-chat {
@@ -280,11 +288,16 @@
   flex-direction: column;
   row-gap: 10px;
   height: 58vh;
+  overflow: scroll;
 }
 
 .message {
   display: flex;
   gap: 10px;
+}
+
+.message.owner {
+  flex-direction: row-reverse;
 }
 
 .message-info {
@@ -313,4 +326,10 @@
   font-family: 'SF Pro Text';
   font-style: normal;
   font-weight: 400;
+}
+
+.emoji__picker {
+  position: absolute;
+  bottom: 60px;
+  right: 3rem;
 }

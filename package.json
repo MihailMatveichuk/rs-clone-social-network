@@ -67,17 +67,21 @@
     ]
   },
   "dependencies": {
+    "am-emoji-picker": "^0.6.1",
     "classnames": "^2.3.2",
     "dotenv": "^16.0.3",
+    "emoji-picker-react": "^4.4.7",
     "firebase": "^9.16.0",
     "http-proxy-middleware": "^2.0.6",
     "qs": "^6.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
+    "react-input-emoji": "^4.3.0",
     "react-router-dom": "^6.5.0",
     "react-scripts": "^5.0.1",
     "reactstrap": "^9.1.5",
+    "rm-emoji-picker": "^1.0.0",
     "styled-components": "^5.3.6",
     "uuid": "^9.0.0"
   }

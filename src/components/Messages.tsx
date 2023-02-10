@@ -19,17 +19,13 @@ const Messages = () => {
     };
   }, [data.chatId]);
 
-  console.log('MESAGESSS',messages);
+  console.log('MESAGESSS', messages);
 
   return (
     <div className="messages">
       {messages.map((m) => (
         <Message message={m} key={m.id} />
       ))}
-      <span className="user-name">Jeff Besos</span>
-      <span className="user-descr">
-        I don’t know how to spend all my money. Any ideas? 😚
-      </span>
     </div>
   );
 };
