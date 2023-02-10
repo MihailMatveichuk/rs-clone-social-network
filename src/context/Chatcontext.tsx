@@ -4,9 +4,10 @@ import {
   useContext,
   useReducer,
 } from 'react';
+import { IData } from '../types';
 import { AuthContext } from './AuthContext';
 
-export const ChatContext = createContext();
+export const ChatContext = createContext<Partial<IData>>({});
 
 export const ChatContextProvider = ({ children }: PropsWithChildren) => {
   const { currentUser } = useContext(AuthContext);
@@ -16,6 +17,8 @@ export const ChatContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   const chatReducer = (state, action) => {
+    console.log('action: ', action);
+    console.log('state: ', state);
     switch (action.type) {
       case 'CHANGE_USER':
         return {

@@ -19,7 +19,7 @@ const Searchbar = () => {
   const { currentUser } = useContext(AuthContext);
   const [userName, setUserName] = useState('');
   const [user, setUser] = useState(null);
-  console.log('user_______________: ', user);
+
   const [err, setError] = useState(false);
 
   const handleSearch = async () => {
@@ -31,7 +31,7 @@ const Searchbar = () => {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         setUser(doc.data());
-        console.log(doc.data());
+        console.log('doc.data()', doc.data());
       });
     } catch (err) {
       setError(true);
@@ -40,7 +40,7 @@ const Searchbar = () => {
 
   const handleKey = async (e: {
     code: string;
-    target: any;
+    target: unknown;
     preventDefault: () => void;
   }) => {
     e.code === 'Enter' && handleSearch();
@@ -48,7 +48,7 @@ const Searchbar = () => {
 
   const handleSelect = async () => {
     const combinedId =
-      currentUser!.uid > user.uid
+      currentUser?.uid > user?.uid
         ? currentUser?.uid + user.uid
         : user.uid + currentUser?.uid;
     try {

@@ -18,30 +18,31 @@ const Send = require('./assets/images/Send.png');
 const InputPanel = () => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
-  console.log('data: ', data);
   const [text, setText] = useState('');
   const handleSend = async () => {
-    await updateDoc(doc(db, 'chats', data.chatId), {
-      messages: arrayUnion({
-        id: uuidv4(),
-        text,
-        senderId: currentUser!.uid,
-        date: Timestamp.now(),
-      }),
-    });
-    await updateDoc(doc(db, 'userChats', currentUser!.uid), {
-      [data.chatId + '.lastMessage']: {
-        text,
-      },
-      [data.chatId + '.date']: serverTimestamp(),
-    });
-    await updateDoc(doc(db, 'userChats', data.user.uid), {
-      [data.chatId + '.lastMessage']: {
-        text,
-      },
-      [data.chatId + '.date']: serverTimestamp(),
-    });
-    setText('');
+    if (typeof data != 'undefined') {
+      await updateDoc(doc(db, 'chats', data.chatId), {
+        messages: arrayUnion({
+          id: uuidv4(),
+          text,
+          senderId: currentUser!.uid,
+          date: Timestamp.now(),
+        }),
+      });
+      await updateDoc(doc(db, 'userChats', currentUser!.uid), {
+        [data.chatId + '.lastMessage']: {
+          text,
+        },
+        [data.chatId + '.date']: serverTimestamp(),
+      });
+      await updateDoc(doc(db, 'userChats', data.user.uid), {
+        [data.chatId + '.lastMessage']: {
+          text,
+        },
+        [data.chatId + '.date']: serverTimestamp(),
+      });
+      setText('');
+    }
   };
 
   return (

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/Chatcontext';
-const Rogan = require('./assets/images/Rogan.png');
+import { IMessageProp } from '../types';
 
-const Message = ({ message }) => {
+const Message = ({ message }: IMessageProp) => {
   console.log('message: ', message);
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
@@ -12,10 +12,10 @@ const Message = ({ message }) => {
     <div className="message">
       <div className="message-info">
         <img
-          src={
+          src ={
             message.senderId === currentUser?.uid
               ? currentUser?.photoURL
-              : data.user.photoURL
+              : data?.user.photoURL
           }
           alt=""
         />

@@ -30,7 +30,7 @@ const Chat = () => {
           </div>
           <Messages />
           <div className="userChat">
-            <span>{data.user?.displayName}</span>
+            <span>{data?.user?.displayName}</span>
             {/* <div className="userChatInfo">
 
         </div> */}

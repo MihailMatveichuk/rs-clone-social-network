@@ -6,6 +6,7 @@ import { ChatContext } from '../context/Chatcontext';
 
 const Chats = () => {
   const [chats, setChats] = useState([]);
+  console.log('chats: ', chats);
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
 
@@ -24,7 +25,7 @@ const Chats = () => {
     };
     currentUser!.uid && getChats();
   }, [currentUser!.uid]);
-  console.log('chats___________', Object.entries(chats));
+
 
   const handleSelect = (u: any) => {
     dispatch({ type: 'CHANGE_USER', payload: u });

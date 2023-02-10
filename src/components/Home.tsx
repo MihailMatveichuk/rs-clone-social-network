@@ -6,7 +6,6 @@ import Chat from './Chat';
 import Leftsidebar from './Leftsidebar/Leftsidebar';
 
 const Home = () => {
-  console.log('+++++++++++++++++++++++++++++++++++')
   return (
     <div className="home">
       <div className="home__content">

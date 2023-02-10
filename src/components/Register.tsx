@@ -1,5 +1,4 @@
 import '../App.css';
-import Header from './Header';
 import InputFile from './InputFile';
 import styled from 'styled-components';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
@@ -72,7 +71,6 @@ const Register = () => {
   };
   return (
     <div className="form-container">
-      <Header />
       <div className="form-wrapper">
         <span className="logo">New account</span>
         <span className="title">Introduce yourself</span>
