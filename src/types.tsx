@@ -11,7 +11,6 @@ export enum AuthType {
 
 export type ContextUser = {
   currentUser: User | null | undefined;
-  //setCurrentUser: (currentUser: User | null | undefined) => void;
 };
 
 export type authUser = {
@@ -19,14 +18,10 @@ export type authUser = {
   photoURL: string;
   uid: string;
 };
+
 export interface IChatContext {
-  chatId: string;
-  user: authUser;
-}
-export interface IData {
-  data: IChatContext;
-  // dispatch: (action: MapViewerAction) => void;
-  // dispatch: () => {};
+  data: IChatState;
+  dispatch: React.Dispatch<IChangeUserAction>;
 }
 
 export enum ActionType {
@@ -35,7 +30,11 @@ export enum ActionType {
 
 export const initialState: IChatState = {
   chatId: 'null',
-  user: {},
+  user: {
+    displayName: '',
+    photoURL: '',
+    uid: '',
+  },
 };
 
 export interface IChangeUserAction {
@@ -44,8 +43,7 @@ export interface IChangeUserAction {
 }
 export interface IChatState {
   chatId: string;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  user: {};
+  user: authUser;
 }
 export interface IMessageFirebase {
   id: string;

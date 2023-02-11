@@ -3,10 +3,10 @@ import { doc, DocumentData, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/Chatcontext';
+import { ActionType } from '../types';
 
 const Chats = () => {
   const [chats, setChats] = useState<DocumentData | undefined>([]);
-  console.log('chats: ', chats);
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
 
@@ -27,7 +27,7 @@ const Chats = () => {
   }, [currentUser?.uid]);
 
   const handleSelect = (u: any) => {
-    dispatch({ type: 'CHANGE_USER', payload: u });
+    dispatch({ type: ActionType.ChangeUser, payload: u });
   };
   return (
     <div className="chats">

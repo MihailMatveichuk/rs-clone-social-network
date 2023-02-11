@@ -20,7 +20,7 @@ const Messages = () => {
         unSub();
       };
     }
-  }, [data?.chatId]);
+  }, [data.chatId]);
 
   console.log('MESAGESSS', messages);
 

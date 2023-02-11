@@ -4,7 +4,6 @@ import { ChatContext } from '../context/Chatcontext';
 import { IMessageProp } from '../types';
 
 const Message = ({ message }: IMessageProp) => {
-  console.log('message: ', message);
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
   let chatUserPhoto: string | undefined;
@@ -12,7 +11,7 @@ const Message = ({ message }: IMessageProp) => {
     chatUserPhoto =
       message.senderId === currentUser.uid
         ? currentUser.photoURL
-        : data?.user.photoURL;
+        : data?.user?.photoURL;
   }
   return (
     <div className="message">
