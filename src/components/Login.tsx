@@ -1,5 +1,4 @@
 import '../App.css';
-import Header from './Header';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
@@ -9,6 +8,7 @@ import {
   setPersistence,
 } from 'firebase/auth';
 import auth from '../firebase';
+import Header from './Header';
 
 export const Button = styled.button`
   background-color: rgba(144, 172, 172, 0.582);

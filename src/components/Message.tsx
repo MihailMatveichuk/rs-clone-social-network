@@ -7,18 +7,17 @@ const Message = ({ message }: IMessageProp) => {
   console.log('message: ', message);
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
-
+  let chatUserPhoto: string | undefined;
+  if (currentUser != null && currentUser.photoURL != null) {
+    chatUserPhoto =
+      message.senderId === currentUser.uid
+        ? currentUser.photoURL
+        : data?.user.photoURL;
+  }
   return (
     <div className="message">
       <div className="message-info">
-        <img
-          src ={
-            message.senderId === currentUser?.uid
-              ? currentUser?.photoURL
-              : data?.user.photoURL
-          }
-          alt=""
-        />
+        <img src={chatUserPhoto} alt="" />
       </div>
       <div className="message-content">
         <span style={{ fontSize: '14px', fontWeight: 700 }}>

@@ -25,9 +25,28 @@ export interface IChatContext {
 }
 export interface IData {
   data: IChatContext;
-  dispatch: () => {};
+  // dispatch: (action: MapViewerAction) => void;
+  // dispatch: () => {};
 }
 
+export enum ActionType {
+  ChangeUser = 'CHANGE_USER',
+}
+
+export const initialState: IChatState = {
+  chatId: 'null',
+  user: {},
+};
+
+export interface IChangeUserAction {
+  type: ActionType;
+  payload: authUser;
+}
+export interface IChatState {
+  chatId: string;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  user: {};
+}
 export interface IMessageFirebase {
   id: string;
   senderId: string;
