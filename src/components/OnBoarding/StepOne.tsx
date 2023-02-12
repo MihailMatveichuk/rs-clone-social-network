@@ -5,9 +5,10 @@ type StepOneProps = {
   text: string;
   children: React.ReactNode;
   onSubmit: () => void;
+  id?: string;
 };
 
-const StepOne = ({ title, text, children, onSubmit }: StepOneProps) => {
+const StepOne = ({ title, text, children, id = 'id', onSubmit }: StepOneProps) => {
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit();
@@ -20,7 +21,7 @@ const StepOne = ({ title, text, children, onSubmit }: StepOneProps) => {
       <form onSubmit={onSubmitHandler} className="on-boarding__form">
         {children}
         <div className="on-boarding__btn-container">
-          <button className="btn btn--primary" type="submit">
+          <button className="btn btn--primary" type="submit" id={id}>
             Next
           </button>
         </div>

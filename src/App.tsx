@@ -6,21 +6,24 @@ import Home from './components/Home';
 import Login from './components/Login';
 import { PropsWithChildren, useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
+import { AuthEmail, AuthPhone } from './pages/Auth';
 
 export function App() {
   const { currentUser } = useContext(AuthContext);
-
-  const ProtectedRoute = ({ children }: PropsWithChildren) => {
-    if (!currentUser) {
-      return <Navigate to="/login" />;
+  console.log(currentUser);
+  const ProtectedRoute: React.FC<PropsWithChildren> = ({ children }) => {
+    if (currentUser === undefined) {
+      return <div>Loading...</div>;
     }
-    return children;
+    if (currentUser === null) {
+      return <Navigate to="/auth" />;
+    }
+    return <>{children}</>;
   };
 
   return (
     <BrowserRouter>
-{/*
-      <OnBoarding /> */}
+      {/* <OnBoarding /> */}
       <Routes>
         <Route path="/">
           <Route
@@ -31,9 +34,10 @@ export function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
         </Route>
+        <Route path="auth" element={<OnBoarding />} />
+        <Route path="auth/email" element={<AuthEmail />} />
+        <Route path="auth/phone" element={<AuthPhone />} />
       </Routes>
     </BrowserRouter>
   );

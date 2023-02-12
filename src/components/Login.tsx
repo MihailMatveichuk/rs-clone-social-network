@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword,
   setPersistence,
 } from 'firebase/auth';
-import auth from '../firebase';
+import { auth } from '../firebase';
 import Header from './Header';
 
 export const Button = styled.button`

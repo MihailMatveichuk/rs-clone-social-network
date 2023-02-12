@@ -4,7 +4,7 @@ import Searchbar from './Searchbar';
 
 import { Link } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
-import auth from '../firebase';
+import { auth } from '../firebase';
 
 import Chats from './Chats';
 const Navbar = () => {

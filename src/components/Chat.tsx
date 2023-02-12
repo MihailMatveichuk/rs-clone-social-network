@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import '../App.css';
 import { ChatContext } from '../context/Chatcontext';
-import auth from '../firebase';
+import { auth } from '../firebase';
 import InputPanel from './InputPanel';
 import Messages from './Messages';
 const Add = require('./assets/images/Add.png');
