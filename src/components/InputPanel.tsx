@@ -9,22 +9,29 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/Chatcontext';
 import { uuidv4 } from '@firebase/util';
-import { db } from '../firebase';
+import { db, storage } from '../firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import EmojiPicker from 'emoji-picker-react';
-
 import '../App.css';
 
 const Attach = require('./assets/images/Attached.png');
 const Smile = require('./assets/images/Smile.png');
 const Send = require('./assets/images/Send.png');
 
-const InputPanel = (e) => {
+const InputPanel = () => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
   const [text, setText] = useState('');
   const [showPicker, setShowPicker] = useState(false);
+  const [image, setImage] = useState('');
+
+  const ImageRef = ref(storage, `images/${image.name}`);
 
   const handleSend = async () => {
+    setText('');
+    await uploadBytes(ImageRef, image).then((snapshot) => {
+      getDownloadURL(snapshot.ref);
+    });
     await updateDoc(doc(db, 'chats', data.chatId), {
       messages: arrayUnion({
         id: uuidv4(),
@@ -45,7 +52,6 @@ const InputPanel = (e) => {
       },
       [data.chatId + '.date']: serverTimestamp(),
     });
-    setText('');
   };
 
   const onEmojiClick = (emojiObject: { emoji: string }) => {
@@ -59,7 +65,14 @@ const InputPanel = (e) => {
 
   return (
     <div className="input-panel">
-      <input type="file" style={{ display: 'none' }} id="file" />
+      <input
+        type="file"
+        style={{ display: 'none' }}
+        id="file"
+        onChange={(e) => {
+          setText(e.target.files[0].name), setImage(e.target.files[0]);
+        }}
+      />
       <label htmlFor="file">
         <img src={Attach} alt="file" />
       </label>
@@ -78,7 +91,7 @@ const InputPanel = (e) => {
         />
       </div>
       <div className="emoji__picker">
-        {showPicker && <EmojiPicker size="80" onEmojiClick={onEmojiClick} />}
+        {showPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
       </div>
       <button onClick={handleSend}>
         <img src={Send} alt="send-icon" />

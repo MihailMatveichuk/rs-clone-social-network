@@ -27,6 +27,7 @@
     "@types/react-dom": "^18.0.9",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
+    "@types/video-react": "^0.15.1",
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "@typescript-eslint/parser": "^5.46.1",
     "autoprefixer": "^10.4.13",
@@ -67,6 +68,7 @@
     ]
   },
   "dependencies": {
+    "@github/file-attachment-element": "^3.1.0",
     "am-emoji-picker": "^0.6.1",
     "classnames": "^2.3.2",
     "dotenv": "^16.0.3",
@@ -76,13 +78,17 @@
     "qs": "^6.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-file-picker": "^0.0.6",
     "react-firebase-hooks": "^5.1.1",
     "react-input-emoji": "^4.3.0",
+    "react-player": "^2.11.2",
     "react-router-dom": "^6.5.0",
     "react-scripts": "^5.0.1",
+    "react-use-file-upload": "^0.9.5",
     "reactstrap": "^9.1.5",
     "rm-emoji-picker": "^1.0.0",
     "styled-components": "^5.3.6",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "video-react": "^0.16.0"
   }
 }

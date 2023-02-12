@@ -318,14 +318,17 @@
 }
 
 .message-text {
-  max-width: 70%;
+  max-width: 50%;
   font-size: 12px;
   border-radius: 0px 10px 10px 10px;
   padding: 5px;
-  border: solid 0.1px rgba(166, 161, 161, 0.718);
   font-family: 'SF Pro Text';
   font-style: normal;
   font-weight: 400;
+}
+
+.message__img {
+  max-width: 150px;
 }
 
 .emoji__picker {

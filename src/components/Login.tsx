@@ -1,5 +1,4 @@
 import '../App.css';
-import Header from './Header';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
@@ -52,7 +51,6 @@ const Login = () => {
   };
   return (
     <div className="form-container">
-      <Header />
       <div className="form-wrapper">
         <span className="logo">Chat</span>
         <span className="title">Login</span>
