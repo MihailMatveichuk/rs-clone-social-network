@@ -1,13 +1,13 @@
 import '../App.css';
-import Header from './Header';
 import InputFile from './InputFile';
 import styled from 'styled-components';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth, db, storage } from '../firebase';
+import auth, { db, storage } from '../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { useState } from 'react';
 import { doc, setDoc } from 'firebase/firestore';
 import { Link, useNavigate } from 'react-router-dom';
+import Header from './Header';
 
 const Button = styled.button`
   background-color: rgba(144, 172, 172, 0.582);
@@ -30,11 +30,11 @@ const Button = styled.button`
 const Register = () => {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+
   const handleSubmit = async (e: {
     target: any;
     preventDefault: () => void;
   }) => {
-    e.preventDefault();
     const file = e.target[0].files[0];
     const displayName: string = e.target[1].value;
     const email: string = e.target[2].value;
@@ -71,7 +71,6 @@ const Register = () => {
   };
   return (
     <div className="form-container">
-      <Header />
       <div className="form-wrapper">
         <span className="logo">New account</span>
         <span className="title">Introduce yourself</span>

@@ -31,3 +31,5 @@ export const OnBoarding = () => {
     </div>
   );
 };
+
+export { logoSrc };

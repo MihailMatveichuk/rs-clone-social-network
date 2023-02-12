@@ -2,6 +2,8 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
+//import * as dotenv from 'dotenv';
+//dotenv.config();
 // Import the functions you need from the SDKs you need
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -17,27 +19,26 @@ import { getStorage } from 'firebase/storage';
 //   appId: '1:794508097033:web:534101952cde4972f0aad8',
 // };
 const firebaseConfig = {
-  apiKey: "AIzaSyDuBOLqhKjpp55463UHvDPc7KnA46dza3Y",
-  authDomain: "rs-chat-da1ad.firebaseapp.com",
-  databaseURL: "https://rs-chat-da1ad-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "rs-chat-da1ad",
-  storageBucket: "rs-chat-da1ad.appspot.com",
-  messagingSenderId: "712962934357",
-  appId: "1:712962934357:web:3032efae27e345b32e76dc"
+//  apiKey: "AIzaSyDuBOLqhKjpp55463UHvDPc7KnA46dza3Y",
+  // authDomain: "rs-chat-da1ad.firebaseapp.com",
+  // databaseURL: "https://rs-chat-da1ad-default-rtdb.europe-west1.firebasedatabase.app",
+ //  projectId: "rs-chat-da1ad",
+  // storageBucket: "rs-chat-da1ad.appspot.com",
+  // messagingSenderId: "712962934357",
+  // appId: "1:712962934357:web:3032efae27e345b32e76dc"
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGE_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 // Initialize Firebase
 
 export const app = initializeApp(firebaseConfig);
-export const auth = getAuth();
+const auth = getAuth();
 export const storage = getStorage();
 export const db = getFirestore();
 
-// const firebaseConfig = {
-//   apiKey: process.env.API_KEY,
-//   authDomain: process.env.AUTH_DOMAIN,
-//   databaseURL: process.env.DATABASE_URL,
-//   projectId: process.env.PROJECT_ID,
-//   storageBucket: process.env.STORAGE_BUCKET,
-//   messagingSenderId: process.env.MESSAGING_SENDER_ID,
-//   appId: process.env.APP_ID
-// };
+export default auth;
+

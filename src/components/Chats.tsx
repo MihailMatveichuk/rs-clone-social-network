@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
-import { doc, onSnapshot } from 'firebase/firestore';
+import { doc, DocumentData, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/Chatcontext';
+import { ActionType } from '../types';
 
 const Chats = () => {
-  const [chats, setChats] = useState([]);
-
+  const [chats, setChats] = useState<DocumentData | undefined>([]);
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
 
@@ -23,16 +23,15 @@ const Chats = () => {
         unsub();
       };
     };
-    currentUser!.uid && getChats();
-  }, [currentUser!.uid]);
-  console.log('chats___________', Object.entries(chats));
+    currentUser?.uid && getChats();
+  }, [currentUser?.uid]);
 
-  const handleSelect = (u) => {
-    dispatch({ type: 'CHANGE_USER', payload: u });
+  const handleSelect = (u: any) => {
+    dispatch({ type: ActionType.ChangeUser, payload: u });
   };
   return (
     <div className="chats">
-      {Object.entries(chats)
+      {Object.entries(chats!)
         ?.sort((a, b) => b[1].date - a[1].date)
         .map((chat) => (
           <div
