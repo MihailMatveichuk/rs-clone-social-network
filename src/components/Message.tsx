@@ -52,7 +52,7 @@ const Message = ({ message }: IMessageProp) => {
         <span style={{ fontSize: '14px', fontWeight: 700 }}>
           {message.img && <img src={message.img} alt="" />}
           <span style={{ fontSize: '10px', fontWeight: 300 }}>
-            {Date(message.date.seconds)}
+            {new Date(message.date.seconds).toLocaleString()}
           </span>
         </span>
         <span className="message-text">

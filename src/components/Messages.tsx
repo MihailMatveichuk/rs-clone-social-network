@@ -4,7 +4,6 @@ import { ChatContext } from '../context/Chatcontext';
 import { db } from '../firebase';
 import { IMessageFirebase } from '../types';
 import Message from './Message';
-//import Message from './Message';
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
@@ -21,8 +20,6 @@ const Messages = () => {
       };
     }
   }, [data.chatId]);
-
-  console.log('MESAGESSS', messages);
 
   return (
     <div className="messages">
