@@ -16,7 +16,10 @@ const Chat = () => {
         <div className="chat__high">
           <div className="chatInfo">
             <div className="chatDescription">
-              <img src={auth.currentUser?.photoURL} alt="" />
+              <img
+                src={auth.currentUser?.photoURL || null || undefined}
+                alt=""
+              />
               <div className="chatText">
                 <span className="name-chat">
                   {auth.currentUser?.displayName}
@@ -34,7 +37,7 @@ const Chat = () => {
             <div className="navChat">
               <img
                 className="userChatImg"
-                src={data.user.photoURL || null}
+                src={data.user.photoURL || null || undefined}
                 alt=""
               />
               <span>{data.user?.displayName}</span>

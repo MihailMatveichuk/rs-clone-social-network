@@ -2,12 +2,11 @@ import '../App.css';
 import InputFile from './InputFile';
 import styled from 'styled-components';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import auth, { db, storage } from '../firebase';
+import { auth, db, storage } from '../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { useState } from 'react';
 import { doc, setDoc } from 'firebase/firestore';
 import { Link, useNavigate } from 'react-router-dom';
-import Header from './Header';
 
 const Button = styled.button`
   background-color: rgba(144, 172, 172, 0.582);
