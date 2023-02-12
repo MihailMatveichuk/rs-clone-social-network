@@ -1,29 +1,40 @@
+import React, { createContext, PropsWithChildren, useContext } from 'react';
 import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useReducer,
-} from 'react';
+  ActionType,
+  IChangeUserAction,
+  IChatContext,
+  IChatState,
+  initialState,
+} from '../types';
 import { AuthContext } from './AuthContext';
 
-export const ChatContext = createContext();
+export const ChatContext = createContext<IChatContext>({
+  data: {
+    chatId: 'null',
+    user: {
+      displayName: '',
+      photoURL: '',
+      uid: '',
+    },
+  },
+  dispatch: function (): void {
+    null;
+  },
+});
 
 export const ChatContextProvider = ({ children }: PropsWithChildren) => {
   const { currentUser } = useContext(AuthContext);
-  const INITIAL_STATE = {
-    chatId: 'null',
-    user: {},
-  };
+  const INITIAL_STATE = initialState;
 
-  const chatReducer = (state, action) => {
+  const chatReducer = (state: IChatState, action: IChangeUserAction) => {
     switch (action.type) {
-      case 'CHANGE_USER':
+      case ActionType.ChangeUser:
         return {
           user: action.payload,
           chatId:
             currentUser!.uid > action.payload.uid
-              ? currentUser!.uid + action.payload.uid
-              : action.payload.uid + currentUser!.uid,
+              ? currentUser?.uid + action.payload.uid
+              : action.payload.uid + currentUser?.uid,
         };
 
       default:
@@ -31,7 +42,9 @@ export const ChatContextProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const [state, dispatch] = useReducer(chatReducer, INITIAL_STATE);
+  const [state, dispatch] = React.useReducer<
+    React.Reducer<IChatState, IChangeUserAction>
+  >(chatReducer, INITIAL_STATE);
 
   return (
     <ChatContext.Provider value={{ data: state, dispatch }}>

@@ -2,14 +2,21 @@ import { getDownloadURL, ref, listAll } from 'firebase/storage';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/Chatcontext';
-
-// import ReactPlayer from 'react-player';
 import { storage } from '../firebase';
+import { IMessageProp } from '../types';
 
-const Message = ({ message }) => {
-  const [listUrl, setListUrl] = useState([]);
+const Message = ({ message }: IMessageProp) => {
   const { currentUser } = useContext(AuthContext);
+  const [listUrl, setListUrl] = useState([]);
   const { data } = useContext(ChatContext);
+  let chatUserPhoto: string | undefined;
+  if (currentUser != null && currentUser.photoURL != null) {
+    chatUserPhoto =
+      message.senderId === currentUser.uid
+        ? currentUser.photoURL
+        : data?.user?.photoURL;
+  }
+
   const refs = useRef();
   const messageExst =
     message.text.split('.')[message.text.split('.').length - 1];
@@ -33,21 +40,13 @@ const Message = ({ message }) => {
   const arr = listUrl.find((item) =>
     item.includes(message.text || message.text.replaceAll(/ /g, '%'))
   );
-
   return (
     <div
       ref={refs}
       className={`message ${message.senderId === currentUser?.uid && 'owner'}`}
     >
       <div className="message-info">
-        <img
-          src={
-            message.senderId === currentUser?.uid
-              ? currentUser?.photoURL
-              : data.user.photoURL
-          }
-          alt=""
-        />
+        <img src={chatUserPhoto} alt="" />
       </div>
       <div className="message-content">
         <span style={{ fontSize: '14px', fontWeight: 700 }}>

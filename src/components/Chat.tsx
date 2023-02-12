@@ -2,7 +2,7 @@ import { ref } from 'firebase/storage';
 import React, { useContext } from 'react';
 import '../App.css';
 import { ChatContext } from '../context/Chatcontext';
-import { auth } from '../firebase';
+import auth from '../firebase';
 import InputPanel from './InputPanel';
 import Messages from './Messages';
 const Tesla = require('./assets/images/Tesla.png');
@@ -32,21 +32,27 @@ const Chat = () => {
               <img src={Menu} alt="" />
             </div>
           </div>
-          <div className="navChat">
-            <img
-              className="userChatImg"
-              src={data.user.photoURL || null}
-              alt=""
-            />
-            <span>{data.user?.displayName}</span>
-            {/* <div className="userChatInfo">
+          <Messages />
+          <div className="userChat">
+            <span>{data?.user?.displayName}</span>
+
+            <div className="navChat">
+              <img
+                className="userChatImg"
+                src={data.user.photoURL || null}
+                alt=""
+              />
+              <span>{data.user?.displayName}</span>
+
+              {/* <div className="userChatInfo">
 
         </div> */}
+            </div>
+            <Messages />
           </div>
-          <Messages />
-        </div>
-        <div className="chat__low">
-          <InputPanel />
+          <div className="chat__low">
+            <InputPanel />
+          </div>
         </div>
       </div>
     </div>
