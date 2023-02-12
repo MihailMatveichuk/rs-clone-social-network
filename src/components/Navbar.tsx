@@ -8,6 +8,10 @@ import { auth } from '../firebase';
 
 import Chats from './Chats';
 const Navbar = () => {
+  const onSignOutHandler = async () => {
+    await auth.signOut();
+    //navigate('/auth/')
+  }
   return (
     <div className="navbar">
       <div className="navbar_top">
@@ -53,7 +57,6 @@ const Navbar = () => {
               fill="#71747A"
             />
           </svg>
-          <Link to={'/login'}>
             <Button
               style={{
                 width: '40px',
@@ -62,11 +65,10 @@ const Navbar = () => {
                 padding: '0px',
               }}
               className={'log-out-button'}
-              onClick={() => signOut(auth)}
+              onClick={onSignOutHandler}
             >
               Log out
             </Button>
-          </Link>
         </div>
       </div>
       <div>
