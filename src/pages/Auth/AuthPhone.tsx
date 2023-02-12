@@ -30,22 +30,26 @@ const AuthPhone = () => {
         } catch(e) {
           console.log(e)
         }
-        console.log('rere')
       }
     }, [])
 
     const setRecaptchaVerifier = async () => {
-      if (rec) return;
+      //if (rec) return;
       try {
         const recaptchaVerifier = new RecaptchaVerifier(
           "recaptcha-container", 
           {},
           auth
         )
-        await recaptchaVerifier.render();
         setRec(recaptchaVerifier)
+        await recaptchaVerifier.render()
       } catch (e) {
-        console.log(e)
+        console.log('setRecapcha',e)
+        if (rec) {
+          rec.clear();
+          setRec(null);
+          //setRecaptchaVerifier();
+        }
       }
     }
     const onCodeSubmitHandler = async () => {
@@ -57,25 +61,28 @@ const AuthPhone = () => {
         console.log(user)
         navigate('/');
       } catch (err) {
-        console.log(err)
+        console.log('onCodeSubmitHandler',err)
       }
     }
 
-    const changePhone = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const changePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
       setPhone(e.target.value)
-      
-    },[]);
+      console.log(phone)
+    };
 
     const onSignInSubmit = async () => {
-      if (rec && phone) {
+      console.log('here', phone, rec)
+      if (phone) {
         try {
+          console.log(rec)
+          if (!rec) return;
           await setPersistence(auth, browserSessionPersistence);
           const res = await signInWithPhoneNumber(auth, phone, rec)
           console.log(res)
           setConfirmRes(res)
           setStep(2)
         } catch(e) {
-          console.log(e)
+          console.log('signInWithPhoneNumber',e)
         }
     }
   }
