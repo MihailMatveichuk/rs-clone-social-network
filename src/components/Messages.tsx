@@ -29,10 +29,6 @@ const Messages = () => {
       {messages.map((m: IMessageFirebase) => (
         <Message message={m} key={m.id} />
       ))}
-      <span className="user-name">Jeff Besos</span>
-      <span className="user-descr">
-        I don’t know how to spend all my money. Any ideas? 😚
-      </span>
     </div>
   );
 };

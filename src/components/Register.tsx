@@ -30,11 +30,11 @@ const Button = styled.button`
 const Register = () => {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+
   const handleSubmit = async (e: {
     target: any;
     preventDefault: () => void;
   }) => {
-    e.preventDefault();
     const file = e.target[0].files[0];
     const displayName: string = e.target[1].value;
     const email: string = e.target[2].value;
@@ -71,7 +71,6 @@ const Register = () => {
   };
   return (
     <div className="form-container">
-      <Header />
       <div className="form-wrapper">
         <span className="logo">New account</span>
         <span className="title">Introduce yourself</span>

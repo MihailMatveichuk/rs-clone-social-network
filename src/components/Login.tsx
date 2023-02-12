@@ -52,7 +52,6 @@ const Login = () => {
   };
   return (
     <div className="form-container">
-      <Header />
       <div className="form-wrapper">
         <span className="logo">Chat</span>
         <span className="title">Login</span>
