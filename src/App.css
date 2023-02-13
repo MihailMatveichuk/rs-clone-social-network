@@ -202,7 +202,7 @@
   background-color: rgba(225, 225, 236, 0.432);
 } */
 
-.chatDescription {
+/* .chatDescription {
   display: flex;
   width: 30%;
   column-gap: 10px;
@@ -211,7 +211,7 @@
 .chatDescription img {
   width: 30px;
   height: 30px;
-}
+} */
 
 .chatText {
   display: flex;
@@ -228,7 +228,7 @@
   cursor: pointer;
 }
 
-.input-panel {
+/* .input-panel {
   height: 50px;
   padding: 10px;
   display: flex;
@@ -241,7 +241,7 @@
   width: 16px;
   height: 16px;
   cursor: pointer;
-}
+} */
 
 .input_container {
   width: 90%;
@@ -278,7 +278,7 @@
   color: #71747a7e;
 }
 
-.messages {
+/* .messages {
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -290,9 +290,9 @@
 .message {
   display: flex;
   gap: 10px;
-}
+} */
 
-.message.owner {
+/* .message.owner {
   flex-direction: row-reverse;
 }
 
@@ -325,7 +325,7 @@
 
 .message__img {
   max-width: 150px;
-}
+} */
 
 .emoji__picker {
   position: absolute;

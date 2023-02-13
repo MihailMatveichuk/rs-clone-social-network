@@ -14,13 +14,12 @@ const Chat = () => {
 
   return (
     <div className="chat">
-      <div className="chats__content">
-        <div className="chat__high">
+      <div className="chat__content">
         <ChatInfo
             photoURL={photoURL}
             displayName={displayName}
           />
-          <div className="userChat">
+          {/* <div className="userChat">
             <div className="navChat">
               <img
                 className="userChatImg"
@@ -29,19 +28,15 @@ const Chat = () => {
               />
               <span>{data.user?.displayName}</span>
 
-              {/* <div className="userChatInfo">
+              <div className="userChatInfo">
 
-        </div> */}
+              </div>
             </div>
-          </div>
+          </div> */}
           <Messages />
-
-          <div className="chat__low">
-            <InputPanel />
-          </div>
+          <InputPanel />
         </div>
       </div>
-    </div>
   );
 };
 

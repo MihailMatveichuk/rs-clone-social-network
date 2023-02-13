@@ -41,20 +41,23 @@ const Message = ({ message }: IMessageProp) => {
     item.includes(message.text || message.text.replaceAll(/ /g, '%'))
   );
   return (
-    <div
+    <li
       ref={refs}
-      className={`message ${message.senderId === currentUser?.uid && 'owner'}`}
+      className={`message ${message.senderId === currentUser?.uid ? 'owner' : 'sender'}`}
     >
-      <div className="message-info">
+      <div className="message__user-photo">
         <img src={chatUserPhoto} alt="" />
       </div>
       <div className="message-content">
         <span style={{ fontSize: '14px', fontWeight: 700 }}>
           {message.img && <img src={message.img} alt="" />}
-          <span style={{ fontSize: '10px', fontWeight: 300 }}>
-            {new Date(message.date.seconds).toLocaleString()}
-          </span>
         </span>
+          <div className="message-info">
+          {/* <div className="message-info-name">{}</div> */}
+          <div className="message-info-time">
+            {new Date(message.date.seconds).toLocaleString()}
+          </div>
+        </div>
         <span className="message-text">
           {messageExst == 'jpg' ||
           messageExst == 'jpeg' ||
@@ -80,7 +83,7 @@ const Message = ({ message }: IMessageProp) => {
           )}
         </span>
       </div>
-    </div>
+    </li>
   );
 };
 

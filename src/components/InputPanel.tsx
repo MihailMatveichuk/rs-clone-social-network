@@ -67,37 +67,41 @@ const InputPanel = () => {
 
   return (
     <div className="input-panel">
-      <input
-        type="file"
-        style={{ display: 'none' }}
-        id="file"
-        onChange={(e) => {
-          setText(e.target.files[0].name), setImage(e.target.files[0]);
-        }}
-      />
-      <label htmlFor="file">
-        <img src={Attach} alt="file" />
-      </label>
-      <div className="input_container">
-        <input
-          type="text"
-          placeholder="Insert message"
-          onChange={(e) => setText(e.target.value)}
-          value={text}
-          onKeyDownCapture={onKeyDown}
-        />
-        <img
-          src={Smile}
-          alt=""
-          onClickCapture={() => setShowPicker((val) => !val)}
-        />
+      <div className="container">
+        <div className="input-panel__inner">
+          <input
+            type="file"
+            style={{ display: 'none' }}
+            id="file"
+            onChange={(e) => {
+              setText(e.target.files[0].name), setImage(e.target.files[0]);
+            }}
+          />
+          <label htmlFor="file">
+            <img src={Attach} alt="file" />
+          </label>
+          <div className="input_container">
+            <input
+              type="text"
+              placeholder="Insert message"
+              onChange={(e) => setText(e.target.value)}
+              value={text}
+              onKeyDownCapture={onKeyDown}
+            />
+            <img
+              src={Smile}
+              alt=""
+              onClickCapture={() => setShowPicker((val) => !val)}
+            />
+          </div>
+          <div className="emoji__picker">
+            {showPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
+          </div>
+          <button onClick={handleSend}>
+            <img src={Send} alt="send-icon" />
+          </button>
+        </div>
       </div>
-      <div className="emoji__picker">
-        {showPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
-      </div>
-      <button onClick={handleSend}>
-        <img src={Send} alt="send-icon" />
-      </button>
     </div>
   );
 };

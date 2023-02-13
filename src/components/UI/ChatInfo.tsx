@@ -14,7 +14,7 @@ const ChatInfo: React.FC<ChatInfoProps> = ({photoURL, displayName}) => {
     <div className="chat-info">
       <div className="container">
         <div className="chat-info__inner">
-          <div className="chatDescription">
+          <div className="chat-info__description">
             <img src={photoURL} alt="" />
             <div className="chatText">
               <span className="name-chat">
