@@ -1,5 +1,5 @@
 import React from 'react';
-import SideBar from './SideBar';
+import Aside from './Aside';
 import '../App.css';
 
 import Chat from './Chat';
@@ -8,11 +8,9 @@ import Leftsidebar from './Leftsidebar/Leftsidebar';
 const Home = () => {
   return (
     <div className="home">
-      <div className="home__content">
         <Leftsidebar />
-        <SideBar />
+        <Aside />
         <Chat />
-      </div>
     </div>
   );
 };

@@ -1,0 +1,40 @@
+.home {
+    height: 100vh;
+    display: flex;
+}
+
+.aside {
+    width: 360px;
+    position: relative;
+    &::after {
+        position: absolute;
+        content: '';
+        top: 0;
+        right: -1px;
+        background: rgba(0, 0, 0, 0.08);
+        width: 1px;
+        height: 100%;
+      }
+    &__top {
+        padding: 12px 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        h3 {
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 32px;
+        }
+    }
+}
+
+
+.chat {
+    &-info {
+        padding: 6px 0;
+        background: #fff;
+        &__inner {
+            padding: 0 80px;
+        }
+    }
+}

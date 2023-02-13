@@ -4,32 +4,22 @@ import { ChatContext } from '../context/Chatcontext';
 import { auth } from '../firebase';
 import InputPanel from './InputPanel';
 import Messages from './Messages';
-const Add = require('./assets/images/Add.png');
-const Call = require('./assets/images/Call.png');
-const Menu = require('./assets/images/Menu.png');
+import ChatInfo from './UI/ChatInfo';
+;
 
 const Chat = () => {
   const { data } = useContext(ChatContext);
+  const displayName = auth.currentUser && auth.currentUser.displayName ? auth.currentUser.displayName : ''
+  const photoURL = auth.currentUser && auth.currentUser.photoURL ? auth.currentUser.photoURL : ''
+
   return (
     <div className="chat">
       <div className="chats__content">
         <div className="chat__high">
-          <div className="chatInfo">
-            <div className="chatDescription">
-              <img src={auth.currentUser?.photoURL} alt="" />
-              <div className="chatText">
-                <span className="name-chat">
-                  {auth.currentUser?.displayName}
-                </span>
-                <span className="amount-members">online</span>
-              </div>
-            </div>
-            <div className="chatIcons">
-              <img src={Add} alt="" />
-              <img src={Call} alt="" />
-              <img src={Menu} alt="" />
-            </div>
-          </div>
+        <ChatInfo
+            photoURL={photoURL}
+            displayName={displayName}
+          />
           <div className="userChat">
             <div className="navChat">
               <img

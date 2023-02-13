@@ -1,6 +1,8 @@
 @import 'variables';
 @import 'reset';
 @import 'on-boarding';
+@import 'chat-page';
+@import 'ui';
 
 html,
 body,
@@ -10,9 +12,8 @@ body,
 
 .container {
   margin: 0 auto;
-  width: 100%;
-  max-width: 1460px;
-  padding: 0 30px;
+  //width: 100%;
+  padding: 0 16px;
 }
 
 .title {
