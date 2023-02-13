@@ -24,15 +24,13 @@ const InputPanel = () => {
   const [text, setText] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [image, setImage] = useState<File | null>(null);
-  console.log('image: ', image);
 
   const ImageRef = ref(storage, `images/${image?.name}`);
-  console.log('ImageRef: ', ImageRef);
 
   const handleSend = async () => {
     setText('');
-    if (typeof data != 'undefined' && image != null) {
-      await uploadBytes(ImageRef, image).then((snapshot) => {
+    if (typeof data != 'undefined') {
+      await uploadBytes(ImageRef, image!).then((snapshot) => {
         getDownloadURL(snapshot.ref);
       });
       await updateDoc(doc(db, 'chats', data.chatId), {
