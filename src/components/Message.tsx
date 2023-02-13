@@ -7,7 +7,7 @@ import { IMessageProp } from '../types';
 
 const Message = ({ message }: IMessageProp) => {
   const { currentUser } = useContext(AuthContext);
-  const [listUrl, setListUrl] = useState([]);
+  const [listUrl, setListUrl] = useState<string[]>([]);
   const { data } = useContext(ChatContext);
   let chatUserPhoto: string | undefined;
   if (currentUser != null && currentUser.photoURL != null) {
@@ -17,7 +17,8 @@ const Message = ({ message }: IMessageProp) => {
         : data?.user?.photoURL;
   }
 
-  const refs = useRef();
+  const refs = useRef<HTMLDivElement>(null);
+
   const messageExst =
     message.text.split('.')[message.text.split('.').length - 1];
 

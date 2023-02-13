@@ -8,7 +8,13 @@ type StepOneProps = {
   id?: string;
 };
 
-const StepOne = ({ title, text, children, id = 'id', onSubmit }: StepOneProps) => {
+const StepOne = ({
+  title,
+  text,
+  children,
+  id = 'id',
+  onSubmit,
+}: StepOneProps) => {
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit();

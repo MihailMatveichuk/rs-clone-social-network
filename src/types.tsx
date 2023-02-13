@@ -1,5 +1,4 @@
 import { User } from 'firebase/auth';
-
 export interface IMessage {
   author: string;
 }
@@ -57,3 +56,12 @@ export interface IMessageFirebase {
 export interface IMessageProp {
   message: IMessageFirebase;
 }
+
+// export interface IFile {
+//   lastModified: number;
+//   lastModifiedDate: Timestamp;
+//   name: string;
+//   size: number;
+//   type: string;
+//   webkitRelativePath: string;
+// }

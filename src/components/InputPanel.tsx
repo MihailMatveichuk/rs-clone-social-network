@@ -23,14 +23,14 @@ const InputPanel = () => {
   const { data } = useContext(ChatContext);
   const [text, setText] = useState('');
   const [showPicker, setShowPicker] = useState(false);
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState<File | null>(null);
 
-  const ImageRef = ref(storage, `images/${image.name}`);
+  const ImageRef = ref(storage, `images/${image?.name}`);
 
   const handleSend = async () => {
     setText('');
     if (typeof data != 'undefined') {
-      await uploadBytes(ImageRef, image).then((snapshot) => {
+      await uploadBytes(ImageRef, image!).then((snapshot) => {
         getDownloadURL(snapshot.ref);
       });
       await updateDoc(doc(db, 'chats', data.chatId), {
@@ -41,7 +41,7 @@ const InputPanel = () => {
           date: Timestamp.now(),
         }),
       });
-      await updateDoc(doc(db, 'userChats', currentUser.uid), {
+      await updateDoc(doc(db, 'userChats', currentUser!.uid), {
         [data.chatId + '.lastMessage']: {
           text,
         },
@@ -72,7 +72,9 @@ const InputPanel = () => {
         style={{ display: 'none' }}
         id="file"
         onChange={(e) => {
-          setText(e.target.files[0].name), setImage(e.target.files[0]);
+          if (e.target.files != null) {
+            setText(e.target.files[0].name), setImage(e.target.files[0]);
+          }
         }}
       />
       <label htmlFor="file">
