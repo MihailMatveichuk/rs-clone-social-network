@@ -1,5 +1,6 @@
 import './assets/styles/style.scss';
 import { OnBoarding } from './pages/OnBoarding';
+import Error from './pages/Error';
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import Register from './components/Register';
 import Home from './components/Home';
@@ -39,6 +40,7 @@ export function App() {
         <Route path="auth" element={<OnBoarding />} />
         <Route path="auth/email" element={<AuthEmail />} />
         <Route path="auth/phone" element={<AuthPhone />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
   );
