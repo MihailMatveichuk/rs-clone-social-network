@@ -4,14 +4,16 @@ import { defaultSrc } from '../assets/images/avatar_logo';
 import { storage } from '../firebase';
 
 const InputFile = () => {
-  const [logo, setLogo] = useState('');
+  const [logo, setLogo] = useState<string[''] | null>(null);
   const logoRef = ref(storage, `logo/${logo.name}`);
   const logoUrl = ref(storage, `logo/`);
 
   const onSelected = async () => {
-    await uploadBytes(logoRef, logo).then((snapshot) => {
-      getDownloadURL(snapshot.ref);
-    });
+    if (logo != null) {
+      await uploadBytes(logoRef, logo).then((snapshot) => {
+        getDownloadURL(snapshot.ref);
+      });
+    }
   };
 
   useEffect(() => {
@@ -19,7 +21,7 @@ const InputFile = () => {
       res.items.forEach((item) => {
         console.log(item);
         getDownloadURL(item).then((url) => {
-          setLogo((prev) => [...prev, url]);
+          setLogo((prev: string) => [...prev, url]);
         });
       });
     });

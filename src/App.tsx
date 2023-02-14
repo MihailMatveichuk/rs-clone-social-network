@@ -2,9 +2,7 @@ import './assets/styles/style.scss';
 import { OnBoarding } from './pages/OnBoarding';
 import Error from './pages/Error';
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
-import Register from './components/Register';
 import Home from './components/Home';
-import Login from './components/Login';
 import { PropsWithChildren, useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
 import { AuthEmail, AuthPhone } from './pages/Auth';
@@ -25,7 +23,6 @@ export function App() {
 
   return (
     <BrowserRouter>
-      {/* <OnBoarding /> */}
       <Routes>
         <Route path="/">
           <Route

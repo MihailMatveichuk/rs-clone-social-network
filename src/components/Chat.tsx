@@ -20,10 +20,11 @@ const Chat = () => {
             displayName={displayName}
           />
           {/* <div className="userChat">
+
             <div className="navChat">
               <img
                 className="userChatImg"
-                src={data.user.photoURL || null}
+                src={data.user.photoURL || null || undefined}
                 alt=""
               />
               <span>{data.user?.displayName}</span>
