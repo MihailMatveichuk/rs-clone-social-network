@@ -3,16 +3,12 @@ import { Button } from './Login';
 import Searchbar from './Searchbar';
 
 import { Link } from 'react-router-dom';
-import { signOut } from 'firebase/auth';
-import { auth } from '../firebase';
+
 
 import Chats from './Chats';
 import SearchInput from './UI/SearchInput';
 const Navbar = () => {
-  const onSignOutHandler = async () => {
-    await auth.signOut();
-    //navigate('/auth/')
-  }
+
   const onSearchChangeHandler = (val: string) => {
     console.log(val);
   }
@@ -63,18 +59,6 @@ const Navbar = () => {
                 fill="#71747A"
               />
             </svg>
-              <Button
-                style={{
-                  width: '40px',
-                  height: '20px',
-                  fontSize: '10px',
-                  padding: '0px',
-                }}
-                className={'log-out-button'}
-                onClick={onSignOutHandler}
-              >
-                Log out
-              </Button>
           </div>
         </div>
       </div>

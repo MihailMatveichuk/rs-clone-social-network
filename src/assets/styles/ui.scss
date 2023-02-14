@@ -32,9 +32,45 @@
         height: 100%;
         align-items: center;
         padding: 0 20px;
+        gap: 24px;
     }
+
+    label, button {
+        cursor: pointer;
+    }
+    &__input-container {
+        flex: 1;
+        position: relative;
+        background: rgba(201, 204, 209, 0.24);
+        border-radius: 8px;
+        input {
+            //width: 100%;
+            padding: 8px 76px 8px 16px;
+            font-size: 15px;
+            line-height: 24px;
+        }
+        svg {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+    }
+
+
 }
 
-.input-container {
-
+@media screen and (hover:hover) {
+    .input-panel {
+        label:hover,
+        button:hover {
+            svg path {
+                fill: #398FE5;
+            }
+        }
+        &__input-container svg:hover path {
+            fill: #398FE5;
+        }
+    }
 }

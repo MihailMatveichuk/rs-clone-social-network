@@ -114,7 +114,7 @@
         margin-bottom: 8px;
     }
     &-content {
-        max-width: 450px;
+        max-width: 60%;
         padding: 15px;
         border-radius: 15px;
         background: #ececec;
@@ -129,11 +129,19 @@
         }
 
     }
+    &__img {
+        max-width:80%;
+        height: auto;
+    }
     &.owner {
         justify-content: flex-end;
+        .message-text {
+            color: #fff;
+        }
         .message-content {
             background: #579ffb;
             order: 0;
+            color: #fff !important;
 
             &::before {
                 border-bottom-left-radius: 0.8rem 0.7rem;
@@ -188,6 +196,7 @@
 }
 
 .user-chat {
+
     &__inner {
         display: flex;
         gap: 16px;
@@ -218,6 +227,7 @@
             height: 40px;
             word-break: break-word;
         }
+
     }
     img {
         width: 56px;
@@ -225,6 +235,8 @@
         border-radius: 50%;
     }
 }
+
+
 
 @media screen and (hover:hover) {
     .user-chat:hover {
