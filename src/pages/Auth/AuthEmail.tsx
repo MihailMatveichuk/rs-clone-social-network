@@ -14,24 +14,26 @@ const AuthEmail = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const login = async () => {
-    try {
-      await setPersistence(auth, browserSessionPersistence);
-      const res = await signInWithEmailAndPassword(auth, email, password);
-      navigate('/');
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const login = async () => {
+  //   try {
+  //     await setPersistence(auth, browserSessionPersistence);
+  //     await signInWithEmailAndPassword(auth, email, password);
+  //     navigate('/');
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const onSubmitHandlerEmail = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await setPersistence(auth, browserSessionPersistence);
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate('/');
     } catch (e) {
       const err = e as Error;
       console.log(err.message);
-      await login();
-      navigate('/');
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigate('/register');
     }
   };
   return (

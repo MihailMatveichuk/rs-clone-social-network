@@ -92,7 +92,7 @@ const AuthPhone = () => {
         <div className="on-boarding__top">
           <button
             className="on-boarding__go-back"
-            onClick={() => setStep((prev) => prev - 1)}
+            onClick={() => navigate('/auth')}
           >
             <svg
               width="24"

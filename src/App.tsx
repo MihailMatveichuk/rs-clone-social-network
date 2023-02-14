@@ -7,13 +7,14 @@ import { PropsWithChildren, useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
 import { AuthEmail, AuthPhone } from './pages/Auth';
 import Launcher from './pages/Launcher';
+import Register from './components/Register';
 
 export function App() {
   const { currentUser } = useContext(AuthContext);
   console.log(currentUser);
   const ProtectedRoute: React.FC<PropsWithChildren> = ({ children }) => {
     if (currentUser === undefined) {
-      return <Launcher/>
+      return <Launcher />;
     }
     if (currentUser === null) {
       return <Navigate to="/auth" />;
@@ -37,6 +38,7 @@ export function App() {
         <Route path="auth" element={<OnBoarding />} />
         <Route path="auth/email" element={<AuthEmail />} />
         <Route path="auth/phone" element={<AuthPhone />} />
+        <Route path="/register" element={<Register />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>

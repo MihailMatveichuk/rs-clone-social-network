@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-// const Avatar = require('./assets/images/Avatar1.png');
 import '../App.css';
 import { AuthContext } from '../context/AuthContext';
 import {
@@ -19,7 +18,6 @@ import { User } from 'firebase/auth';
 
 const Searchbar = () => {
   const { currentUser } = useContext(AuthContext);
-  console.log('currentUser: ', currentUser);
   const [userName, setUserName] = useState('');
   const [user, setUser] = useState<User | null | undefined | DocumentData>(
     null

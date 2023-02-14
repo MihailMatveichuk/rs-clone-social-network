@@ -38,7 +38,6 @@ const InputFile = () => {
       />
       <label htmlFor="file">
         <img width={50} height={50} src={logo || defaultSrc} alt="" />
-        {/* <AvatarLogo /> */}
       </label>
     </div>
   );

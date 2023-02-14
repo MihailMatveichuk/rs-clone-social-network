@@ -88,7 +88,6 @@ const Message = ({ message }: IMessageProp) => {
           {message.img && <img src={message.img} alt="" />}
         </span>
         <div className="message-info">
-          {/* <div className="message-info-name">{}</div> */}
           <div className="message-info-time">
             {new Date(message.date.seconds).toLocaleString()}
           </div>
@@ -106,21 +105,6 @@ const Message = ({ message }: IMessageProp) => {
           messageExst == 'png' ? (
             <img className="message__img" src={arr} alt="" />
           ) : (
-            // messageExst == 'mkv' ? (
-            // <ReactPlayer width={300} height={200} url={arr} />
-            // ) : (
-            // <video width="200" height="200">
-            //   <source
-            //     src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
-            //     type="video/mp4"
-            //   />
-            //   <track
-            //     src={arr}
-            //     kind="captions"
-            //     srcLang="en"
-            //     label="english_captions"
-            //   ></track>
-            // </video>
             message.text
           )}
         </span>
