@@ -70,7 +70,8 @@ const InputPanel = () => {
             style={{ display: 'none' }}
             id="file"
             onChange={(e) => {
-              setText(e.target.files[0].name), setImage(e.target.files[0]);
+              if (e.target.files != null)
+                setText(e.target.files[0].name), setImage(e.target.files[0]);
             }}
           />
           <label htmlFor="file">

@@ -47,7 +47,7 @@ const Message = ({ message }: IMessageProp) => {
         : data?.user?.photoURL;
   }
 
-  const refs = useRef<HTMLDivElement>(null);
+  const refs = useRef<HTMLLIElement>(null);
 
   const messageExst =
     message.text.split('.')[message.text.split('.').length - 1];

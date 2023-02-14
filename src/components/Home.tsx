@@ -8,9 +8,9 @@ import Leftsidebar from './Leftsidebar/Leftsidebar';
 const Home = () => {
   return (
     <div className="home">
-        <Leftsidebar />
-        <Aside />
-        <Chat />
+      <Leftsidebar />
+      <Aside />
+      <Chat />
     </div>
   );
 };

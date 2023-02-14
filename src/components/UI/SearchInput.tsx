@@ -21,9 +21,8 @@ type SearchInputProps = {
 };
 
 const SearchInput: React.FC<SearchInputProps> = ({ onChange, placeholder }) => {
-  const [value, setValue] = useState<string>('');
+  const [, setValue] = useState<string>('');
   const { currentUser } = useContext(AuthContext);
-  console.log('currentUser: ', currentUser);
   const [userName, setUserName] = useState('');
   const [user, setUser] = useState<User | null | undefined | DocumentData>(
     null

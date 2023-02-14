@@ -1,17 +1,11 @@
 import '../App.css';
-import { Button } from './Login';
-import Searchbar from './Searchbar';
-
-import { Link } from 'react-router-dom';
-
 
 import Chats from './Chats';
 import SearchInput from './UI/SearchInput';
 const Navbar = () => {
-
   const onSearchChangeHandler = (val: string) => {
     console.log(val);
-  }
+  };
 
   return (
     <div className="aside">
@@ -63,7 +57,7 @@ const Navbar = () => {
         </div>
       </div>
       <div className="container">
-        <SearchInput 
+        <SearchInput
           onChange={onSearchChangeHandler}
           placeholder="Chats, messages and more"
         />
