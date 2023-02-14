@@ -1,6 +1,8 @@
 @import 'variables';
 @import 'reset';
 @import 'on-boarding';
+@import 'chat-page';
+@import 'ui';
 
 html,
 body,
@@ -10,9 +12,8 @@ body,
 
 .container {
   margin: 0 auto;
-  width: 100%;
-  max-width: 1460px;
-  padding: 0 30px;
+  //width: 100%;
+  padding: 0 16px;
 }
 
 .title {
@@ -75,6 +76,54 @@ body,
   }
 }
 
+.launcher {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__logo {
+    width: 96px;
+    height: 96px;
+    animation: pulse 4s infinite;
+  }
+}
+
+.error {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__logo {
+    width: 320px;
+    height: 200px;
+    margin-bottom: 16px;
+  }
+  &__title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+    letter-spacing: 0.36px;
+    color: #171A1F;
+    margin-bottom: 8px;
+  }
+  &__text {
+    font-size: 15px;
+    line-height: 24px;
+    text-align: center;
+    letter-spacing: -0.24px;
+    color: #71747A;
+    margin-bottom: 32px;
+  }
+}
+
 @media screen and (hover: hover) {
   .btn {
     &--primary:hover {
@@ -85,4 +134,20 @@ body,
       background-color: $grey-background-hovered;
     }
   }
+}
+
+
+@-webkit-keyframes pulse {
+  0% { -webkit-transform: scale(1); }
+  25% {-webkit-transform: scale(1.1);}
+  50% { -webkit-transform: scale(1); }
+  75% { -webkit-transform: scale(1.1); }
+  100% { -webkit-transform: scale(1); }
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  25% {transform: scale(1.1);}
+  50% { transform: scale(1); }
+  75% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
