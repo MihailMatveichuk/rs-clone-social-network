@@ -1,4 +1,84 @@
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -8,7 +88,17 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
   display: block;
 }
 
@@ -16,21 +106,25 @@ body {
   line-height: 1;
 }
 
-ol, ul {
+ol,
+ul {
   list-style: none;
 }
 
-blockquote, q {
+blockquote,
+q {
   quotes: none;
 }
 
-blockquote:before, blockquote:after {
-  content: "";
+blockquote:before,
+blockquote:after {
+  content: '';
   content: none;
 }
 
-q:before, q:after {
-  content: "";
+q:before,
+q:after {
+  content: '';
   content: none;
 }
 
@@ -39,11 +133,16 @@ table {
   border-spacing: 0;
 }
 
-ol, ul, li {
+ol,
+ul,
+li {
   list-style: none;
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   background-color: transparent;
   outline: none;
   border: 0;
@@ -103,7 +202,7 @@ button, input, select, textarea {
   width: 100%;
   max-width: 360px;
   -moz-column-gap: 10px;
-       column-gap: 10px;
+  column-gap: 10px;
   margin-bottom: 32px;
 }
 
@@ -125,7 +224,7 @@ button, input, select, textarea {
 
 @media screen and (hover: hover) {
   .on-boarding__go-back:hover svg g path {
-    fill: #171A1F;
+    fill: #171a1f;
   }
 }
 html,
@@ -147,14 +246,14 @@ body,
   line-height: 32px;
   text-align: center;
   letter-spacing: 0.36px;
-  color: #171A1F;
+  color: #171a1f;
 }
 
 .text {
   font-size: 15px;
   line-height: 24px;
   letter-spacing: -0.24px;
-  color: #71747A;
+  color: #71747a;
 }
 
 .btn {
@@ -171,18 +270,18 @@ body,
   padding: 8px 24px;
 }
 .btn--primary {
-  background-color: #248BF2;
+  background-color: #248bf2;
   color: #fff;
 }
 .btn--primary.active {
-  background-color: #1677D9;
+  background-color: #1677d9;
 }
 .btn--grey {
-  color: #71747A;
-  background-color: #F2F3F5;
+  color: #71747a;
+  background-color: #f2f3f5;
 }
 .btn--grey:active {
-  background-color: #1677D9;
+  background-color: #1677d9;
 }
 
 .input {
@@ -194,20 +293,38 @@ body,
   letter-spacing: -0.24px;
 }
 .input::-moz-placeholder {
-  color: #9D9FA3;
+  color: #9d9fa3;
 }
 .input:-ms-input-placeholder {
-  color: #9D9FA3;
+  color: #9d9fa3;
 }
 .input::placeholder {
-  color: #9D9FA3;
+  color: #9d9fa3;
+}
+
+.reaction {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+}
+
+.reaction img:hover {
+  transform: scale(1.2);
+}
+
+.post__like__counter {
+  color: rgba(187, 231, 9, 0.868);
+}
+
+.dislike {
+  width: '25px';
 }
 
 @media screen and (hover: hover) {
   .btn--primary:hover {
-    background-color: #3399FF;
+    background-color: #3399ff;
   }
   .btn--grey:hover {
-    background-color: #EBEDF0;
+    background-color: #ebedf0;
   }
-}/*# sourceMappingURL=style.css.map */
+} /*# sourceMappingURL=style.css.map */

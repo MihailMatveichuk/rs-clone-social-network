@@ -24,11 +24,11 @@ const Messages = () => {
   return (
     <div className="messages">
       <div className="container">
-      <ul className="messages__list">
-        {messages.map((m: IMessageFirebase) => (
-          <Message message={m} key={m.id} />
-        ))}
-      </ul>
+        <ul className="messages__list">
+          {messages.map((m: IMessageFirebase) => (
+            <Message message={m} key={m.id} />
+          ))}
+        </ul>
       </div>
     </div>
   );

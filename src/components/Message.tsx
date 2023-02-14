@@ -5,6 +5,11 @@ import { ChatContext } from '../context/Chatcontext';
 import { storage } from '../firebase';
 import { IMessageProp } from '../types';
 import { ColorRing } from 'react-loader-spinner';
+import '../assets/styles/style.css';
+
+const Like = require('./assets/images/Like.png');
+const Dislike = require('./assets/images/Dislike.png');
+
 <ColorRing
   visible={true}
   height="50"
@@ -19,6 +24,21 @@ const Message = ({ message }: IMessageProp) => {
   const [listUrl, setListUrl] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const { data } = useContext(ChatContext);
+  const [like, setLike] = useState(0);
+  const [dislike, setDislike] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isHeart, setIsDislike] = useState(false);
+
+  const likeHandler = () => {
+    setLike(isLiked ? like - 1 : like + 1);
+    setIsLiked(!isLiked);
+  };
+
+  const dislikeHandler = () => {
+    setDislike(isHeart ? dislike - 1 : dislike + 1);
+    setIsDislike(!isHeart);
+  };
+
   let chatUserPhoto: string | undefined;
   if (currentUser != null && currentUser.photoURL != null) {
     chatUserPhoto =
@@ -56,36 +76,30 @@ const Message = ({ message }: IMessageProp) => {
   return (
     <li
       ref={refs}
-      className={`message ${message.senderId === currentUser?.uid ? 'owner' : 'sender'}`}
+      className={`message ${
+        message.senderId === currentUser?.uid ? 'owner' : 'sender'
+      }`}
     >
       <div className="message__user-photo">
         <img src={chatUserPhoto} alt="" />
       </div>
       <div className="message-content">
-
         <span style={{ fontSize: '14px', fontWeight: 700 }}>
           {message.img && <img src={message.img} alt="" />}
         </span>
-          <div className="message-info">
+        <div className="message-info">
           {/* <div className="message-info-name">{}</div> */}
           <div className="message-info-time">
             {new Date(message.date.seconds).toLocaleString()}
           </div>
         </div>
-
-/*
         {loading ? (
           <ColorRing />
         ) : (
           <span style={{ fontSize: '14px', fontWeight: 700 }}>
             {message.img && <img src={message.img} alt="" />}
-            <span style={{ fontSize: '10px', fontWeight: 300 }}>
-              {new Date(message.date.seconds).toLocaleString()}
-            </span>
           </span>
         )}
-        */
-
         <span className="message-text">
           {messageExst == 'jpg' ||
           messageExst == 'jpeg' ||
@@ -110,6 +124,22 @@ const Message = ({ message }: IMessageProp) => {
             message.text
           )}
         </span>
+        <div className="reaction">
+          <img
+            className="dislike"
+            src={Dislike}
+            onClickCapture={dislikeHandler}
+            alt=""
+          />
+          <span className="post__like__counter">{dislike}</span>
+          <img
+            style={{ width: '25px' }}
+            src={Like}
+            onClickCapture={likeHandler}
+            alt=""
+          />
+          <span className="post__like__counter">{like}</span>
+        </div>
       </div>
     </li>
   );

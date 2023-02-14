@@ -16,12 +16,12 @@ import { db } from '../../firebase';
 import { User } from 'firebase/auth';
 
 type SearchInputProps = {
-  placeholder: string
-  onChange: (val: string) => void
-}
+  placeholder: string;
+  onChange: (val: string) => void;
+};
 
-const SearchInput:React.FC<SearchInputProps> = ({onChange, placeholder}) => {
-  const [value, setValue] = useState<string>('')
+const SearchInput: React.FC<SearchInputProps> = ({ onChange, placeholder }) => {
+  const [value, setValue] = useState<string>('');
   const { currentUser } = useContext(AuthContext);
   console.log('currentUser: ', currentUser);
   const [userName, setUserName] = useState('');
@@ -87,17 +87,17 @@ const SearchInput:React.FC<SearchInputProps> = ({onChange, placeholder}) => {
     setUserName('');
   };
 
-  const onInputChange = (e:  React.ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = e;
     if (target instanceof HTMLInputElement) {
       setValue(target.value);
       onChange(target.value);
     }
-  }
+  };
 
   return (
     <div className="search-input">
-      <input 
+      <input
         type="text"
         onChange={onInputChange}
         placeholder={placeholder}
