@@ -1,9 +1,7 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   browserSessionPersistence,
-  signInWithEmailAndPassword,
   setPersistence,
-  createUserWithEmailAndPassword,
   RecaptchaVerifier,
   signInWithPhoneNumber,
   ConfirmationResult,
@@ -12,7 +10,6 @@ import { auth, db } from '../../firebase';
 import StepOne from '../../components/OnBoarding/StepOne';
 import OtpInput from '../../components/OnBoarding/OtpInput';
 import { useNavigate } from 'react-router-dom';
-import Login from '../../components/Login';
 import { doc, setDoc } from 'firebase/firestore';
 
 const AuthPhone = () => {
@@ -99,6 +96,7 @@ const AuthPhone = () => {
       <div className="on-boarding__inner">
         <div className="on-boarding__top">
           <button
+            title="button"
             className="on-boarding__go-back"
             onClick={() => navigate('/auth')}
           >
@@ -136,6 +134,7 @@ const AuthPhone = () => {
             <input
               type="text"
               placeholder="phone"
+              required
               className="input on-boarding__email"
               onInput={changePhone}
             />

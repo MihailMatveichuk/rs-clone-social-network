@@ -144,7 +144,7 @@ const InputPanel = () => {
           >
             {showPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
           </div>
-          <button onClick={handleSend}>
+          <button title="button" onClick={handleSend}>
             <svg
               width="24"
               height="24"
