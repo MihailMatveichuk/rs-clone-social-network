@@ -15,7 +15,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { User } from 'firebase/auth';
-import { ActionType } from '../types';
+// import { ActionType } from '../types';
 
 const Searchbar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -31,12 +31,10 @@ const Searchbar = () => {
       collection(db, 'users'),
       where('displayName', '==', userName)
     );
-    console.log('q: ', q);
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         setUser(doc.data());
-        console.log('doc.data()', doc.data());
       });
     } catch (err) {
       setError(true);
@@ -48,6 +46,7 @@ const Searchbar = () => {
     target: unknown;
     preventDefault: () => void;
   }) => {
+    e.preventDefault();
     e.code === 'Enter' && handleSearch();
   };
 
@@ -76,13 +75,12 @@ const Searchbar = () => {
           },
           [combinedId + '.date']: serverTimestamp(),
         });
-        dispatch({ type: ActionType.ChangeUser, payload: user });
-
+        // dispatch({ type: ActionType.ChangeUser, payload: user });
       }
-    } catch (err) {}
-
-    setUser(null);
-    setUserName('');
+    } catch (err) {
+      setUser(null);
+      setUserName('');
+    }
   };
 
   return (
@@ -109,7 +107,3 @@ const Searchbar = () => {
 };
 
 export default Searchbar;
-function dispatch(arg0: { type: ActionType; payload: any; }) {
-  throw new Error('Function not implemented.');
-}
-

@@ -17,11 +17,11 @@ const Messages = () => {
   useEffect(() => {
     if (data != undefined) {
       const unSub = onSnapshot(doc(db, 'chats', data.chatId), (doc) => {
-        console.log(doc.exists())
+        console.log(doc.exists());
         if (doc.exists()) {
-          setMessages(doc.data().messages)
+          setMessages(doc.data().messages);
         } else {
-          setMessages([])
+          setMessages([]);
         }
       });
 
@@ -35,8 +35,8 @@ const Messages = () => {
     <div className="messages">
       <div className="container">
         <ul className="messages__list">
-          {messages.map((m: IMessageFirebase, index: number) => (
-            <Message message={m} key={m.id}  />
+          {messages.map((m: IMessageFirebase) => (
+            <Message message={m} key={m.id} />
           ))}
           <li ref={refs}></li>
         </ul>

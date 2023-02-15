@@ -31,16 +31,20 @@ import Loading from './UI/Loading';
 />;
 
 type ChatsProps = {
-  chats: DocumentData | undefined,
-  users: DocumentData | undefined,
-  loading: boolean,
-  onUserSelect: (user: authUser) => void,
-}
+  chats: DocumentData | undefined;
+  users: DocumentData | undefined;
+  loading: boolean;
+  onUserSelect: (user: authUser) => void;
+};
 
-const Chats:React.FC<ChatsProps> = ({chats, users, loading, onUserSelect}) => {
+const Chats: React.FC<ChatsProps> = ({
+  chats,
+  users,
+  loading,
+  onUserSelect,
+}) => {
   const { dispatch } = useContext(ChatContext);
   console.log(chats, loading);
-  
 
   const handleSelect = (u: any) => {
     dispatch({ type: ActionType.ChangeUser, payload: u });
@@ -48,36 +52,37 @@ const Chats:React.FC<ChatsProps> = ({chats, users, loading, onUserSelect}) => {
 
   return (
     <div className="chats">
-      {loading && <Loading/>}
+      {loading && <Loading />}
       <ul className="chats__list">
-      {users != undefined && 
-        users.map((user: authUser) => (
-          <li
-                className="user-chat"
-                key={user.uid}
-                onClick={() => onUserSelect(user)}
-                role="presentation"
-              >
-                <div className="container">
-                  <div className="user-chat__inner">
-                    {user.photoURL && <img
+        {users != undefined &&
+          users.map((user: authUser) => (
+            <li
+              className="user-chat"
+              key={user.uid}
+              onClick={() => onUserSelect(user)}
+              role="presentation"
+            >
+              <div className="container">
+                <div className="user-chat__inner">
+                  {user.photoURL && (
+                    <img
                       className="user-chat__img"
                       src={user.photoURL}
                       alt=""
-                    />}
-                    <div className="user-chat__message">
-                      <span>{user.displayName}</span>
-                      <div></div>
-                    </div>
+                    />
+                  )}
+                  <div className="user-chat__message">
+                    <span>{user.displayName}</span>
+                    <div></div>
                   </div>
                 </div>
-              </li>
-        ))
-      }
+              </div>
+            </li>
+          ))}
         {chats != undefined ? (
           Object.entries(chats!)
             ?.sort((a, b) => b[1].date - a[1].date)
-            .map((chat) =>  (
+            .map((chat) => (
               <li
                 className="user-chat"
                 key={chat[0]}
@@ -86,13 +91,17 @@ const Chats:React.FC<ChatsProps> = ({chats, users, loading, onUserSelect}) => {
               >
                 <div className="container">
                   <div className="user-chat__inner">
-                    {chat[1].userInfo  && <img
-                      className="user-chat__img"
-                      src={chat[1].userInfo.photoURL}
-                      alt=""
-                    />}
+                    {chat[1].userInfo && (
+                      <img
+                        className="user-chat__img"
+                        src={chat[1].userInfo.photoURL}
+                        alt=""
+                      />
+                    )}
                     <div className="user-chat__message">
-                      {chat[1].userInfo && <span>{chat[1].userInfo.displayName}</span>}
+                      {chat[1].userInfo && (
+                        <span>{chat[1].userInfo.displayName}</span>
+                      )}
                       <div>{chat[1].lastMessage?.text}</div>
                     </div>
                   </div>

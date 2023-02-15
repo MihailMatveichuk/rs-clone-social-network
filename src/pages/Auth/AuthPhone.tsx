@@ -21,11 +21,11 @@ const AuthPhone = () => {
   const navigate = useNavigate();
   const onBackClick = () => {
     if (step === 2) {
-      setStep(1)
+      setStep(1);
     } else {
-      navigate('/auth')
+      navigate('/auth');
     }
-  }
+  };
   useEffect(() => {
     if (step === 1) {
       try {
@@ -37,7 +37,7 @@ const AuthPhone = () => {
   }, []);
 
   const setRecaptchaVerifier = async () => {
-    if (rec) return;    
+    if (rec) return;
     try {
       const recaptchaVerifier = new RecaptchaVerifier(
         'recaptcha-container',
@@ -126,7 +126,6 @@ const AuthPhone = () => {
             </svg>
           </button>
         </div>
-        <div id="recaptcha-container"></div>
         {step === 1 && (
           <StepOne
             title="What’s your phone?"
@@ -134,6 +133,7 @@ const AuthPhone = () => {
             onSubmit={onSignInSubmit}
             id={'sign-in-button'}
           >
+            <div id="recaptcha-container"></div>
             <input
               type="text"
               placeholder="phone"
