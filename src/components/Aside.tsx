@@ -1,12 +1,107 @@
+import { User } from 'firebase/auth';
+import { useContext, useEffect, useState } from 'react';
 import '../App.css';
-
+import { AuthContext } from '../context/AuthContext';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  setDoc,
+  updateDoc,
+  doc,
+  serverTimestamp,
+  onSnapshot,
+  getDoc,
+  DocumentData,
+} from 'firebase/firestore';
 import Chats from './Chats';
 import SearchInput from './UI/SearchInput';
+import { db } from '../firebase';
+import { ActionType, authUser } from '../types';
+import { ChatContext } from '../context/Chatcontext';
+
 const Navbar = () => {
-  const onSearchChangeHandler = (val: string) => {
-    console.log(val);
+  const { currentUser } = useContext(AuthContext);
+  const { dispatch } = useContext(ChatContext);
+
+  const [userName, setUserName] = useState('');
+  const [chats, setChats] = useState<DocumentData | undefined>([])
+  const [users, setUsers] = useState<DocumentData | undefined>([])
+  const [user, setUser] = useState<User | null | undefined | DocumentData>(
+    null
+  );
+  const [err, setError] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const getChats = () => {
+    setLoading(true)
+    const unsub = onSnapshot(
+      doc(db, 'userChats', currentUser!.uid),
+      (doc) => {
+        if (doc && doc.data()) {
+          console.log(doc.data());
+          setChats(doc.data());
+          setLoading(false)
+        }
+      }
+    );
+    return () => {
+      unsub();
+    };
   };
 
+  useEffect(() => {
+    currentUser?.uid && getChats();
+  }, [currentUser?.uid]);
+
+
+  const handleSelect = async (user: authUser) => {
+    const combinedId =
+      currentUser!.uid > user?.uid
+        ? currentUser?.uid + user?.uid
+        : user?.uid + currentUser?.uid;
+    try {
+      const res = await getDoc(doc(db, 'chats', combinedId));
+      if (!res.exists()) {
+        await setDoc(doc(db, 'chats', combinedId), { messages: [] });
+        await updateDoc(doc(db, 'userChats', currentUser!.uid), {
+          [combinedId + '.userInfo']: {
+            uid: user?.uid,
+            displayName: user?.displayName,
+            photoURL: user?.photoURL,
+          },
+          [combinedId + '.date']: serverTimestamp(),
+        });
+        await updateDoc(doc(db, 'userChats', user?.uid), {
+          [combinedId + '.userInfo']: {
+            uid: currentUser?.uid,
+            displayName: currentUser?.displayName,
+            photoURL: currentUser?.photoURL,
+          },
+          [combinedId + '.date']: serverTimestamp(),
+        });
+      }
+    } catch (err) {}
+    dispatch({ type: ActionType.ChangeUser, payload: user });
+
+  };
+  const onEnterHandler = async (val: string) => {
+      const q = query(
+        collection(db, 'users'),
+        where('displayName', '==', val)
+      );    
+      try {
+        const querySnapshot = await getDocs(q);
+        const arr:DocumentData = []
+        querySnapshot.forEach((doc) => {
+         arr.push(doc.data());
+        });
+        setUsers(arr)
+      } catch (err) {
+        setError(true);
+      }
+  }
   return (
     <div className="aside">
       <div className="container">
@@ -58,13 +153,20 @@ const Navbar = () => {
       </div>
       <div className="container">
         <SearchInput
-          onChange={onSearchChangeHandler}
+          onEnterClick={onEnterHandler}
           placeholder="Chats, messages and more"
         />
       </div>
-      <Chats />
+      <Chats
+        chats={chats}
+        loading={loading}
+        users={users}
+        onUserSelect={handleSelect}
+      />
     </div>
   );
 };
 
 export default Navbar;
+
+

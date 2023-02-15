@@ -22,7 +22,13 @@ const AuthPhone = () => {
   const [otp, setOtp] = useState<string>('');
   const [confirmRes, setConfirmRes] = useState<ConfirmationResult | null>(null);
   const navigate = useNavigate();
-
+  const onBackClick = () => {
+    if (step === 2) {
+      setStep(1)
+    } else {
+      navigate('/auth')
+    }
+  }
   useEffect(() => {
     if (step === 1) {
       try {
@@ -34,7 +40,7 @@ const AuthPhone = () => {
   }, []);
 
   const setRecaptchaVerifier = async () => {
-    //if (rec) return;
+    if (rec) return;    
     try {
       const recaptchaVerifier = new RecaptchaVerifier(
         'recaptcha-container',
@@ -44,11 +50,9 @@ const AuthPhone = () => {
       setRec(recaptchaVerifier);
       await recaptchaVerifier.render();
     } catch (e) {
-      console.log('setRecapcha', e);
       if (rec) {
-        rec.clear();
         setRec(null);
-        //setRecaptchaVerifier();
+        setRecaptchaVerifier();
       }
     }
   };
@@ -74,7 +78,6 @@ const AuthPhone = () => {
 
   const changePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(e.target.value);
-    console.log(phone);
   };
 
   const onSignInSubmit = async () => {
@@ -100,7 +103,7 @@ const AuthPhone = () => {
         <div className="on-boarding__top">
           <button
             className="on-boarding__go-back"
-            onClick={() => navigate('/auth')}
+            onClick={onBackClick}
           >
             <svg
               width="24"
@@ -125,6 +128,7 @@ const AuthPhone = () => {
             </svg>
           </button>
         </div>
+        <div id="recaptcha-container"></div>
         {step === 1 && (
           <StepOne
             title="What’s your phone?"
@@ -132,7 +136,6 @@ const AuthPhone = () => {
             onSubmit={onSignInSubmit}
             id={'sign-in-button'}
           >
-            <div id="recaptcha-container"></div>
             <input
               type="text"
               placeholder="phone"

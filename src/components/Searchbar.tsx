@@ -15,6 +15,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { User } from 'firebase/auth';
+import { ActionType } from '../types';
 
 const Searchbar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -75,6 +76,8 @@ const Searchbar = () => {
           },
           [combinedId + '.date']: serverTimestamp(),
         });
+        dispatch({ type: ActionType.ChangeUser, payload: user });
+
       }
     } catch (err) {}
 
@@ -106,3 +109,7 @@ const Searchbar = () => {
 };
 
 export default Searchbar;
+function dispatch(arg0: { type: ActionType; payload: any; }) {
+  throw new Error('Function not implemented.');
+}
+

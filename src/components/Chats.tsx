@@ -1,10 +1,25 @@
 import { useContext, useEffect, useState } from 'react';
-import { doc, DocumentData, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/Chatcontext';
-import { ActionType } from '../types';
+import { ActionType, authUser } from '../types';
 import { ColorRing } from 'react-loader-spinner';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  setDoc,
+  updateDoc,
+  doc,
+  serverTimestamp,
+  onSnapshot,
+  getDoc,
+  DocumentData,
+} from 'firebase/firestore';
+import { User } from 'firebase/auth';
+import Loading from './UI/Loading';
+
 <ColorRing
   visible={true}
   height="50"
@@ -14,39 +29,56 @@ import { ColorRing } from 'react-loader-spinner';
   wrapperClass="blocks-wrapper"
   colors={['#b8c480', '#B2A3B5', '#F4442E', '#51E5FF', '#429EA6']}
 />;
-const Chats = () => {
-  const [chats, setChats] = useState<DocumentData | undefined>([]);
-  console.log('chats: ', chats);
-  const { currentUser } = useContext(AuthContext);
+
+type ChatsProps = {
+  chats: DocumentData | undefined,
+  users: DocumentData | undefined,
+  loading: boolean,
+  onUserSelect: (user: authUser) => void,
+}
+
+const Chats:React.FC<ChatsProps> = ({chats, users, loading, onUserSelect}) => {
   const { dispatch } = useContext(ChatContext);
-
-  useEffect(() => {
-    const getChats = () => {
-      const unsub = onSnapshot(
-        doc(db, 'userChats', currentUser!.uid),
-        (doc) => {
-          setChats(doc.data());
-        }
-      );
-
-      return () => {
-        unsub();
-      };
-    };
-    currentUser?.uid && getChats();
-  }, [currentUser?.uid]);
+  console.log(chats, loading);
+  
 
   const handleSelect = (u: any) => {
     dispatch({ type: ActionType.ChangeUser, payload: u });
   };
+
   return (
     <div className="chats">
+      {loading && <Loading/>}
       <ul className="chats__list">
+      {users != undefined && 
+        users.map((user: authUser) => (
+          <li
+                className="user-chat"
+                key={user.uid}
+                onClick={() => onUserSelect(user)}
+                role="presentation"
+              >
+                <div className="container">
+                  <div className="user-chat__inner">
+                    {user.photoURL && <img
+                      className="user-chat__img"
+                      src={user.photoURL}
+                      alt=""
+                    />}
+                    <div className="user-chat__message">
+                      <span>{user.displayName}</span>
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+        ))
+      }
         {chats != undefined ? (
           Object.entries(chats!)
             ?.sort((a, b) => b[1].date - a[1].date)
-            .map((chat) => (
-              <div
+            .map((chat) =>  (
+              <li
                 className="user-chat"
                 key={chat[0]}
                 onClick={() => handleSelect(chat[1].userInfo)}
@@ -54,18 +86,18 @@ const Chats = () => {
               >
                 <div className="container">
                   <div className="user-chat__inner">
-                    <img
+                    {chat[1].userInfo  && <img
                       className="user-chat__img"
                       src={chat[1].userInfo.photoURL}
                       alt=""
-                    />
+                    />}
                     <div className="user-chat__message">
-                      <span>{chat[1].userInfo.displayName}</span>
+                      {chat[1].userInfo && <span>{chat[1].userInfo.displayName}</span>}
                       <div>{chat[1].lastMessage?.text}</div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </li>
             ))
         ) : (
           <div className="user-chat">

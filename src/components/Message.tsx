@@ -10,15 +10,7 @@ import '../assets/styles/style.css';
 const Like = require('./assets/images/Like.png');
 const Dislike = require('./assets/images/Dislike.png');
 
-<ColorRing
-  visible={true}
-  height="50"
-  width="50"
-  ariaLabel="blocks-loading"
-  wrapperStyle={{}}
-  wrapperClass="blocks-wrapper"
-  colors={['#b8c480', '#B2A3B5', '#F4442E', '#51E5FF', '#429EA6']}
-/>;
+
 const Message = ({ message }: IMessageProp) => {
   const { currentUser } = useContext(AuthContext);
   const [listUrl, setListUrl] = useState<string[]>([]);
@@ -47,7 +39,6 @@ const Message = ({ message }: IMessageProp) => {
         : data?.user?.photoURL;
   }
 
-  const refs = useRef<HTMLLIElement>(null);
 
   const messageExst =
     message.text.split('.')[message.text.split('.').length - 1];
@@ -55,27 +46,32 @@ const Message = ({ message }: IMessageProp) => {
   const imageListRef = ref(storage, `images/`);
 
   useEffect(() => {
-    setLoading(true);
+    if ((messageExst == 'jpg' ||
+    messageExst == 'jpeg' ||
+    messageExst == 'png') && !loading) {
+      setLoading(true)
+    }
     listAll(imageListRef).then((res) => {
       res.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
           setListUrl((prev) => [...prev, url]);
         });
       });
-      setLoading(false);
     });
   }, []);
 
-  useEffect(() => {
-    refs.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [message]);
+  const onImgLoadHandler = (e) => {
+    if (e.target.complete) {
+      setLoading(false)      
+    }
+  }
 
   const arr = listUrl.find((item) =>
     item.includes(message.text || message.text.replaceAll(/ /g, '%'))
   );
   return (
     <li
-      ref={refs}
+     
       className={`message ${
         message.senderId === currentUser?.uid ? 'owner' : 'sender'
       }`}
@@ -92,18 +88,14 @@ const Message = ({ message }: IMessageProp) => {
             {new Date(message.date.seconds).toLocaleString()}
           </div>
         </div>
-        {loading ? (
+        {loading && 
           <ColorRing />
-        ) : (
-          <span style={{ fontSize: '14px', fontWeight: 700 }}>
-            {message.img && <img src={message.img} alt="" />}
-          </span>
-        )}
+        }
         <span className="message-text">
           {messageExst == 'jpg' ||
           messageExst == 'jpeg' ||
           messageExst == 'png' ? (
-            <img className="message__img" src={arr} alt="" />
+            <img className="message__img" src={arr} alt="" onLoad={onImgLoadHandler} />
           ) : (
             message.text
           )}
