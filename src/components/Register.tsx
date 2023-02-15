@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, db, storage } from '../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { useState } from 'react';
 import { doc, setDoc } from 'firebase/firestore';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const Button = styled.button`
   background-color: rgba(144, 172, 172, 0.582);
@@ -27,13 +27,14 @@ const Button = styled.button`
 `;
 
 const Register = () => {
-  const [error, setError] = useState(false);
   const navigate = useNavigate();
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e: {
     target: any;
     preventDefault: () => void;
   }) => {
+    e.preventDefault();
     const file = e.target[0].files[0];
     const displayName: string = e.target[1].value;
     const email: string = e.target[2].value;
@@ -56,9 +57,8 @@ const Register = () => {
               email,
               photoURL: downloadURL,
             });
-
-            await setDoc(doc(db, 'userChats', res.user.uid), {});
             navigate('/');
+            await setDoc(doc(db, 'userChats', res.user.uid), {});
           } catch (err) {
             setError(true);
           }
@@ -79,11 +79,8 @@ const Register = () => {
           <input type="email" placeholder="Email" />
           <input type="password" placeholder="Password" />
           <Button>Sign up</Button>
-          {error && <span style={{ color: 'red' }}>This user is existed</span>}
         </form>
-        <p>
-          You do have an account? <Link to={'/login'}>Login</Link>
-        </p>
+        <p>{error ? 'Email is wrong' : null}</p>
       </div>
     </div>
   );

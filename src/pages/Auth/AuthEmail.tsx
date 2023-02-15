@@ -4,15 +4,16 @@ import {
   browserSessionPersistence,
   signInWithEmailAndPassword,
   setPersistence,
-  createUserWithEmailAndPassword,
 } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useNavigate, Link } from 'react-router-dom';
+import Register from '../../components/Register';
 
 const AuthEmail = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [step, setStep] = useState<number>(1);
 
   // const login = async () => {
   //   try {
@@ -32,8 +33,7 @@ const AuthEmail = () => {
     } catch (e) {
       const err = e as Error;
       console.log(err.message);
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate('/register');
+      setStep(2);
     }
   };
   return (
@@ -64,28 +64,33 @@ const AuthEmail = () => {
             </svg>
           </Link>
         </div>
-        <StepOne
-          title="What’s your email and password?"
-          text="We’ll send you a sign-in code"
-          onSubmit={onSubmitHandlerEmail}
-        >
-          <input
-            type="email"
-            placeholder="email"
-            className="input on-boarding__email"
-            onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setEmail(e.target.value)
-            }
-          />
-          <input
-            type="password"
-            placeholder="password"
-            className="input on-boarding__password"
-            onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setPassword(e.target.value)
-            }
-          />
-        </StepOne>
+        {step === 1 && (
+          <StepOne
+            title="What’s your email and password?"
+            text="We’ll send you a sign-in code"
+            onSubmit={onSubmitHandlerEmail}
+          >
+            <input
+              type="email"
+              placeholder="email"
+              className="input on-boarding__email"
+              required
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(e.target.value)
+              }
+            />
+            <input
+              type="password"
+              placeholder="password"
+              className="input on-boarding__password"
+              required
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(e.target.value)
+              }
+            />
+          </StepOne>
+        )}
+        {step === 2 && <Register />}
       </div>
     </div>
   );

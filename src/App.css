@@ -1,4 +1,4 @@
-/* .form-container {
+.form-container {
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -6,23 +6,14 @@
 }
 
 .registra-form {
-    display: flex;
-    flex-direction: column;
-    align-items:center;
-    gap: 15px;
-    width: 72%;
-    border-radius: 20px;
-    margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 72%;
+  border-radius: 20px;
+  margin-top: 10px;
 }
-
-/* .header{
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 50px;
-    width: 100%;
-} */
-
 
 .form-wrapper {
   background-color: white;
@@ -35,27 +26,26 @@
   align-items: center;
 }
 
-/* .logo {
-    font-family: 'SF Pro Display';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 32px;
-    text-align: center;
-    letter-spacing: 0.36px
-} */
+.logo {
+  font-family: 'SF Pro Display';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  text-align: center;
+  letter-spacing: 0.36px;
+}
 
-/* .title {
-    font-family: 'SF Pro Text';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 24px;
-    color: #71747A;
-    text-align: center;
-    letter-spacing: -0.24px;
-} */
-
+.title {
+  font-family: 'SF Pro Text';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 24px;
+  color: #71747a;
+  text-align: center;
+  letter-spacing: -0.24px;
+}
 
 .registra-form input {
   background: rgba(201, 204, 209, 0.24);
@@ -82,8 +72,6 @@
   color: rgba(21, 22, 22, 0.582);
   font-size: small;
 }
-
-
 
 /* .home__content {
   border: rgba(117, 117, 121, 0.504) 0.1px solid;
@@ -331,4 +319,4 @@
   position: absolute;
   bottom: 60px;
   right: 3rem;
-} 
+}
