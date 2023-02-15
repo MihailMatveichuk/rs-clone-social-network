@@ -8,11 +8,12 @@ import {
   signInWithPhoneNumber,
   ConfirmationResult,
 } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 import StepOne from '../../components/OnBoarding/StepOne';
 import OtpInput from '../../components/OnBoarding/OtpInput';
 import { useNavigate } from 'react-router-dom';
 import Login from '../../components/Login';
+import { doc, setDoc } from 'firebase/firestore';
 
 const AuthPhone = () => {
   const [step, setStep] = useState<number>(1);
@@ -57,7 +58,14 @@ const AuthPhone = () => {
       await setPersistence(auth, browserSessionPersistence);
       const res = await confirmRes.confirm(otp);
       const user = res.user;
-      console.log(user);
+      console.log('!!!!!!!!!!! USER ', user);
+      await setDoc(doc(db, 'users', res.user.uid), {
+        uid: res.user.uid,
+        displayName: user.phoneNumber,
+        phoneNumber: res.user.phoneNumber,
+      });
+
+      await setDoc(doc(db, 'userChats', res.user.uid), {});
       navigate('/');
     } catch (err) {
       console.log('onCodeSubmitHandler', err);

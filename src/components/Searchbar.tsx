@@ -30,6 +30,7 @@ const Searchbar = () => {
       collection(db, 'users'),
       where('displayName', '==', userName)
     );
+    console.log('q: ', q);
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {

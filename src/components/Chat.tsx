@@ -5,21 +5,27 @@ import { auth } from '../firebase';
 import InputPanel from './InputPanel';
 import Messages from './Messages';
 import ChatInfo from './UI/ChatInfo';
-;
-
+const logoSrc = require('../assets/images/logo.png');
 const Chat = () => {
   const { data } = useContext(ChatContext);
-  const displayName = auth.currentUser && auth.currentUser.displayName ? auth.currentUser.displayName : ''
-  const photoURL = auth.currentUser && auth.currentUser.photoURL ? auth.currentUser.photoURL : ''
+  const displayName =
+    auth.currentUser && auth.currentUser.phoneNumber
+      ? auth.currentUser.phoneNumber
+      : auth.currentUser?.displayName;
+  const photoURL =
+    auth.currentUser && auth.currentUser.photoURL
+      ? auth.currentUser.photoURL
+      : logoSrc;
 
+  // const displayName =
+  //   auth.currentUser && auth.currentUser.phoneNumber
+  //     ? auth.currentUser.phoneNumber
+  //     : ''
   return (
     <div className="chat">
       <div className="chat__content">
-        <ChatInfo
-            photoURL={photoURL}
-            displayName={displayName}
-          />
-          {/* <div className="userChat">
+        <ChatInfo photoURL={photoURL} displayName={displayName!} />
+        {/* <div className="userChat">
 
             <div className="navChat">
               <img
@@ -34,10 +40,10 @@ const Chat = () => {
               </div>
             </div>
           </div> */}
-          <Messages />
-          <InputPanel />
-        </div>
+        <Messages />
+        <InputPanel />
       </div>
+    </div>
   );
 };
 
