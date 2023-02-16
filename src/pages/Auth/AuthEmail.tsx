@@ -4,10 +4,12 @@ import {
   browserSessionPersistence,
   signInWithEmailAndPassword,
   setPersistence,
+  UserCredential,
 } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import Register from '../../components/Register';
+import { checkUser, createUserViaEmail } from '../../api';
 
 const AuthEmail = () => {
   const navigate = useNavigate();
@@ -28,8 +30,15 @@ const AuthEmail = () => {
   const onSubmitHandlerEmail = async () => {
     try {
       await setPersistence(auth, browserSessionPersistence);
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate('/');
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      console.log(user.user);
+      
+      const u = await checkUser(user.user.uid)
+      if (!u && user.user.email) {
+        await createUserViaEmail({ email: user.user.email, uid: user.user.uid})
+      } else {
+        navigate('/');
+      }
     } catch (e) {
       const err = e as Error;
       console.log(err.message);
@@ -97,3 +106,5 @@ const AuthEmail = () => {
 };
 
 export default AuthEmail;
+
+

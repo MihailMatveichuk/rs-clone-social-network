@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { db } from '../firebase';
+import { db, storage } from '../firebase';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/Chatcontext';
 import { ActionType, authUser } from '../types';
@@ -19,6 +19,7 @@ import {
 } from 'firebase/firestore';
 import { User } from 'firebase/auth';
 import Loading from './UI/Loading';
+import { getDownloadURL, ref } from 'firebase/storage';
 
 <ColorRing
   visible={true}
@@ -47,8 +48,34 @@ const Chats: React.FC<ChatsProps> = ({
   console.log(chats, loading);
 
   const handleSelect = (u: any) => {
-    dispatch({ type: ActionType.ChangeUser, payload: u });
+    console.log(u)
+    //dispatch({ type: ActionType.ChangeUser, payload: u });
   };
+
+getDownloadURL(ref(storage, 'images/product_595.jpg'))
+  .then((url) => {
+    // `url` is the download URL for 'images/stars.jpg'
+
+    // This can be downloaded directly:
+    const xhr = new XMLHttpRequest();
+    xhr.responseType = 'blob';
+    xhr.onload = (event) => {
+      const blob = xhr.response;
+    };
+    xhr.open('GET', url);
+    xhr.send();
+
+    // Or inserted into an <img> element
+    console.log(url);
+    
+    // const img = document.getElementById('myimg');
+    // img.setAttribute('src', url);
+  })
+  .catch((error) => {
+    console.log(error);
+    
+    // Handle any errors
+  });
 
   return (
     <div className="chats">
@@ -91,18 +118,18 @@ const Chats: React.FC<ChatsProps> = ({
               >
                 <div className="container">
                   <div className="user-chat__inner">
-                    {chat[1].userInfo && (
+                  
                       <img
                         className="user-chat__img"
-                        src={chat[1].userInfo.photoURL}
+                        src={chat[1].memberPhoto}
                         alt=""
                       />
-                    )}
+                    
                     <div className="user-chat__message">
-                      {chat[1].userInfo && (
-                        <span>{chat[1].userInfo.displayName}</span>
-                      )}
-                      <div>{chat[1].lastMessage?.text}</div>
+                      
+                        <span>{chat[1].memberName}</span>
+                      
+                      <div>{chat[1].lastMessage}</div>
                     </div>
                   </div>
                 </div>

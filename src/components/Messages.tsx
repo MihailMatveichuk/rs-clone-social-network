@@ -24,7 +24,6 @@ const Messages = () => {
           setMessages([]);
         }
       });
-
       return () => {
         unSub();
       };

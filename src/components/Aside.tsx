@@ -20,6 +20,7 @@ import SearchInput from './UI/SearchInput';
 import { db } from '../firebase';
 import { ActionType, authUser } from '../types';
 import { ChatContext } from '../context/Chatcontext';
+import { createChat, getChat } from '../api';
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -34,14 +35,18 @@ const Navbar = () => {
   const [err, setError] = useState(false);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const getChats = () => {
+  const gtChats = () => {
     setLoading(true)
     const unsub = onSnapshot(
-      doc(db, 'userChats', currentUser!.uid),
+      doc(db, 'chats', currentUser!.uid),
       (doc) => {
         if (doc && doc.data()) {
-          console.log(doc.data());
-          setChats(doc.data());
+          const data = doc.data()
+          console.log(data);
+          
+          if (data) {
+            setChats(data.chats);
+          }
           setLoading(false)
         }
       }
@@ -52,49 +57,59 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    currentUser?.uid && getChats();
+    currentUser?.uid && gtChats();
   }, [currentUser?.uid]);
 
 
   const handleSelect = async (user: authUser) => {
-    const combinedId =
-      currentUser!.uid > user?.uid
-        ? currentUser?.uid + user?.uid
-        : user?.uid + currentUser?.uid;
-    try {
-      const res = await getDoc(doc(db, 'chats', combinedId));
-      if (!res.exists()) {
-        await setDoc(doc(db, 'chats', combinedId), { messages: [] });
-        await updateDoc(doc(db, 'userChats', currentUser!.uid), {
-          [combinedId + '.userInfo']: {
-            uid: user?.uid,
-            displayName: user?.displayName,
-            photoURL: user?.photoURL,
-          },
-          [combinedId + '.date']: serverTimestamp(),
-        });
-        await updateDoc(doc(db, 'userChats', user?.uid), {
-          [combinedId + '.userInfo']: {
-            uid: currentUser?.uid,
-            displayName: currentUser?.displayName,
-            photoURL: currentUser?.photoURL,
-          },
-          [combinedId + '.date']: serverTimestamp(),
-        });
-      }
-    } catch (err) {}
-    dispatch({ type: ActionType.ChangeUser, payload: user });
-
+    console.log(user)
+    const chat = await getChat(currentUser!.uid,user.uid )
+    console.log(chat)
+    if (!chat) {
+      await createChat(currentUser!.uid,user.uid)
+    }
+    // const combinedId =
+    //   currentUser!.uid > user?.uid
+    //     ? currentUser?.uid + user?.uid
+    //     : user?.uid + currentUser?.uid;
+    // try {
+    //   const res = await getDoc(doc(db, 'chats', combinedId));
+    //   if (!res.exists()) {
+    //     await setDoc(doc(db, 'chats', combinedId), { messages: [] });
+    //     await updateDoc(doc(db, 'userChats', currentUser!.uid), {
+    //       [combinedId + '.userInfo']: {
+    //         uid: user?.uid,
+    //         displayName: user?.displayName,
+    //         photoURL: user?.photoURL,
+    //       },
+    //       [combinedId + '.date']: serverTimestamp(),
+    //     });
+    //     await updateDoc(doc(db, 'userChats', user?.uid), {
+    //       [combinedId + '.userInfo']: {
+    //         uid: currentUser?.uid,
+    //         displayName: currentUser?.displayName,
+    //         photoURL: currentUser?.photoURL,
+    //       },
+    //       [combinedId + '.date']: serverTimestamp(),
+    //     });
+    //   }
+    // } catch (err) {}
+    // dispatch({ type: ActionType.ChangeUser, payload: user });
   };
   const onEnterHandler = async (val: string) => {
+    console.log(val)
       const q = query(
         collection(db, 'users'),
         where('displayName', '==', val)
       );    
       try {
         const querySnapshot = await getDocs(q);
+        console.log(querySnapshot);
+        
         const arr:DocumentData = []
         querySnapshot.forEach((doc) => {
+          console.log(doc.data);
+          
          arr.push(doc.data());
         });
         setUsers(arr)
@@ -168,5 +183,7 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
 
 
