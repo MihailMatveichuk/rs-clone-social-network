@@ -28,21 +28,22 @@ export enum ActionType {
 }
 
 export const initialState: IChatState = {
-  chatId: 'null',
-  user: {
-    displayName: '',
-    photoURL: '',
-    uid: '',
-  },
+  chatId: null,
+  user: null
 };
+
+
 
 export interface IChangeUserAction {
   type: ActionType;
-  payload: authUser;
+  payload: {
+    user: string,
+    uid: string;
+  };
 }
 export interface IChatState {
-  chatId: string;
-  user: authUser;
+  chatId: string | null;
+  user: string | null;
 }
 export interface IMessageFirebase {
   id: string;

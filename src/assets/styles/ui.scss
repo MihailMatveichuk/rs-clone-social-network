@@ -1,3 +1,13 @@
+.logo-choose {
+    img {
+        width: 96px;
+        height: 96px;
+        object-fit: cover;
+        object-position: top center;
+        border-radius: 50%;
+    }
+}
+
 .search-input {
     position: relative;
     background: rgba(201, 204, 209, 0.24);

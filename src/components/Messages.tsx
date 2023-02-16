@@ -1,5 +1,6 @@
 import { doc, onSnapshot } from 'firebase/firestore';
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { createChatMessages } from '../api';
 import { ChatContext } from '../context/Chatcontext';
 import { db } from '../firebase';
 import { IMessageFirebase } from '../types';
@@ -15,13 +16,14 @@ const Messages = () => {
   }, [messages]);
 
   useEffect(() => {
-    if (data != undefined) {
-      const unSub = onSnapshot(doc(db, 'chats', data.chatId), (doc) => {
+    if (data.chatId != null) {
+      const unSub = onSnapshot(doc(db, 'messages', data.chatId), (doc) => {
         console.log(doc.exists());
         if (doc.exists()) {
           setMessages(doc.data().messages);
         } else {
           setMessages([]);
+          createChatMessages(data.chatId)
         }
       });
       return () => {

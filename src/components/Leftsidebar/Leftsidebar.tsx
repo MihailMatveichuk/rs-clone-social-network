@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 const logoSrc = require('../../assets/images/logo.png');
 import './Leftsidebar.scss';
 import { NavLink } from 'react-router-dom';
 import { auth } from '../../firebase';
+import { logoutUser } from '../../api';
+import { AuthContext } from '../../context/AuthContext';
 
 const Leftsidebar = () => {
+  const {currentUser} = useContext(AuthContext)
   const onSignOutHandler = async () => {
+    await logoutUser(currentUser!.uid)
     await auth.signOut();
+
   };
 
   return (

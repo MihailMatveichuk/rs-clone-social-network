@@ -1,6 +1,7 @@
 import {
   arrayUnion,
   doc,
+  getDoc,
   serverTimestamp,
   Timestamp,
   updateDoc,
@@ -13,6 +14,7 @@ import { db, storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import EmojiPicker from 'emoji-picker-react';
 import '../App.css';
+import { getChat } from '../api';
 
 const InputPanel = () => {
   const { currentUser } = useContext(AuthContext);
@@ -21,15 +23,15 @@ const InputPanel = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [image, setImage] = useState<File | null>(null);
 
-  const ImageRef = ref(storage, `images/${image?.name}`);
+  const ImageRef = ref(storage, `images/${data.chatId}/${image?.name}`);
 
   const handleSend = async () => {
     setText('');
-    if (typeof data != 'undefined') {
+    if (data.chatId) {
       await uploadBytes(ImageRef, image!).then((snapshot) => {
         getDownloadURL(snapshot.ref);
       });
-      await updateDoc(doc(db, 'chats', data.chatId), {
+      await updateDoc(doc(db, 'messages', data.chatId), {
         messages: arrayUnion({
           id: uuidv4(),
           text,
@@ -37,18 +39,32 @@ const InputPanel = () => {
           date: Timestamp.now(),
         }),
       });
-      await updateDoc(doc(db, 'userChats', currentUser!.uid), {
-        [data.chatId + '.lastMessage']: {
-          text,
-        },
-        [data.chatId + '.date']: serverTimestamp(),
-      });
-      await updateDoc(doc(db, 'userChats', data.user.uid), {
-        [data.chatId + '.lastMessage']: {
-          text,
-        },
-        [data.chatId + '.date']: serverTimestamp(),
-      });
+      const docRef = doc(db, 'chats', currentUser!.uid)
+      const docSnap =  await getDoc(docRef);
+      if (docSnap.exists()) {
+        const chats = [...docSnap.data().chats];
+        const index = chats.findIndex(chat => chat.memberId === data.user!)
+        chats[index] = {
+          ...chats[index],
+          lastMessage: text
+        }
+        await updateDoc(docRef, {
+          chats
+        })
+      } 
+      const docRef1 = doc(db, 'chats', data.user!)
+      const docSnap1 =  await getDoc(docRef1);
+      if (docSnap1.exists()) {
+        const chats = [...docSnap1.data().chats];
+        const index = chats.findIndex(chat => chat.memberId === currentUser!.uid)
+        chats[index] = {
+          ...chats[index],
+          lastMessage: text
+        }
+        await updateDoc(docRef1, {
+          chats
+        })
+      } 
     }
   };
 

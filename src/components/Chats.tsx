@@ -49,33 +49,10 @@ const Chats: React.FC<ChatsProps> = ({
 
   const handleSelect = (u: any) => {
     console.log(u)
-    //dispatch({ type: ActionType.ChangeUser, payload: u });
+    dispatch({ type: ActionType.ChangeUser, payload: u });
   };
 
-getDownloadURL(ref(storage, 'images/product_595.jpg'))
-  .then((url) => {
-    // `url` is the download URL for 'images/stars.jpg'
 
-    // This can be downloaded directly:
-    const xhr = new XMLHttpRequest();
-    xhr.responseType = 'blob';
-    xhr.onload = (event) => {
-      const blob = xhr.response;
-    };
-    xhr.open('GET', url);
-    xhr.send();
-
-    // Or inserted into an <img> element
-    console.log(url);
-    
-    // const img = document.getElementById('myimg');
-    // img.setAttribute('src', url);
-  })
-  .catch((error) => {
-    console.log(error);
-    
-    // Handle any errors
-  });
 
   return (
     <div className="chats">
@@ -113,7 +90,10 @@ getDownloadURL(ref(storage, 'images/product_595.jpg'))
               <li
                 className="user-chat"
                 key={chat[0]}
-                onClick={() => handleSelect(chat[1].userInfo)}
+                onClick={() => handleSelect({
+                  uid: chat[1].uid,
+                  user: chat[1].user.uid
+                })}
                 role="presentation"
               >
                 <div className="container">
@@ -121,15 +101,15 @@ getDownloadURL(ref(storage, 'images/product_595.jpg'))
                   
                       <img
                         className="user-chat__img"
-                        src={chat[1].memberPhoto}
+                        src={chat[1].user.photoUrl}
                         alt=""
                       />
                     
                     <div className="user-chat__message">
                       
-                        <span>{chat[1].memberName}</span>
+                        <span>{chat[1].user.displayName}</span>
                       
-                      <div>{chat[1].lastMessage}</div>
+                      <div>{chat[1].lastMessage} <span>({chat[1].user.online.toString()})</span></div>
                     </div>
                   </div>
                 </div>

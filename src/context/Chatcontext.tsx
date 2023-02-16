@@ -10,12 +10,13 @@ import { AuthContext } from './AuthContext';
 
 export const ChatContext = createContext<IChatContext>({
   data: {
-    chatId: 'null',
-    user: {
-      displayName: '',
-      photoURL: '',
-      uid: '',
-    },
+    chatId: null,
+    user: null
+    // user: {
+    //   displayName: '',
+    //   photoURL: '',
+    //   uid: '',
+    // },
   },
   dispatch: function (): void {
     null;
@@ -30,11 +31,8 @@ export const ChatContextProvider = ({ children }: PropsWithChildren) => {
     switch (action.type) {
       case ActionType.ChangeUser:
         return {
-          user: action.payload,
-          chatId:
-            currentUser!.uid > action.payload.uid
-              ? currentUser?.uid + action.payload.uid
-              : action.payload.uid + currentUser?.uid,
+          user: action.payload.user,
+          chatId: action.payload.uid
         };
 
       default:

@@ -21,6 +21,7 @@ import { db } from '../firebase';
 import { ActionType, authUser } from '../types';
 import { ChatContext } from '../context/Chatcontext';
 import { createChat, getChat } from '../api';
+import { checkUser } from '../api/index';
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -28,6 +29,7 @@ const Navbar = () => {
 
   const [userName, setUserName] = useState('');
   const [chats, setChats] = useState<DocumentData | undefined>([])
+  const [userInfoChanged, setUserInfoChanged] = useState<boolean>(false)
   const [users, setUsers] = useState<DocumentData | undefined>([])
   const [user, setUser] = useState<User | null | undefined | DocumentData>(
     null
@@ -39,16 +41,33 @@ const Navbar = () => {
     setLoading(true)
     const unsub = onSnapshot(
       doc(db, 'chats', currentUser!.uid),
-      (doc) => {
-        if (doc && doc.data()) {
-          const data = doc.data()
-          console.log(data);
-          
+      async (d) => {
+        if (d && d.data()) {
+          const data = d.data()
+          const arr = []          
           if (data) {
-            setChats(data.chats);
+            for (let i = 0; i < data.chats.length; i++) {
+              const docRef = doc(db, 'users',data.chats[i].memberId);
+              onSnapshot(docRef, (newDoc) => {
+                console.log(newDoc);
+                
+                setUserInfoChanged(!userInfoChanged)
+              })
+              const docSnap =  await getDoc(docRef);
+              console.log(docSnap.data());
+              
+              //const user = await checkUser(data.chats[i].memberId)
+              arr.push({
+                ...data.chats[i],
+                user: docSnap.data()
+              })
+            }
+            console.log(arr);
+            
+            setChats(arr);
           }
-          setLoading(false)
         }
+        setLoading(false)
       }
     );
     return () => {
@@ -62,45 +81,20 @@ const Navbar = () => {
 
 
   const handleSelect = async (user: authUser) => {
-    console.log(user)
     const chat = await getChat(currentUser!.uid,user.uid )
-    console.log(chat)
     if (!chat) {
       await createChat(currentUser!.uid,user.uid)
+      setUsers([])
     }
-    // const combinedId =
-    //   currentUser!.uid > user?.uid
-    //     ? currentUser?.uid + user?.uid
-    //     : user?.uid + currentUser?.uid;
-    // try {
-    //   const res = await getDoc(doc(db, 'chats', combinedId));
-    //   if (!res.exists()) {
-    //     await setDoc(doc(db, 'chats', combinedId), { messages: [] });
-    //     await updateDoc(doc(db, 'userChats', currentUser!.uid), {
-    //       [combinedId + '.userInfo']: {
-    //         uid: user?.uid,
-    //         displayName: user?.displayName,
-    //         photoURL: user?.photoURL,
-    //       },
-    //       [combinedId + '.date']: serverTimestamp(),
-    //     });
-    //     await updateDoc(doc(db, 'userChats', user?.uid), {
-    //       [combinedId + '.userInfo']: {
-    //         uid: currentUser?.uid,
-    //         displayName: currentUser?.displayName,
-    //         photoURL: currentUser?.photoURL,
-    //       },
-    //       [combinedId + '.date']: serverTimestamp(),
-    //     });
-    //   }
-    // } catch (err) {}
-    // dispatch({ type: ActionType.ChangeUser, payload: user });
   };
+
   const onEnterHandler = async (val: string) => {
     console.log(val)
       const q = query(
         collection(db, 'users'),
-        where('displayName', '==', val)
+        //where('displayName', 'in', val)
+        where('displayName', '>=', val)
+        //where('name', '<=', queryText+ '\uf8ff')
       );    
       try {
         const querySnapshot = await getDocs(q);

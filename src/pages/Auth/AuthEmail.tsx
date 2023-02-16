@@ -5,17 +5,17 @@ import {
   signInWithEmailAndPassword,
   setPersistence,
   UserCredential,
+  createUserWithEmailAndPassword,
 } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import Register from '../../components/Register';
-import { checkUser, createUserViaEmail } from '../../api';
+import { checkUser, createUserViaEmail, loginUser } from '../../api';
 
 const AuthEmail = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [step, setStep] = useState<number>(1);
 
   // const login = async () => {
   //   try {
@@ -27,22 +27,56 @@ const AuthEmail = () => {
   //   }
   // };
 
-  const onSubmitHandlerEmail = async () => {
+  // const onSubmitHandlerEmail = async () => {
+  //   try {
+  //     await setPersistence(auth, browserSessionPersistence);
+  //     const user = await signInWithEmailAndPassword(auth, email, password);
+  //     const u = await checkUser(user.user.uid)
+  //     if (!u && user.user.email) {
+  //       await createUserViaEmail({ email: user.user.email, uid: user.user.uid})
+  //       navigate('/register')
+  //     } else {
+  //       navigate('/');
+  //     }
+  //   } catch (e) {
+  //     const err = e as Error;
+  //     console.log(err.message);
+  //     setStep(2);
+  //   }
+  // };
+
+  const login = async () => {
     try {
       await setPersistence(auth, browserSessionPersistence);
-      const user = await signInWithEmailAndPassword(auth, email, password);
-      console.log(user.user);
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      await loginUser(res.user.uid)
+      console.log(res);
       
-      const u = await checkUser(user.user.uid)
+     // navigate('/');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onSubmitHandlerEmail = async () => {
+    try {
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      const u = await checkUser(user.user.uid)      
       if (!u && user.user.email) {
         await createUserViaEmail({ email: user.user.email, uid: user.user.uid})
+        navigate('/register')
       } else {
-        navigate('/');
+        //navigate('/');
       }
     } catch (e) {
       const err = e as Error;
       console.log(err.message);
-      setStep(2);
+      
+      if (err.message === 'Firebase: Error (auth/email-already-in-use).') {
+        await login();
+        navigate('/');
+      }
+
     }
   };
   return (
@@ -73,7 +107,6 @@ const AuthEmail = () => {
             </svg>
           </Link>
         </div>
-        {step === 1 && (
           <StepOne
             title="What’s your email and password?"
             text="We’ll send you a sign-in code"
@@ -98,8 +131,6 @@ const AuthEmail = () => {
               }
             />
           </StepOne>
-        )}
-        {step === 2 && <Register />}
       </div>
     </div>
   );

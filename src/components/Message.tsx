@@ -21,6 +21,7 @@ const Message = ({ message }: IMessageProp) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isHeart, setIsDislike] = useState(false);
 
+
   const likeHandler = () => {
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
@@ -43,7 +44,7 @@ const Message = ({ message }: IMessageProp) => {
   const messageExst =
     message.text.split('.')[message.text.split('.').length - 1];
 
-  const imageListRef = ref(storage, `images/`);
+  const imageListRef = ref(storage, `images/${data.chatId}`);
 
   useEffect(() => {
     if ((messageExst == 'jpg' ||
@@ -71,7 +72,6 @@ const Message = ({ message }: IMessageProp) => {
   );
   return (
     <li
-     
       className={`message ${
         message.senderId === currentUser?.uid ? 'owner' : 'sender'
       }`}

@@ -4,9 +4,11 @@ import styled from 'styled-components';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, db, storage } from '../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { checkUser } from '../api';
 
 const Button = styled.button`
   background-color: rgba(144, 172, 172, 0.582);
@@ -29,38 +31,41 @@ const Button = styled.button`
 const Register = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(false);
-
+  const { currentUser } = useContext(AuthContext);
   const handleSubmit = async (e: {
     target: any;
     preventDefault: () => void;
   }) => {
     e.preventDefault();
     const file = e.target[0].files[0];
-    const displayName: string = e.target[1].value;
-    const email: string = e.target[2].value;
-    const password: string = e.target[3].value;
+    const firstName: string = e.target[1].value;
+    const lastName: string = e.target[2].value;
 
     try {
-      const res = await createUserWithEmailAndPassword(auth, email, password);
+      const displayName = `${firstName} ${lastName}`
+      //const res = await createUserWithEmailAndPassword(auth, email, password);
       const storageRef = ref(storage, displayName);
 
       await uploadBytesResumable(storageRef, file).then(async () => {
         getDownloadURL(storageRef).then(async (downloadURL) => {
           try {
-            await updateProfile(res.user, {
+            await updateProfile(currentUser!, {
               displayName,
               photoURL: downloadURL,
             });
-            await setDoc(doc(db, 'users', res.user.uid), {
-              uid: res.user.uid,
+            const user = await checkUser(currentUser!.uid);
+            console.log(user);
+            await updateDoc(doc(db, 'users', user!.uid), {
+              ...user,
               displayName,
-              email,
-              photoURL: downloadURL,
+              photoUrl: downloadURL,
             });
             navigate('/');
-            await setDoc(doc(db, 'userChats', res.user.uid), {});
+            //await setDoc(doc(db, 'userChats', res.user.uid), {});
           } catch (err) {
-            setError(true);
+            console.log(err);
+            
+           // setError(true);
           }
         });
       });
@@ -76,8 +81,7 @@ const Register = () => {
         <form className="registra-form" onSubmit={handleSubmit}>
           <InputFile />
           <input type="text" placeholder="First name" />
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
+          <input type="text" placeholder="Last Name" />
           <Button>Sign up</Button>
         </form>
         <p>{error ? 'Email is wrong' : null}</p>
