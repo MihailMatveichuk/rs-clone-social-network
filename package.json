@@ -84,6 +84,7 @@
     "react-dom": "^18.2.0",
     "react-file-picker": "^0.0.6",
     "react-firebase-hooks": "^5.1.1",
+    "react-google-button": "^0.7.2",
     "react-input-emoji": "^4.3.0",
     "react-loader-spinner": "^5.3.4",
     "react-player": "^2.11.2",

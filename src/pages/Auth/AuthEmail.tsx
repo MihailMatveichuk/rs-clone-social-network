@@ -4,16 +4,20 @@ import {
   browserSessionPersistence,
   signInWithEmailAndPassword,
   setPersistence,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import Register from '../../components/Register';
+import GoogleButton from 'react-google-button';
 
 const AuthEmail = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [step, setStep] = useState<number>(1);
+  const providerGoogle = new GoogleAuthProvider();
 
   // const login = async () => {
   //   try {
@@ -24,6 +28,16 @@ const AuthEmail = () => {
   //     console.log(err);
   //   }
   // };
+
+  const signInWithGoogle = async () => {
+    signInWithPopup(auth, providerGoogle)
+      .then(async () => {
+        navigate('/');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const onSubmitHandlerEmail = async () => {
     try {
@@ -87,6 +101,10 @@ const AuthEmail = () => {
               onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setPassword(e.target.value)
               }
+            />
+            <GoogleButton
+              style={{ margin: '10px auto', width: '70%' }}
+              onClick={signInWithGoogle}
             />
           </StepOne>
         )}
