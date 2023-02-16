@@ -6,11 +6,13 @@ import {
   setPersistence,
   GoogleAuthProvider,
   signInWithPopup,
+  updateProfile,
 } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import Register from '../../components/Register';
 import GoogleButton from 'react-google-button';
+import { doc, setDoc } from 'firebase/firestore';
 
 const AuthEmail = () => {
   const navigate = useNavigate();
@@ -31,7 +33,18 @@ const AuthEmail = () => {
 
   const signInWithGoogle = async () => {
     signInWithPopup(auth, providerGoogle)
-      .then(async () => {
+      .then(async (res) => {
+        await updateProfile(res.user, {
+          displayName: res.user.displayName,
+          photoURL: res.user.photoURL,
+        });
+        await setDoc(doc(db, 'users', res.user.uid), {
+          uid: res.user.uid,
+          displayName: res.user.displayName,
+          email: res.user.email,
+          photoURL: res.user.photoURL,
+        });
+        await setDoc(doc(db, 'userChats', res.user.uid), {});
         navigate('/');
       })
       .catch((err) => {
