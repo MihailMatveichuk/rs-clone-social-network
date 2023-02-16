@@ -103,6 +103,7 @@ const AuthEmail = () => {
               }
             />
             <GoogleButton
+              type="light"
               style={{ margin: '10px auto', width: '70%' }}
               onClick={signInWithGoogle}
             />
