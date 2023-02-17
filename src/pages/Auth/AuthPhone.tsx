@@ -19,6 +19,11 @@ const AuthPhone = () => {
   const [otp, setOtp] = useState<string>('');
   const [confirmRes, setConfirmRes] = useState<ConfirmationResult | null>(null);
   const navigate = useNavigate();
+  const [secondsLeft, setSeconds] = useState(60);
+  const [counting, setCounting] = useState(false);
+  const startTimer = () => {
+    setCounting(true);
+  };
   const onBackClick = () => {
     if (step === 2) {
       setStep(1);
@@ -26,6 +31,7 @@ const AuthPhone = () => {
       navigate('/auth');
     }
   };
+
   useEffect(() => {
     if (step === 1) {
       try {
@@ -35,6 +41,12 @@ const AuthPhone = () => {
       }
     }
   }, []);
+
+  useEffect(() => {
+    counting &&
+      secondsLeft > 0 &&
+      setTimeout(() => setSeconds(secondsLeft - 1), 1000);
+  }, [counting, secondsLeft]);
 
   const setRecaptchaVerifier = async () => {
     if (rec) return;
@@ -87,6 +99,7 @@ const AuthPhone = () => {
         const res = await signInWithPhoneNumber(auth, phone, rec);
         console.log(res);
         setConfirmRes(res);
+        startTimer();
         setStep(2);
       } catch (e) {
         console.log('signInWithPhoneNumber', e);
@@ -146,7 +159,7 @@ const AuthPhone = () => {
         {step === 2 && (
           <StepOne
             title="Enter sign-in code"
-            text={`We just sent it to  ${phone}. Haven’t received? Wait for 57 sec`}
+            text={`We just sent it to  ${phone}. Haven’t received? Wait for ${secondsLeft} sec`}
             onSubmit={onCodeSubmitHandler}
           >
             <OtpInput value={otp} valueLength={6} onChange={setOtp}></OtpInput>
