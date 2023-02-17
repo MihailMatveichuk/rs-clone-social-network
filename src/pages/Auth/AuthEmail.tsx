@@ -4,16 +4,22 @@ import {
   browserSessionPersistence,
   signInWithEmailAndPassword,
   setPersistence,
+  GoogleAuthProvider,
+  signInWithPopup,
+  updateProfile,
 } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import Register from '../../components/Register';
+import GoogleButton from 'react-google-button';
+import { doc, setDoc } from 'firebase/firestore';
 
 const AuthEmail = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [step, setStep] = useState<number>(1);
+  const providerGoogle = new GoogleAuthProvider();
 
   // const login = async () => {
   //   try {
@@ -24,6 +30,27 @@ const AuthEmail = () => {
   //     console.log(err);
   //   }
   // };
+
+  const signInWithGoogle = async () => {
+    signInWithPopup(auth, providerGoogle)
+      .then(async (res) => {
+        await updateProfile(res.user, {
+          displayName: res.user.displayName,
+          photoURL: res.user.photoURL,
+        });
+        await setDoc(doc(db, 'users', res.user.uid), {
+          uid: res.user.uid,
+          displayName: res.user.displayName,
+          email: res.user.email,
+          photoURL: res.user.photoURL,
+        });
+        await setDoc(doc(db, 'userChats', res.user.uid), {});
+        navigate('/');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const onSubmitHandlerEmail = async () => {
     try {
@@ -87,6 +114,11 @@ const AuthEmail = () => {
               onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setPassword(e.target.value)
               }
+            />
+            <GoogleButton
+              type="light"
+              style={{ margin: '10px auto', width: '70%' }}
+              onClick={signInWithGoogle}
             />
           </StepOne>
         )}
