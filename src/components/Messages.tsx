@@ -15,6 +15,8 @@ const Messages = () => {
     refs.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+
+
   useEffect(() => {
     if (data.chatId != null) {
       const unSub = onSnapshot(doc(db, 'messages', data.chatId), (doc) => {

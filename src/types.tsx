@@ -1,4 +1,5 @@
 import { User } from 'firebase/auth';
+import { Timestamp } from 'firebase/firestore';
 export interface IMessage {
   author: string;
 }
@@ -50,9 +51,10 @@ export interface IMessageFirebase {
   senderId: string;
   img: string;
   text: string;
-  date: {
-    seconds: number;
-  };
+  date: Timestamp;
+  // date: {
+  //   seconds: number;
+  // };
 }
 export interface IMessageProp {
   message: IMessageFirebase;

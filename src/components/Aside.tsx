@@ -44,27 +44,25 @@ const Navbar = () => {
       async (d) => {
         if (d && d.data()) {
           const data = d.data()
-          const arr = []          
           if (data) {
-            for (let i = 0; i < data.chats.length; i++) {
-              const docRef = doc(db, 'users',data.chats[i].memberId);
-              onSnapshot(docRef, (newDoc) => {
-                console.log(newDoc);
+            setChats(data.chats);
+
+            // for (let i = 0; i < data.chats.length; i++) {
+            //   const docRef = doc(db, 'users',data.chats[i].memberId);
+            //   onSnapshot(docRef, (newDoc) => {
+            //     console.log(newDoc);
                 
-                setUserInfoChanged(!userInfoChanged)
-              })
-              const docSnap =  await getDoc(docRef);
-              console.log(docSnap.data());
+            //    //gtChats()
+            //   })
+            //   const docSnap =  await getDoc(docRef);
+            //   console.log(docSnap.data());
               
-              //const user = await checkUser(data.chats[i].memberId)
-              arr.push({
-                ...data.chats[i],
-                user: docSnap.data()
-              })
-            }
-            console.log(arr);
-            
-            setChats(arr);
+            //   //const user = await checkUser(data.chats[i].memberId)
+            //   arr.push({
+            //     ...data.chats[i],
+            //     user: docSnap.data()
+            //   })
+            // }            
           }
         }
         setLoading(false)

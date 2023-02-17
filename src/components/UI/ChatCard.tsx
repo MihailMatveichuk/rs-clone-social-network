@@ -11,46 +11,40 @@ type ChatCardProps = {
 
 
 const ChatCard:React.FC<ChatCardProps> = ({chat, handleSelect}) => {
-  const [user, setUser] = useState(null)
   console.log(chat);
   
-  // const docRef = doc(db, 'users',data.chats[i].memberId);
-  // const docSnap =  await getDoc(docRef);
-  // console.log(docSnap.data());
-  const gtChats = async () => {
-    const docRef = doc(db, 'users',chat[1].memberId);
-    const docSnap =  await getDoc(docRef);
-    console.log(docSnap.data());
-    
-    // const unsub = onSnapshot(
+  const [user, setUser] = useState<DocumentData | null>(null)
+  const getData = async () => {
+    const unsub = onSnapshot(
+      doc(db, 'users', chat.memberId),
+      async (d) => {
+        if (d && d.data()) {
+          const data = d.data()
+          console.log(data);
+          
+          if (data) {
+            setUser(data)
+          }
+        }
 
-    //   doc(db, 'users', chat[1].memberId),
-    //   (doc) => {
-    //     if (doc && doc.data()) {
-    //       const data = doc.data()
-    //       if (data) {
-    //         console.log(data)
-    //       }
-    //     }
-    //   }
-    // );
-    // return () => {
-    //   unsub();
-    // };
-  };
-
+      })
+      return () => {
+        unsub();
+      };
+  }
   useEffect(() => {
-    gtChats();
-  }, []);
+    getData()
+  },[])
+
 
   return (
     <li
     className="user-chat"
-    key={chat[0]}
-    // onClick={() => handleSelect({
-    //   uid: chat[1].uid,
-    //   user: chat[1].user.uid
-    // })}
+    key={chat.uid}
+    onClick={() => handleSelect({
+      uid: chat.uid,
+      user: user!.uid
+    })}
     role="presentation"
   >
     {user && <div className="container">
@@ -58,15 +52,15 @@ const ChatCard:React.FC<ChatCardProps> = ({chat, handleSelect}) => {
       
           <img
             className="user-chat__img"
-            src={chat[1].user.photoUrl}
+            src={user.photoUrl}
             alt=""
           />
         
         <div className="user-chat__message">
           
-            <span>{chat[1].user.displayName}</span>
+            <span>{user.displayName}</span>
           
-          <div>{chat[1].lastMessage} <span>({chat[1].user.online.toString()})</span></div>
+          <div>{chat.lastMessage} <span>({user.online.toString()})</span></div>
         </div>
       </div>
     </div>}

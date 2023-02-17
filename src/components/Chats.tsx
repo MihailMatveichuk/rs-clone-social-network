@@ -20,6 +20,7 @@ import {
 import { User } from 'firebase/auth';
 import Loading from './UI/Loading';
 import { getDownloadURL, ref } from 'firebase/storage';
+import ChatCard from './UI/ChatCard';
 
 <ColorRing
   visible={true}
@@ -84,36 +85,39 @@ const Chats: React.FC<ChatsProps> = ({
             </li>
           ))}
         {chats != undefined ? (
-          Object.entries(chats!)
-            ?.sort((a, b) => b[1].date - a[1].date)
+          chats?.sort((a, b) => b.date - a.date)
             .map((chat) => (
-              <li
-                className="user-chat"
-                key={chat[0]}
-                onClick={() => handleSelect({
-                  uid: chat[1].uid,
-                  user: chat[1].user.uid
-                })}
-                role="presentation"
-              >
-                <div className="container">
-                  <div className="user-chat__inner">
+              <ChatCard
+                handleSelect={handleSelect}
+                chat={chat}
+              />
+              // <li
+              //   className="user-chat"
+              //   key={chat[0]}
+              //   onClick={() => handleSelect({
+              //     uid: chat[1].uid,
+              //     user: chat[1].user.uid
+              //   })}
+              //   role="presentation"
+              // >
+              //   <div className="container">
+              //     <div className="user-chat__inner">
                   
-                      <img
-                        className="user-chat__img"
-                        src={chat[1].user.photoUrl}
-                        alt=""
-                      />
+              //         <img
+              //           className="user-chat__img"
+              //           src={chat[1].user.photoUrl}
+              //           alt=""
+              //         />
                     
-                    <div className="user-chat__message">
+              //       <div className="user-chat__message">
                       
-                        <span>{chat[1].user.displayName}</span>
+              //           <span>{chat[1].user.displayName}</span>
                       
-                      <div>{chat[1].lastMessage} <span>({chat[1].user.online.toString()})</span></div>
-                    </div>
-                  </div>
-                </div>
-              </li>
+              //         <div>{chat[1].lastMessage} <span>({chat[1].user.online.toString()})</span></div>
+              //       </div>
+              //     </div>
+              //   </div>
+              // </li>
             ))
         ) : (
           <div className="user-chat">
