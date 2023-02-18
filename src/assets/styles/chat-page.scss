@@ -11,7 +11,7 @@
         content: '';
         top: 0;
         right: -1px;
-        background: rgba(0, 0, 0, 0.08);
+        background: var(--theme-aside-bg);
         width: 1px;
         height: 100%;
       }
@@ -31,6 +31,12 @@
 
 .chat {
     flex: 1;
+    &__messages-container {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        overflow: auto;
+    }
     & .container {
         height: 100%;
     }
@@ -42,13 +48,30 @@
     &-info {
         height: 56px;
         padding: 6px 0;
-        background: #fff;
-
+        background: var(--theme-chat-info-bg);
         img {
             width: 40px;
             height: 40px;
             border-radius: 50%;
         }
+        &__name-container {
+            display: flex;
+            flex-direction: column;
+        }
+        &__name {
+            color: var(--theme-main-text);
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 20px
+        }
+
+        &__online {
+            font-size: 14px;
+            line-height: 15px;
+            letter-spacing: 0.92px;
+            color: var(--theme-grey-text);
+        }
+
         &__inner {
             padding: 0 20px;
             height: 100%;
@@ -65,6 +88,47 @@
     }
 }
 
+.northern  body{
+    position: relative;
+    background: unset;
+    & > div {
+        position: relative;
+        z-index: 1;
+        background: transparent;
+    }
+    & .aside {
+        position: relative;
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-color: var(--theme-input);
+            z-index: -1;
+        }
+    }
+    & .sidebar {
+        background-color: transparent;
+
+    }
+    &::before {
+        content: "";
+        background: url('../images/northern_lights.jpg');
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-size: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.86;
+        z-index: 0;
+    }
+
+}
 
 .messages {
     flex: 1;
@@ -83,12 +147,12 @@
             width: 4px;
         }
         &::-webkit-scrollbar-track {
-            background-color: #C4C4C4;
+            background-color: var(--theme-scrollbar-track);
             border-radius: 2px;
             background-clip: content-box;
         }
         &::-webkit-scrollbar-thumb {
-            background-color: #191C21;
+            background-color: var(--theme-primary);
             border-radius: 2px;
             height: 40px !important;
         }
@@ -104,20 +168,20 @@
         font-size: 15px;
         line-height: 24px;
         letter-spacing: -0.24px;
-        color: #171A1F;
+        color: var(--theme-main-text);
     }
     &-info {
         font-size: 13px;
         line-height: 18px;
         letter-spacing: -0.08px;
-        color: #71747A;
+        color: var(--theme-grey-text);
         margin-bottom: 8px;
     }
     &-content {
         max-width: 500px;
         padding: 15px;
         border-radius: 15px;
-        background: #ececec;
+        background: var(--chat-bg);
         margin-bottom: 30px;
         position: relative;
         overflow: hidden;
@@ -138,21 +202,22 @@
     &.owner {
         justify-content: flex-end;
         .message-text {
-            color: #fff;
+            color: var(--chat-info-bg)
         }
         .message-content {
-            background: #579ffb;
+            background: var(--theme-primary-active);
             order: 0;
-            color: #fff !important;
+            color: var(--chat-info-bg)!important;
+            
 
             &::before {
                 border-bottom-left-radius: 0.8rem 0.7rem;
-                border-right: 1rem solid #579ffb;
+                border-right: 1rem solid var(--theme-primary-active);
                 right: -0.35rem;
                 transform: translate(0, -0.1rem);
             }
             &::after {
-                background-color: #fff;
+                background-color: var(--chat-info-bg);
                 border-bottom-left-radius: 0.5rem;
                 right: -40px;
                 transform:translate(-30px, -2px);
@@ -161,7 +226,7 @@
 
         }
         .message-info {
-            color: #fff;
+            color:  var(--chat-info-bg);
         }
         .message__user-photo {
             order: 1;
@@ -171,13 +236,13 @@
         .message-content {
             &:before {
                 border-bottom-right-radius: 0.8rem 0.7rem;
-                border-left: 1rem solid #ececec;
+                border-left: 1rem solid var(--chat-bg);
                 left: -0.35rem;
                 transform: translate(0, -0.1rem);
               }
               
               &::after {
-                background-color: #fff;
+                background-color: var(--chat-info-bg);
                 border-bottom-right-radius: 0.5rem;
                 left: 20px;
                 transform: translate(-30px, -2px);
@@ -199,7 +264,29 @@
 }
 
 .user-chat {
-
+    &__img-wrapper {
+        position: relative;
+    }
+    &__online {
+        position: absolute;
+        bottom: 4px;
+        right: 4px;
+        width: 12px;
+        height: 12px;
+        background: var(--chat-info-bg);
+        border-radius: 50%;
+        &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: var(--theme-primary-active);
+            border-radius: 50%;
+        }
+    }
     &__inner {
         display: flex;
         gap: 16px;
@@ -226,7 +313,7 @@
             font-size: 14px;
             line-height: 20px;
             letter-spacing: -0.24px;
-            color: #71747A;
+            color: var(--theme-grey-text);
             height: 40px;
             word-break: break-word;
         }
@@ -243,10 +330,16 @@
 
 @media screen and (hover:hover) {
     .user-chat:hover {
-        background: #398FE5;
-        color: #fff;
+        background: var(--theme-primary-hovered);
+        color: var(--chat-info-bg);
         .user-chat__message div {
-            color: #fff;
+            color: var(--chat-info-bg);
+        }
+        .user-chat__online {
+            background: var(--theme-primary-hovered);
+            &::before {
+                background-color: var(--chat-info-bg);
+            }
         }
     }
 }

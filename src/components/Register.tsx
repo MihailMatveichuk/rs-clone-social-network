@@ -1,4 +1,3 @@
-import '../App.css';
 import InputFile from './InputFile';
 import styled from 'styled-components';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
@@ -10,23 +9,6 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { checkUser } from '../api';
 
-const Button = styled.button`
-  background-color: rgba(144, 172, 172, 0.582);
-  padding: 10px;
-  border: none;
-  width: 82px;
-  height: 40px;
-  color: white;
-  font-family: 'SF Pro Text';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 15px;
-  color: #ffffff;
-  background: #248bf2;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-`;
 
 const Register = () => {
   const navigate = useNavigate();
@@ -43,9 +25,7 @@ const Register = () => {
 
     try {
       const displayName = `${firstName} ${lastName}`
-      //const res = await createUserWithEmailAndPassword(auth, email, password);
       const storageRef = ref(storage, displayName);
-
       await uploadBytesResumable(storageRef, file).then(async () => {
         getDownloadURL(storageRef).then(async (downloadURL) => {
           try {
@@ -76,15 +56,13 @@ const Register = () => {
   return (
     <div className="form-container">
       <div className="form-wrapper">
-        <span className="logo">New account</span>
         <span className="title">Introduce yourself</span>
         <form className="registra-form" onSubmit={handleSubmit}>
           <InputFile />
           <input type="text" placeholder="First name" />
           <input type="text" placeholder="Last Name" />
-          <Button>Sign up</Button>
+          <button className="btn btn--primary">Go</button>
         </form>
-        <p>{error ? 'Email is wrong' : null}</p>
       </div>
     </div>
   );

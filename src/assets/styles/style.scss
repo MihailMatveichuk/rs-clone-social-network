@@ -1,18 +1,70 @@
-@import 'variables';
+// @import 'variables';
+@import 'themes';
 @import 'reset';
 @import 'on-boarding';
 @import 'chat-page';
 @import 'user';
 @import 'ui';
+@import 'settings';
+
 
 html,
 body,
 #root {
   height: 100%;
 }
+
+html,
+body {
+  background: var(--theme-bg);
+  color: var(--theme-main-text);
+}
 *, *::after, *::before {
   box-sizing: border-box;
 }
+
+.form-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form-wrapper,
+.registra-form {
+  display: flex;
+  flex-direction: column;
+  .registra-form input {
+
+  }
+}
+
+.registra-form {
+  margin-top: 30px;
+  gap: 30px;
+  input {
+    background: var(--theme-input);
+    border-radius: 8px;
+    border: none;
+    width: 320px;
+    height: 56px;
+    padding-left: 10px;
+    outline: none;
+  }
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10%;
+    color: var(--theme-main-text);
+    font-size: small;
+  }
+}
+
+.svgFill{
+  fill: var(--svg-fill);
+}
+
 .blocks-wrapper {
   position: absolute;
   top: 0;
@@ -40,14 +92,14 @@ body,
   line-height: 32px;
   text-align: center;
   letter-spacing: 0.36px;
-  color: $main-text;
+  color: var(--theme-main-text);
 }
 
 .text {
   font-size: 15px;
   line-height: 24px;
   letter-spacing: -0.24px;
-  color: $grey-text;
+  color: var(--theme-grey-text);
 }
 
 .btn {
@@ -65,32 +117,32 @@ body,
   text-decoration: none;
 
   &--primary {
-    background-color: $primary;
-    color: #fff;
+    background-color: var(--theme-primary);
+    color: var(--chat-info-bg);
     &.active {
-      background-color: $primary-active;
+      background-color: var(--theme-primary-active);
     }
   }
 
   &--grey {
-    color: $grey-text;
-    background-color: $grey-background;
+    color: var(--theme-grey-text);
+    background-color: var(--theme-grey-background);
 
     &:active {
-      background-color: $grey-background-active;
+      background-color: var(--theme-grey-background-active);
     }
   }
 }
 
 .input {
-  background: rgba(201, 204, 209, 0.24);
+  background: var(--theme-input);
   border-radius: 8px;
   padding: 8px 16px;
   font-size: 15px;
   line-height: 24px;
   letter-spacing: -0.24px;
   &::placeholder {
-    color: $input-placeholder;
+    color: var(--theme-input-placeholder)
   }
 }
 
@@ -129,7 +181,7 @@ body,
     line-height: 32px;
     text-align: center;
     letter-spacing: 0.36px;
-    color: #171A1F;
+    color: var(--theme-main-text);
     margin-bottom: 8px;
   }
   &__text {
@@ -137,7 +189,7 @@ body,
     line-height: 24px;
     text-align: center;
     letter-spacing: -0.24px;
-    color: #71747A;
+    color: var(--theme-grey-text);
     margin-bottom: 32px;
   }
 }
@@ -145,11 +197,11 @@ body,
 @media screen and (hover: hover) {
   .btn {
     &--primary:hover {
-      background-color: $primary-hovered;
+      background-color: var(--theme-primary-hovered);
     }
 
     &--grey:hover {
-      background-color: $grey-background-hovered;
+      background-color: var(--theme-grey-background-hovered);
     }
   }
 }

@@ -45,18 +45,18 @@ const ChatCard:React.FC<ChatCardProps> = ({chat, handleSelect}) => {
   >
     {user && <div className="container">
       <div className="user-chat__inner">
-      
+        <div className="user-chat__img-wrapper">
           <img
-            className="user-chat__img"
-            src={user.photoUrl}
-            alt=""
-          />
-        
-        <div className="user-chat__message">
-          
-            <span>{user.displayName}</span>
-          
-          <div>{chat.lastMessage} <span>({user.online.toString()})</span></div>
+              className="user-chat__img"
+              src={user.photoUrl}
+              alt=""
+            />
+            {user.online && <div className='user-chat__online'></div>}
+        </div>
+
+        <div className="user-chat__message"> 
+          <span>{user.displayName}</span>
+          <div>{chat.lastMessage}</div>
         </div>
       </div>
     </div>}

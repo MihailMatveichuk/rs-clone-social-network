@@ -5,7 +5,6 @@ import { ChatContext } from '../context/Chatcontext';
 import { storage } from '../firebase';
 import { IMessageProp } from '../types';
 import { ColorRing } from 'react-loader-spinner';
-import '../assets/styles/style.css';
 import { checkUser } from '../api';
 import { Timestamp } from '@firebase/firestore';
 

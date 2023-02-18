@@ -9,6 +9,7 @@ import { AuthEmail, AuthPhone } from './pages/Auth';
 import Launcher from './pages/Launcher';
 import Register from './components/Register';
 import MainPage from './pages/User/MainPage';
+import SettingsPage from './pages/Settings';
 
 export function App() {
   const { currentUser } = useContext(AuthContext);
@@ -42,6 +43,16 @@ export function App() {
             element={
               <ProtectedRoute>
                 <ChatPage />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+        <Route path="/settings">
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <SettingsPage />
               </ProtectedRoute>
             }
           />

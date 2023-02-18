@@ -1,6 +1,6 @@
 .user-info {
     flex: 1;
-    color: #171A1F;
+    color: var(--theme-main-text);
     &__info {
         padding: 0 16px;
     }
@@ -19,14 +19,14 @@
     }
     &__main-info {
         padding: 20px;
-        background: rgba(201, 204, 209, 0.24);
+        background: var(--theme-input);
         border-radius: 8px;
         margin-top: 30px;
         font-size: 17px;
         line-height: 24px;
         a,
         a:visited {
-            color: #248BF2;
+            color: var(--theme-primary);
         }
     }
     &__controls {
@@ -58,7 +58,7 @@
         font-size: 15px;
         line-height: 24px;
         letter-spacing: -0.24px;
-        color: #71747A;
+        color: var(--theme-grey-text);
         margin-bottom: 16px;
     }
     &__content-left {
@@ -128,12 +128,12 @@
     .user-info {
         &__controls li:hover {
             svg path {
-                fill: #171A1F;
+                fill: var(--theme-main-text);
             }
         }
         &__main-info {
             a:hover {
-                color:#3399ff;
+                color: var(--theme-primary-hovered);
             }
         }
     }

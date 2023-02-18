@@ -1,9 +1,8 @@
 import { doc, DocumentData, onSnapshot } from 'firebase/firestore';
 import React, {useState, useEffect} from 'react';
 import { db } from '../../firebase';
-// const Add = require('../../assets/images/Add.png');
-// const Call = require('../../assets/images/Call.png');
-// const Menu = require('./assets/images/Menu.png');
+import { getLastSeenText } from '../../utlis/lastSeen';
+
 
 type ChatInfoProps = {
   userRef: string;
@@ -42,9 +41,9 @@ const ChatInfo: React.FC<ChatInfoProps> = ({ userRef , chatId}) => {
             {user && 
               <>
                 <img src={user.photoUrl} alt="" />
-                <div className="chatText">
-                  <span className="name-chat">{user.displayName}</span>
-                  <span className="amount-members">{user.online ? 'online' : 'offline'}</span>
+                <div className="chat-info__name-container">
+                  <span className="chat-info__name">{user.displayName}</span>
+                  <span className="chat-info__online">{user.online ? 'online' : getLastSeenText(user.lastSeen)}</span>
                 </div>
               </>
             }

@@ -1,3 +1,22 @@
+.input-container {
+    background: var(--theme-input);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+    width: 448px;
+    input {
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 24px;
+        width: 100%;
+        color: var(--theme-main-text);
+        &::placeholder {
+            color: var(--theme-input-placeholder);
+        }
+    }
+}
+
+
 .logo-choose {
     img {
         width: 96px;
@@ -10,7 +29,7 @@
 
 .search-input {
     position: relative;
-    background: rgba(201, 204, 209, 0.24);
+    background: var(--theme-input);
     border-radius: 8px;
     position: relative;
     &::before {
@@ -31,7 +50,7 @@
         line-height: 24px;
         letter-spacing: -0.24px;
         &::placeholder {
-            color: #9D9FA3;
+            color: var(--theme-input-placeholder);
         }
     }
 }
@@ -53,13 +72,17 @@
     &__input-container {
         flex: 1;
         position: relative;
-        background: rgba(201, 204, 209, 0.24);
+        background: var(--theme-input);
         border-radius: 8px;
         input {
             width: 100%;
             padding: 8px 76px 8px 16px;
             font-size: 15px;
             line-height: 24px;
+            &::placeholder {
+                color: var(--theme-input-placeholder);
+            }
+            color: var(--theme-main-color);
         }
         svg {
             position: absolute;
@@ -78,11 +101,11 @@
         label:hover,
         button:hover {
             svg path {
-                fill: #398FE5;
+                fill: var(--theme-primary);
             }
         }
         &__input-container svg:hover path {
-            fill: #398FE5;
+            fill: var(--theme-primary);
         }
     }
 }

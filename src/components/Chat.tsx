@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import '../App.css';
 import { ChatContext } from '../context/Chatcontext';
 import { auth } from '../firebase';
 import InputPanel from './InputPanel';
@@ -15,8 +14,10 @@ const Chat = () => {
         {data.chatId && data.user &&
           <>
             <ChatInfo userRef={data.user} chatId={data.chatId} />
-            <Messages />
-            <InputPanel />
+            <div className="chat__messages-container">
+              <Messages />
+              <InputPanel />
+            </div>
           </>
         }
       </div>

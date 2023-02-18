@@ -33,7 +33,10 @@ export const createUserViaEmail = async ({email, uid}: createUserWithEmail) => {
         online: true,
         email,
         phone:'',
-        displayName: email
+        displayName: email,
+        lastSeen: null,
+        about: '',
+        createdAt: Timestamp.now()
     });
 
     await setDoc(doc(userChatsRef, uid), {
@@ -93,7 +96,8 @@ export const logoutUser = async (uid: string | null) => {
   const user = await checkUser(uid)
   await updateDoc(doc(usersRef, uid), {
     ...user,
-    online: false
+    online: false,
+    lastSeen: Timestamp.now(),
   })
 }
 
@@ -103,6 +107,7 @@ export const loginUser = async (uid: string | null) => {
   const user = await checkUser(uid)
   await updateDoc(doc(usersRef, uid), {
     ...user,
-    online: true
+    online: true,
+    lastSeen: null
   })
 }

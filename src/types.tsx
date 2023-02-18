@@ -52,9 +52,6 @@ export interface IMessageFirebase {
   img: string;
   text: string;
   date: Timestamp;
-  // date: {
-  //   seconds: number;
-  // };
 }
 export interface IMessageProp {
   message: IMessageFirebase;

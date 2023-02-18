@@ -6,33 +6,23 @@ const InputFile = () => {
   const fileReader = new FileReader();
 
   const changePhoto = () => {
-    console.log(fileReader.result);
-    
+    if (!fileReader.result) return;
     setSrc(fileReader.result)
   }
   fileReader.addEventListener('load', changePhoto)
-  // return () => {
-  //   fileReader.removeEventListener('load', changePhoto)
-  // }
   fileReader.onabort = (e) => console.log(e)
   fileReader.onerror = (e) => console.log(e)
 
   useEffect(() => {
     fileReader.addEventListener('load', changePhoto)
-    // return () => {
-    //   fileReader.removeEventListener('load', changePhoto)
-    // }
-    fileReader.onabort = (e) => console.log(e)
-    fileReader.onerror = (e) => console.log(e)
-
+    return () => {
+      fileReader.removeEventListener('load', changePhoto)
+    }
   }, [])
 
   const onFileLoad = (e) => {
     const [file] = e.target.files;
-    console.log(file);
-    if (file) {
-      console.log('in file');
-      
+    if (file && file.type.includes('image')) {
       fileReader.readAsDataURL(file)
     }
     
