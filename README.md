@@ -41,8 +41,6 @@ Project has the following **🎯 Features**:
 | Opportunity of logging out from user's chat ❌               |         ✔️         |
 | Opportunity of leaving like or dislike for message :+1: 👎   |         ✔️         |
 
-Here you can [watch a video about this repository](https://www.youtube.com/watch?v=TNzCfgwIDCY).
-
 ## ⚙️ Installation
 
 At first, clone repository
