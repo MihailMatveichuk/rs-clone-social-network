@@ -3,8 +3,6 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
-
-
 // const firebaseConfig = {
 //   apiKey: process.env.REACT_APP_API_KEY,
 //   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -13,6 +11,7 @@ import { getStorage } from 'firebase/storage';
 //   messagingSenderId: process.env.REACT_APP_MESSAGE_SENDER_ID,
 //   appId: process.env.REACT_APP_APP_ID,
 // };
+
 const firebaseConfig = {
   apiKey: "AIzaSyD6PUtnmbH_fovZuwQUAfz0nzbZ4sULv_E",
   authDomain: "chat-local-9eadd.firebaseapp.com",

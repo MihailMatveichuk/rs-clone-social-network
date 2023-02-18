@@ -6,16 +6,24 @@ import {
   setPersistence,
   UserCredential,
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  updateProfile,
+
 } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import Register from '../../components/Register';
 import { checkUser, createUserViaEmail, loginUser } from '../../api';
+import GoogleButton from 'react-google-button';
+import { doc, setDoc } from 'firebase/firestore';
 
 const AuthEmail = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [step, setStep] = useState<number>(1);
+  const providerGoogle = new GoogleAuthProvider();
 
   // const login = async () => {
   //   try {
@@ -26,6 +34,7 @@ const AuthEmail = () => {
   //     console.log(err);
   //   }
   // };
+
 
   // const onSubmitHandlerEmail = async () => {
   //   try {
@@ -46,6 +55,29 @@ const AuthEmail = () => {
   // };
 
   const login = async () => {
+
+  const signInWithGoogle = async () => {
+    signInWithPopup(auth, providerGoogle)
+      .then(async (res) => {
+        await updateProfile(res.user, {
+          displayName: res.user.displayName,
+          photoURL: res.user.photoURL,
+        });
+        await setDoc(doc(db, 'users', res.user.uid), {
+          uid: res.user.uid,
+          displayName: res.user.displayName,
+          email: res.user.email,
+          photoURL: res.user.photoURL,
+        });
+        await setDoc(doc(db, 'userChats', res.user.uid), {});
+        navigate('/');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const onSubmitHandlerEmail = async () => {
     try {
       await setPersistence(auth, browserSessionPersistence);
       const res = await signInWithEmailAndPassword(auth, email, password);
@@ -109,26 +141,38 @@ const AuthEmail = () => {
         </div>
           <StepOne
             title="What’s your email and password?"
-            text="We’ll send you a sign-in code"
+            text="Insert your email and password"
             onSubmit={onSubmitHandlerEmail}
           >
             <input
               type="email"
-              placeholder="email"
               className="input on-boarding__email"
               required
+              placeholder="krambambulia@.com"
+              pattern="/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"
               onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setEmail(e.target.value)
               }
             />
             <input
               type="password"
-              placeholder="password"
+              placeholder="Password should be more then 6 symbols"
               className="input on-boarding__password"
+              pattern=".{6,}"
               required
+              title="Enter a password consisting more then 6 symbols"
               onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setPassword(e.target.value)
               }
+            />
+            <GoogleButton
+              type="light"
+              style={{
+                margin: '10px auto',
+                width: '75%',
+                borderRadius: '7px',
+              }}
+              onClick={signInWithGoogle}
             />
           </StepOne>
       </div>

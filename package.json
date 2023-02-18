@@ -76,6 +76,7 @@
     "dotenv": "^16.0.3",
     "emoji-picker-react": "^4.4.7",
     "firebase": "^9.16.0",
+    "formik": "^2.2.9",
     "http-proxy-middleware": "^2.0.6",
     "moment": "^2.29.4",
     "os-browserify": "^0.3.0",
@@ -85,6 +86,7 @@
     "react-dom": "^18.2.0",
     "react-file-picker": "^0.0.6",
     "react-firebase-hooks": "^5.1.1",
+    "react-google-button": "^0.7.2",
     "react-input-emoji": "^4.3.0",
     "react-loader-spinner": "^5.3.4",
     "react-player": "^2.11.2",
@@ -95,6 +97,7 @@
     "rm-emoji-picker": "^1.0.0",
     "styled-components": "^5.3.6",
     "uuid": "^9.0.0",
-    "video-react": "^0.16.0"
+    "video-react": "^0.16.0",
+    "yup": "^1.0.0"
   }
 }

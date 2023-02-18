@@ -27,6 +27,7 @@ const Navbar = () => {
   const { dispatch } = useContext(ChatContext);
 
   const [userName, setUserName] = useState('');
+
   const [chats, setChats] = useState<DocumentData | undefined>([])
   const [userInfoChanged, setUserInfoChanged] = useState<boolean>(false)
   const [users, setUsers] = useState<DocumentData | undefined>([])
@@ -66,7 +67,7 @@ const Navbar = () => {
         }
         setLoading(false)
       }
-    );
+    });
     return () => {
       unsub();
     };
@@ -76,13 +77,41 @@ const Navbar = () => {
     currentUser?.uid && gtChats();
   }, [currentUser?.uid]);
 
-
   const handleSelect = async (user: authUser) => {
+
     const chat = await getChat(currentUser!.uid,user.uid )
     if (!chat) {
       await createChat(currentUser!.uid,user.uid)
       setUsers([])
     }
+
+    const combinedId =
+      currentUser!.uid > user?.uid
+        ? currentUser?.uid + user?.uid
+        : user?.uid + currentUser?.uid;
+    try {
+      const res = await getDoc(doc(db, 'chats', combinedId));
+      if (!res.exists()) {
+        await setDoc(doc(db, 'chats', combinedId), { messages: [] });
+        await updateDoc(doc(db, 'userChats', currentUser!.uid), {
+          [combinedId + '.userInfo']: {
+            uid: user?.uid,
+            displayName: user?.displayName,
+            photoURL: user?.photoURL,
+          },
+          [combinedId + '.date']: serverTimestamp(),
+        });
+        await updateDoc(doc(db, 'userChats', user?.uid), {
+          [combinedId + '.userInfo']: {
+            uid: currentUser?.uid,
+            displayName: currentUser?.displayName,
+            photoURL: currentUser?.photoURL,
+          },
+          [combinedId + '.date']: serverTimestamp(),
+        });
+      }
+    } catch (err) {}
+    dispatch({ type: ActionType.ChangeUser, payload: user });
   };
 
   const onEnterHandler = async (val: string) => {
@@ -174,7 +203,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-
-

@@ -1,5 +1,5 @@
 import { getDownloadURL, ref, listAll } from 'firebase/storage';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/Chatcontext';
 import { storage } from '../firebase';
@@ -10,7 +10,6 @@ import { Timestamp } from '@firebase/firestore';
 
 const Like = require('./assets/images/Like.png');
 const Dislike = require('./assets/images/Dislike.png');
-
 
 const Message = ({ message }: IMessageProp) => {
   const { currentUser } = useContext(AuthContext);
@@ -48,16 +47,26 @@ const Message = ({ message }: IMessageProp) => {
     setIsDislike(!isHeart);
   };
 
+
+  let chatUserPhoto: string | undefined;
+  if (currentUser != null && currentUser.photoURL != null) {
+    chatUserPhoto =
+      message.senderId === currentUser.uid
+        ? currentUser.photoURL
+        : data?.user?.photoURL;
+  }
+
   const messageExst =
     message.text.split('.')[message.text.split('.').length - 1];
   const date = message.date.toDate().toLocaleString();
   const imageListRef = ref(storage, `images/${data.chatId}`);
 
   useEffect(() => {
-    if ((messageExst == 'jpg' ||
-    messageExst == 'jpeg' ||
-    messageExst == 'png') && !loading) {
-      setLoading(true)
+    if (
+      (messageExst == 'jpg' || messageExst == 'jpeg' || messageExst == 'png') &&
+      !loading
+    ) {
+      setLoading(true);
     }
     listAll(imageListRef).then((res) => {
       res.items.forEach((item) => {
@@ -68,11 +77,11 @@ const Message = ({ message }: IMessageProp) => {
     });
   }, []);
 
-  const onImgLoadHandler = (e) => {
+  const onImgLoadHandler = (e: { target: { complete: any } }) => {
     if (e.target.complete) {
-      setLoading(false)      
+      setLoading(false);
     }
-  }
+  };
 
   const arr = listUrl.find((item) =>
     item.includes(message.text || message.text.replaceAll(/ /g, '%'))
@@ -95,14 +104,17 @@ const Message = ({ message }: IMessageProp) => {
             {date}
           </div>
         </div>
-        {loading && 
-          <ColorRing />
-        }
+        {loading && <ColorRing />}
         <span className="message-text">
           {messageExst == 'jpg' ||
           messageExst == 'jpeg' ||
           messageExst == 'png' ? (
-            <img className="message__img" src={arr} alt="" onLoad={onImgLoadHandler} />
+            <img
+              className="message__img"
+              src={arr}
+              alt=""
+              onLoad={onImgLoadHandler}
+            />
           ) : (
             message.text
           )}
