@@ -1,5 +1,3 @@
-import React from 'react';
-
 type StepOneProps = {
   title: string;
   text: string;

@@ -44,7 +44,6 @@ const Chats: React.FC<ChatsProps> = ({
   onUserSelect,
 }) => {
   const { dispatch } = useContext(ChatContext);
-  console.log(chats, loading);
 
   const handleSelect = (u: any) => {
     dispatch({ type: ActionType.ChangeUser, payload: u });
