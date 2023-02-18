@@ -26,8 +26,8 @@ const Navbar = () => {
   const { dispatch } = useContext(ChatContext);
 
   const [userName, setUserName] = useState('');
-  const [chats, setChats] = useState<DocumentData | undefined>([])
-  const [users, setUsers] = useState<DocumentData | undefined>([])
+  const [chats, setChats] = useState<DocumentData | undefined>([]);
+  const [users, setUsers] = useState<DocumentData | undefined>([]);
   const [user, setUser] = useState<User | null | undefined | DocumentData>(
     null
   );
@@ -35,17 +35,13 @@ const Navbar = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const getChats = () => {
-    setLoading(true)
-    const unsub = onSnapshot(
-      doc(db, 'userChats', currentUser!.uid),
-      (doc) => {
-        if (doc && doc.data()) {
-          console.log(doc.data());
-          setChats(doc.data());
-          setLoading(false)
-        }
+    setLoading(true);
+    const unsub = onSnapshot(doc(db, 'userChats', currentUser!.uid), (doc) => {
+      if (doc && doc.data()) {
+        setChats(doc.data());
+        setLoading(false);
       }
-    );
+    });
     return () => {
       unsub();
     };
@@ -54,7 +50,6 @@ const Navbar = () => {
   useEffect(() => {
     currentUser?.uid && getChats();
   }, [currentUser?.uid]);
-
 
   const handleSelect = async (user: authUser) => {
     const combinedId =
@@ -84,24 +79,20 @@ const Navbar = () => {
       }
     } catch (err) {}
     dispatch({ type: ActionType.ChangeUser, payload: user });
-
   };
   const onEnterHandler = async (val: string) => {
-      const q = query(
-        collection(db, 'users'),
-        where('displayName', '==', val)
-      );    
-      try {
-        const querySnapshot = await getDocs(q);
-        const arr:DocumentData = []
-        querySnapshot.forEach((doc) => {
-         arr.push(doc.data());
-        });
-        setUsers(arr)
-      } catch (err) {
-        setError(true);
-      }
-  }
+    const q = query(collection(db, 'users'), where('displayName', '==', val));
+    try {
+      const querySnapshot = await getDocs(q);
+      const arr: DocumentData = [];
+      querySnapshot.forEach((doc) => {
+        arr.push(doc.data());
+      });
+      setUsers(arr);
+    } catch (err) {
+      setError(true);
+    }
+  };
   return (
     <div className="aside">
       <div className="container">
@@ -168,5 +159,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-

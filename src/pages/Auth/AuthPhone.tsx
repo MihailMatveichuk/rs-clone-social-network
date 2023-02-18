@@ -19,7 +19,7 @@ const AuthPhone = () => {
   const [otp, setOtp] = useState<string>('');
   const [confirmRes, setConfirmRes] = useState<ConfirmationResult | null>(null);
   const navigate = useNavigate();
-  const [secondsLeft, setSeconds] = useState(60);
+  const [secondsLeft, setSeconds] = useState(59);
   const [counting, setCounting] = useState(false);
   const startTimer = () => {
     setCounting(true);
@@ -71,7 +71,6 @@ const AuthPhone = () => {
       await setPersistence(auth, browserSessionPersistence);
       const res = await confirmRes.confirm(otp);
       const user = res.user;
-      console.log('!!!!!!!!!!! USER ', user);
       await setDoc(doc(db, 'users', res.user.uid), {
         uid: res.user.uid,
         displayName: user.phoneNumber,
@@ -90,14 +89,12 @@ const AuthPhone = () => {
   };
 
   const onSignInSubmit = async () => {
-    console.log('here', phone, rec);
     if (phone) {
       try {
         console.log(rec);
         if (!rec) return;
         await setPersistence(auth, browserSessionPersistence);
         const res = await signInWithPhoneNumber(auth, phone, rec);
-        console.log(res);
         setConfirmRes(res);
         startTimer();
         setStep(2);

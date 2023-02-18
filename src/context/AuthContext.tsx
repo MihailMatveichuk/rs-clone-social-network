@@ -14,7 +14,6 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
-        console.log('user: ', user);
       } else {
         setCurrentUser(null);
       }
