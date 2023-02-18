@@ -78,6 +78,7 @@
     "firebase": "^9.16.0",
     "formik": "^2.2.9",
     "http-proxy-middleware": "^2.0.6",
+    "moment": "^2.29.4",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "qs": "^6.11.0",

@@ -4,13 +4,17 @@ import {
   browserSessionPersistence,
   signInWithEmailAndPassword,
   setPersistence,
+  UserCredential,
+  createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
   updateProfile,
+
 } from 'firebase/auth';
 import { auth, db } from '../../firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import Register from '../../components/Register';
+import { checkUser, createUserViaEmail, loginUser } from '../../api';
 import GoogleButton from 'react-google-button';
 import { doc, setDoc } from 'firebase/firestore';
 
@@ -30,6 +34,27 @@ const AuthEmail = () => {
   //     console.log(err);
   //   }
   // };
+
+
+  // const onSubmitHandlerEmail = async () => {
+  //   try {
+  //     await setPersistence(auth, browserSessionPersistence);
+  //     const user = await signInWithEmailAndPassword(auth, email, password);
+  //     const u = await checkUser(user.user.uid)
+  //     if (!u && user.user.email) {
+  //       await createUserViaEmail({ email: user.user.email, uid: user.user.uid})
+  //       navigate('/register')
+  //     } else {
+  //       navigate('/');
+  //     }
+  //   } catch (e) {
+  //     const err = e as Error;
+  //     console.log(err.message);
+  //     setStep(2);
+  //   }
+  // };
+
+  const login = async () => {
 
   const signInWithGoogle = async () => {
     signInWithPopup(auth, providerGoogle)
@@ -55,12 +80,35 @@ const AuthEmail = () => {
   const onSubmitHandlerEmail = async () => {
     try {
       await setPersistence(auth, browserSessionPersistence);
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate('/');
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      await loginUser(res.user.uid)
+      console.log(res);
+      
+     // navigate('/');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onSubmitHandlerEmail = async () => {
+    try {
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      const u = await checkUser(user.user.uid)      
+      if (!u && user.user.email) {
+        await createUserViaEmail({ email: user.user.email, uid: user.user.uid})
+        navigate('/register')
+      } else {
+        //navigate('/');
+      }
     } catch (e) {
       const err = e as Error;
       console.log(err.message);
-      setStep(2);
+      
+      if (err.message === 'Firebase: Error (auth/email-already-in-use).') {
+        await login();
+        navigate('/');
+      }
+
     }
   };
   return (
@@ -91,7 +139,6 @@ const AuthEmail = () => {
             </svg>
           </Link>
         </div>
-        {step === 1 && (
           <StepOne
             title="What’s your email and password?"
             text="Insert your email and password"
@@ -128,11 +175,11 @@ const AuthEmail = () => {
               onClick={signInWithGoogle}
             />
           </StepOne>
-        )}
-        {step === 2 && <Register />}
       </div>
     </div>
   );
 };
 
 export default AuthEmail;
+
+

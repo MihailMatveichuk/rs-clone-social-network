@@ -9,6 +9,6 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.name': JSON.stringify('PRODUCTION'),
     }),
-    new BundleAnalyzerPlugin(),
+    //new BundleAnalyzerPlugin(),
   ],
 };

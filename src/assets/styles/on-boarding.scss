@@ -87,6 +87,8 @@
 }
 
 @media screen and (hover: hover) {
+  .on-boarding__go-back:hover svg g path{
+    fill: var(--main-text);
   .on-boarding__go-back:hover svg g path {
     fill: $main-text;
   }

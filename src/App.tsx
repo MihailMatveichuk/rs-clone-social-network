@@ -2,16 +2,18 @@ import './assets/styles/style.scss';
 import { OnBoarding } from './pages/OnBoarding';
 import Error from './pages/Error';
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
-import Home from './components/Home';
-import { PropsWithChildren, useContext } from 'react';
+import ChatPage from './pages/Chat/ChatPage';
+import { PropsWithChildren, useContext, useEffect } from 'react';
 import { AuthContext } from './context/AuthContext';
 import { AuthEmail, AuthPhone } from './pages/Auth';
 import Launcher from './pages/Launcher';
 import Register from './components/Register';
+import MainPage from './pages/User/MainPage';
+import SettingsPage from './pages/Settings';
+import { Themes, changeTheme } from './utlis/theme';
 
 export function App() {
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser);
   const ProtectedRoute: React.FC<PropsWithChildren> = ({ children }) => {
     if (currentUser === undefined) {
       return <Launcher />;
@@ -21,6 +23,13 @@ export function App() {
     }
     return <>{children}</>;
   };
+  
+  useEffect(() => {
+    const theme = window.sessionStorage.getItem('theme');
+    if (theme && theme !== Themes.LIGHT) {
+      changeTheme(theme as Themes);
+    }
+  }, []);
 
   return (
     <BrowserRouter>
@@ -30,7 +39,27 @@ export function App() {
             index
             element={
               <ProtectedRoute>
-                <Home />
+                <MainPage />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+        <Route path="/chats">
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <ChatPage />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+        <Route path="/settings">
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <SettingsPage />
               </ProtectedRoute>
             }
           />

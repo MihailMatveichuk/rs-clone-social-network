@@ -1,4 +1,5 @@
 import { User } from 'firebase/auth';
+import { Timestamp } from 'firebase/firestore';
 export interface IMessage {
   author: string;
 }
@@ -28,30 +29,29 @@ export enum ActionType {
 }
 
 export const initialState: IChatState = {
-  chatId: 'null',
-  user: {
-    displayName: '',
-    photoURL: '',
-    uid: '',
-  },
+  chatId: null,
+  user: null
 };
+
+
 
 export interface IChangeUserAction {
   type: ActionType;
-  payload: authUser;
+  payload: {
+    user: string,
+    uid: string;
+  };
 }
 export interface IChatState {
-  chatId: string;
-  user: authUser;
+  chatId: string | null;
+  user: string | null;
 }
 export interface IMessageFirebase {
   id: string;
   senderId: string;
   img: string;
   text: string;
-  date: {
-    seconds: number;
-  };
+  date: Timestamp;
 }
 export interface IMessageProp {
   message: IMessageFirebase;

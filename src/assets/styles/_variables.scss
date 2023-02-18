@@ -1,9 +1,67 @@
-$main-text: #171A1F;
-$primary: #248BF2;
-$primary-hovered: #3399FF;
-$primary-active: #1677D9;
-$grey-text: #71747A;
-$grey-background: #F2F3F5;
-$grey-background-hovered: #EBEDF0;
-$grey-background-active: #1677D9;
-$input-placeholder: #9D9FA3;
+// $main-text: #171A1F;
+// $primary: #248BF2;
+// $primary-hovered: #3399FF;
+// $primary-active: #1677D9;
+// $grey-text: #71747A;
+// $grey-background: #F2F3F5;
+// $grey-background-hovered: #EBEDF0;
+// $grey-background-active: #1677D9;
+// $input-placeholder: #9D9FA3;
+@use "sass:map";
+$theme-map-light: (
+    --theme-bg: #fff,
+    --theme-scrollbar-track: #C4C4C4,
+    --chat-info-bg:#fff,
+    --chat-bg: #ececec,
+    --theme-aside-bg: rgba(0, 0, 0, 0.08),
+    --theme-primary: #248BF2,
+    --theme-main-text: #171A1F,
+    --theme-primary-hovered: #3399FF,
+    --theme-primary-active: #1677D9,
+    --theme-grey-text: #71747A,
+    --svg-fill: #71747A,
+    --theme-grey-background: #F2F3F5,
+    --theme-grey-background-hovered: #EBEDF0,
+    --theme-grey-background-active: #1677D9,
+    --theme-input-placeholder: #9D9FA3,
+    --theme-input: rgba(201, 204, 209, 0.24),
+);
+
+$theme-map-dark: (
+    --theme-bg: #fff,
+    --theme-scrollbar-track: #C4C4C4,
+    --chat-info-bg:#fff,
+    --chat-bg: #ececec,
+    --theme-aside-bg: rgba(0, 0, 0, 0.08),
+    --theme-primary: #248BF2,
+    --theme-main-text: #171A1F,
+    --theme-primary-hovered: #3399FF,
+    --theme-primary-active: #1677D9,
+    --theme-grey-text: #71747A,
+    --theme-grey-background: #F2F3F5,
+    --theme-grey-background-hovered: #EBEDF0,
+    --theme-grey-background-active: #1677D9,
+    --theme-input-placeholder: #9D9FA3,
+    --theme-input: rgba(201, 204, 209, 0.24),
+);
+
+$theme-map-northern: (
+    --theme-bg: #0f3043,
+    --theme-scrollbar-track: #C4C4C4,
+    --theme-chat-info-bg:#053049,
+    --theme-chat-bg: #ececec,
+    --theme-aside-bg: rgba(0, 0, 0, 0.08),
+    --theme-primary: #027946e5,
+    --theme-main-text: #fff,
+    --theme-primary-hovered: #01a15c,
+    --theme-primary-active: #027946e5,
+    --theme-grey-text: rgba(255, 255, 255, 0.6),
+    --svg-fill: #fff,
+    --theme-grey-background: #F2F3F5,
+    --theme-grey-background-hovered: #EBEDF0,
+    --theme-grey-background-active: #1677D9,
+    --theme-input-placeholder: #d1ddcd,
+    --theme-input: rgba(201, 204, 209, 0.44),
+    
+);
+// Override the default light theme

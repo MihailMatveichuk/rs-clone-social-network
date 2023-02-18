@@ -5,7 +5,8 @@ import { ChatContext } from '../context/Chatcontext';
 import { storage } from '../firebase';
 import { IMessageProp } from '../types';
 import { ColorRing } from 'react-loader-spinner';
-import '../assets/styles/style.css';
+import { checkUser } from '../api';
+import { Timestamp } from '@firebase/firestore';
 
 const Like = require('./assets/images/Like.png');
 const Dislike = require('./assets/images/Dislike.png');
@@ -19,16 +20,33 @@ const Message = ({ message }: IMessageProp) => {
   const [dislike, setDislike] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [isHeart, setIsDislike] = useState(false);
+  const [photo, setPhoto] = useState(currentUser!.photoURL);
+  let chatUserPhoto: string | undefined;
+
 
   const likeHandler = () => {
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
 
+  const getPhoto = async () => {
+    if (currentUser != null && currentUser.photoURL != null) {
+      if (message.senderId !== currentUser!.uid) {
+        const user = await checkUser(message.senderId)
+        setPhoto(user!.photoUrl)
+      }
+    }
+  }
+  useEffect(() => {
+    getPhoto()
+  },[])
+    
+
   const dislikeHandler = () => {
     setDislike(isHeart ? dislike - 1 : dislike + 1);
     setIsDislike(!isHeart);
   };
+
 
   let chatUserPhoto: string | undefined;
   if (currentUser != null && currentUser.photoURL != null) {
@@ -40,8 +58,8 @@ const Message = ({ message }: IMessageProp) => {
 
   const messageExst =
     message.text.split('.')[message.text.split('.').length - 1];
-
-  const imageListRef = ref(storage, `images/`);
+  const date = message.date.toDate().toLocaleString();
+  const imageListRef = ref(storage, `images/${data.chatId}`);
 
   useEffect(() => {
     if (
@@ -75,7 +93,7 @@ const Message = ({ message }: IMessageProp) => {
       }`}
     >
       <div className="message__user-photo">
-        <img src={chatUserPhoto} alt="" />
+        <img src={photo!} alt="" />
       </div>
       <div className="message-content">
         <span style={{ fontSize: '14px', fontWeight: 700 }}>
@@ -83,7 +101,7 @@ const Message = ({ message }: IMessageProp) => {
         </span>
         <div className="message-info">
           <div className="message-info-time">
-            {new Date(message.date.seconds).toLocaleString()}
+            {date}
           </div>
         </div>
         {loading && <ColorRing />}

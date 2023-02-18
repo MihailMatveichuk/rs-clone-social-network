@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { db } from '../firebase';
+import { db, storage } from '../firebase';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/Chatcontext';
 import { ActionType, authUser } from '../types';
@@ -19,6 +19,8 @@ import {
 } from 'firebase/firestore';
 import { User } from 'firebase/auth';
 import Loading from './UI/Loading';
+import { getDownloadURL, ref } from 'firebase/storage';
+import ChatCard from './UI/ChatCard';
 
 <ColorRing
   visible={true}
@@ -48,6 +50,8 @@ const Chats: React.FC<ChatsProps> = ({
   const handleSelect = (u: any) => {
     dispatch({ type: ActionType.ChangeUser, payload: u });
   };
+
+
 
   return (
     <div className="chats">
@@ -79,33 +83,12 @@ const Chats: React.FC<ChatsProps> = ({
             </li>
           ))}
         {chats != undefined ? (
-          Object.entries(chats!)
-            ?.sort((a, b) => b[1].date - a[1].date)
+          chats?.sort((a, b) => b.date - a.date)
             .map((chat) => (
-              <li
-                className="user-chat"
-                key={chat[0]}
-                onClick={() => handleSelect(chat[1].userInfo)}
-                role="presentation"
-              >
-                <div className="container">
-                  <div className="user-chat__inner">
-                    {chat[1].userInfo && (
-                      <img
-                        className="user-chat__img"
-                        src={chat[1].userInfo.photoURL}
-                        alt=""
-                      />
-                    )}
-                    <div className="user-chat__message">
-                      {chat[1].userInfo && (
-                        <span>{chat[1].userInfo.displayName}</span>
-                      )}
-                      <div>{chat[1].lastMessage?.text}</div>
-                    </div>
-                  </div>
-                </div>
-              </li>
+              <ChatCard
+                handleSelect={handleSelect}
+                chat={chat}
+              />
             ))
         ) : (
           <div className="user-chat">
