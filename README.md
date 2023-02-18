@@ -87,7 +87,7 @@ If the information from this repo was useful to you in any way, make sure you gi
 Do you have any suggestions on how we could improve this project overall? Let us know! We'd love to hear your feedback!
 
 ### Main Contributors :sunglasses: :sunglasses: :sunglasses::
-***Kashin Gen***
+***Gennady Kashin***
   
 [![GitHub Badge](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/KashinGen)
   
