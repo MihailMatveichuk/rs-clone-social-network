@@ -3,6 +3,7 @@ import { doc, DocumentData, getDoc } from 'firebase/firestore';
 import { createContext, PropsWithChildren, useEffect, useState } from 'react';
 import { auth, db } from '../firebase';
 import { ContextUser } from '../types';
+import { changeTheme, Themes } from '../utlis/theme';
 
 export const AuthContext = createContext<ContextUser>({
   currentUser: null,
@@ -17,8 +18,10 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
-
-        console.log('user: ', user);
+          const theme = user.theme;
+          if (theme && theme !== Themes.LIGHT) {
+            changeTheme(theme as Themes);
+          }
       } else {
         setCurrentUser(null);
       }

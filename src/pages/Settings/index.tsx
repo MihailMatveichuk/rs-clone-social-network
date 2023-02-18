@@ -2,7 +2,7 @@ import { useContext, useEffect, useState  } from 'react';
 import UserInfo from '../../components/Main/UserInfo';
 import Layout from '../Layout';
 import { AuthContext } from '../../context/AuthContext';
-import { checkUser } from '../../api';
+import { changeUserTheme, checkUser } from '../../api';
 import { DocumentData } from 'firebase/firestore';
 import { changeTheme, Themes, getTheme } from '../../utlis/theme';
 import CustomInput from '../../components/UI/Input';
@@ -21,6 +21,12 @@ const SettingsPage = () => {
     getUser()
   },[])
 
+  const onChangeThemeHandler = async (theme: Themes) => {
+    changeTheme(theme)
+    sessionStorage.setItem('theme', theme);
+    await changeUserTheme(currentUser!.uid, theme)
+  }
+
   const getUser = async () => {
     const u = await checkUser(currentUser!.uid)
     if (u) {
@@ -35,17 +41,17 @@ const SettingsPage = () => {
             <h4 className="settings__block-title">Change theme</h4>
             <div className='settings__button-wrapper'>
               <button className='btn btn--primary'
-                onClick={() => changeTheme(Themes.LIGHT)}
+                onClick={() => onChangeThemeHandler(Themes.LIGHT)}
               >
                 Light (default)
               </button>
               <button className='btn btn--primary'
-                      onClick={() => changeTheme(Themes.DARK)}
+                      onClick={() => onChangeThemeHandler(Themes.DARK)}
               >
                 Dark
               </button>
               <button className='btn btn--primary'
-                      onClick={() => changeTheme(Themes.NORTHERN_SHINING)}
+                      onClick={() => onChangeThemeHandler(Themes.NORTHERN_SHINING)}
               >
                 Northern shining
               </button>

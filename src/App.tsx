@@ -3,17 +3,17 @@ import { OnBoarding } from './pages/OnBoarding';
 import Error from './pages/Error';
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import ChatPage from './pages/Chat/ChatPage';
-import { PropsWithChildren, useContext } from 'react';
+import { PropsWithChildren, useContext, useEffect } from 'react';
 import { AuthContext } from './context/AuthContext';
 import { AuthEmail, AuthPhone } from './pages/Auth';
 import Launcher from './pages/Launcher';
 import Register from './components/Register';
 import MainPage from './pages/User/MainPage';
 import SettingsPage from './pages/Settings';
+import { Themes, changeTheme } from './utlis/theme';
 
 export function App() {
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser);
   const ProtectedRoute: React.FC<PropsWithChildren> = ({ children }) => {
     if (currentUser === undefined) {
       return <Launcher />;
@@ -23,6 +23,13 @@ export function App() {
     }
     return <>{children}</>;
   };
+  
+  useEffect(() => {
+    const theme = window.sessionStorage.getItem('theme');
+    if (theme && theme !== Themes.LIGHT) {
+      changeTheme(theme as Themes);
+    }
+  }, []);
 
   return (
     <BrowserRouter>

@@ -2,6 +2,7 @@ import { User } from "firebase/auth";
 import { arrayUnion, collection, doc, DocumentData, getDoc, getDocs, query, setDoc, Timestamp, updateDoc, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { uuidv4 } from '@firebase/util';
+import { Themes, changeTheme } from '../utlis/theme';
 
 const usersRef = collection(db, "users");
 
@@ -94,6 +95,10 @@ export const createChatMessages = async (uid: string | null) => {
 export const logoutUser = async (uid: string | null) => {
   if (!uid) return;
   const user = await checkUser(uid)
+  const theme = sessionStorage.getItem('theme')
+  if (theme) {
+    sessionStorage.removeItem('theme')
+  }
   await updateDoc(doc(usersRef, uid), {
     ...user,
     online: false,
@@ -109,5 +114,14 @@ export const loginUser = async (uid: string | null) => {
     ...user,
     online: true,
     lastSeen: null
+  })
+}
+
+export const changeUserTheme = async (uid: string | null, theme: Themes) => {
+  if (!uid) return;
+  const user = await checkUser(uid)
+  await updateDoc(doc(usersRef, uid), {
+    ...user,
+    theme
   })
 }
