@@ -1,18 +1,15 @@
 import InputFile from './InputFile';
-import styled from 'styled-components';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth, db, storage } from '../firebase';
+import { updateProfile } from 'firebase/auth';
+import { db, storage } from '../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { checkUser } from '../api';
 
-
 const Register = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState(false);
   const { currentUser } = useContext(AuthContext);
   const handleSubmit = async (e: {
     target: any;
@@ -24,7 +21,7 @@ const Register = () => {
     const lastName: string = e.target[2].value;
 
     try {
-      const displayName = `${firstName} ${lastName}`
+      const displayName = `${firstName} ${lastName}`;
       const storageRef = ref(storage, displayName);
       await uploadBytesResumable(storageRef, file).then(async () => {
         getDownloadURL(storageRef).then(async (downloadURL) => {
@@ -41,16 +38,14 @@ const Register = () => {
               photoUrl: downloadURL,
             });
             navigate('/');
-            //await setDoc(doc(db, 'userChats', res.user.uid), {});
           } catch (err) {
             console.log(err);
-            
-           // setError(true);
+            // setError(true);
           }
         });
       });
     } catch (err) {
-      setError(true);
+      console.log(err);
     }
   };
   return (

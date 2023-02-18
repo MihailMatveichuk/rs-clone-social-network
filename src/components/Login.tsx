@@ -1,4 +1,3 @@
-import '../App.css';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';

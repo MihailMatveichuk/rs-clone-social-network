@@ -30,15 +30,13 @@ export enum ActionType {
 
 export const initialState: IChatState = {
   chatId: null,
-  user: null
+  user: null,
 };
-
-
 
 export interface IChangeUserAction {
   type: ActionType;
   payload: {
-    user: string,
+    user: string;
     uid: string;
   };
 }

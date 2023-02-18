@@ -4,10 +4,10 @@ import Layout from '../Layout';
 import { AuthContext } from '../../context/AuthContext';
 
 const MainPage = () => {
-  const {currentUser} = useContext(AuthContext)
+  const { currentUser } = useContext(AuthContext);
   return (
     <Layout>
-      <UserInfo userUid={currentUser!.uid} isMain/>
+      <UserInfo userUid={currentUser!.uid} isMain />
     </Layout>
   );
 };

@@ -13,14 +13,14 @@ import { getStorage } from 'firebase/storage';
 // };
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD6PUtnmbH_fovZuwQUAfz0nzbZ4sULv_E",
-  authDomain: "chat-local-9eadd.firebaseapp.com",
-  databaseURL: "https://chat-local-9eadd-default-rtdb.firebaseio.com",
-  projectId: "chat-local-9eadd",
-  storageBucket: "chat-local-9eadd.appspot.com",
-  messagingSenderId: "15271697589",
-  appId: "1:15271697589:web:e95a3b3adc2e47080af2fc",
-  measurementId: "G-TX164T1DNG"
+  apiKey: 'AIzaSyD6PUtnmbH_fovZuwQUAfz0nzbZ4sULv_E',
+  authDomain: 'chat-local-9eadd.firebaseapp.com',
+  databaseURL: 'https://chat-local-9eadd-default-rtdb.firebaseio.com',
+  projectId: 'chat-local-9eadd',
+  storageBucket: 'chat-local-9eadd.appspot.com',
+  messagingSenderId: '15271697589',
+  appId: '1:15271697589:web:e95a3b3adc2e47080af2fc',
+  measurementId: 'G-TX164T1DNG',
 };
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth();

@@ -7,7 +7,6 @@
 @import 'ui';
 @import 'settings';
 
-
 html,
 body,
 #root {
@@ -19,7 +18,9 @@ body {
   background: var(--theme-bg);
   color: var(--theme-main-text);
 }
-*, *::after, *::before {
+*,
+*::after,
+*::before {
   box-sizing: border-box;
 }
 
@@ -35,7 +36,6 @@ body {
   display: flex;
   flex-direction: column;
   .registra-form input {
-
   }
 }
 
@@ -61,7 +61,7 @@ body {
   }
 }
 
-.svgFill{
+.svgFill {
   fill: var(--svg-fill);
 }
 
@@ -142,7 +142,7 @@ body {
   line-height: 24px;
   letter-spacing: -0.24px;
   &::placeholder {
-    color: var(--theme-input-placeholder)
+    color: var(--theme-input-placeholder);
   }
 }
 

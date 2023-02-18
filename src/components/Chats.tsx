@@ -1,25 +1,25 @@
-import { useContext, useEffect, useState } from 'react';
-import { db, storage } from '../firebase';
-import { AuthContext } from '../context/AuthContext';
+import { Key, useContext } from 'react';
+// import { db, storage } from '../firebase';
+// import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/Chatcontext';
 import { ActionType, authUser } from '../types';
 import { ColorRing } from 'react-loader-spinner';
 import {
-  collection,
-  query,
-  where,
-  getDocs,
-  setDoc,
-  updateDoc,
-  doc,
-  serverTimestamp,
-  onSnapshot,
-  getDoc,
+  // collection,
+  // query,
+  // where,
+  // getDocs,
+  // setDoc,
+  // updateDoc,
+  // doc,
+  // serverTimestamp,
+  // onSnapshot,
+  // getDoc,
   DocumentData,
 } from 'firebase/firestore';
-import { User } from 'firebase/auth';
+// import { User } from 'firebase/auth';
 import Loading from './UI/Loading';
-import { getDownloadURL, ref } from 'firebase/storage';
+// import { getDownloadURL, ref } from 'firebase/storage';
 import ChatCard from './UI/ChatCard';
 
 <ColorRing
@@ -51,8 +51,6 @@ const Chats: React.FC<ChatsProps> = ({
     dispatch({ type: ActionType.ChangeUser, payload: u });
   };
 
-
-
   return (
     <div className="chats">
       {loading && <Loading />}
@@ -83,12 +81,12 @@ const Chats: React.FC<ChatsProps> = ({
             </li>
           ))}
         {chats != undefined ? (
-          chats?.sort((a, b) => b.date - a.date)
-            .map((chat) => (
-              <ChatCard
-                handleSelect={handleSelect}
-                chat={chat}
-              />
+          chats
+            ?.sort(
+              (a: { date: number }, b: { date: number }) => b.date - a.date
+            )
+            .map((chat: DocumentData, i: Key | null | undefined) => (
+              <ChatCard handleSelect={handleSelect} chat={chat} key={i} />
             ))
         ) : (
           <div className="user-chat">

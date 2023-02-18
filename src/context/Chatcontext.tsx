@@ -1,4 +1,4 @@
-import React, { createContext, PropsWithChildren, useContext } from 'react';
+import React, { createContext, PropsWithChildren } from 'react';
 import {
   ActionType,
   IChangeUserAction,
@@ -6,12 +6,11 @@ import {
   IChatState,
   initialState,
 } from '../types';
-import { AuthContext } from './AuthContext';
 
 export const ChatContext = createContext<IChatContext>({
   data: {
     chatId: null,
-    user: null
+    user: null,
     // user: {
     //   displayName: '',
     //   photoURL: '',
@@ -24,7 +23,6 @@ export const ChatContext = createContext<IChatContext>({
 });
 
 export const ChatContextProvider = ({ children }: PropsWithChildren) => {
-  const { currentUser } = useContext(AuthContext);
   const INITIAL_STATE = initialState;
 
   const chatReducer = (state: IChatState, action: IChangeUserAction) => {
@@ -32,7 +30,7 @@ export const ChatContextProvider = ({ children }: PropsWithChildren) => {
       case ActionType.ChangeUser:
         return {
           user: action.payload.user,
-          chatId: action.payload.uid
+          chatId: action.payload.uid,
         };
 
       default:

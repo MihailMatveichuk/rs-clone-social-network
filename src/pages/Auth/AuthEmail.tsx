@@ -4,17 +4,15 @@ import {
   browserSessionPersistence,
   signInWithEmailAndPassword,
   setPersistence,
-  UserCredential,
+  // UserCredential,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
   updateProfile,
-
 } from 'firebase/auth';
 import { auth, db } from '../../firebase';
 import { useNavigate, Link } from 'react-router-dom';
-import Register from '../../components/Register';
-import { checkUser, createUserViaEmail, loginUser } from '../../api';
+import { checkUser, createUserViaEmail } from '../../api';
 import GoogleButton from 'react-google-button';
 import { doc, setDoc } from 'firebase/firestore';
 
@@ -22,39 +20,17 @@ const AuthEmail = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [step, setStep] = useState<number>(1);
   const providerGoogle = new GoogleAuthProvider();
 
-  // const login = async () => {
-  //   try {
-  //     await setPersistence(auth, browserSessionPersistence);
-  //     await signInWithEmailAndPassword(auth, email, password);
-  //     navigate('/');
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-
-  // const onSubmitHandlerEmail = async () => {
-  //   try {
-  //     await setPersistence(auth, browserSessionPersistence);
-  //     const user = await signInWithEmailAndPassword(auth, email, password);
-  //     const u = await checkUser(user.user.uid)
-  //     if (!u && user.user.email) {
-  //       await createUserViaEmail({ email: user.user.email, uid: user.user.uid})
-  //       navigate('/register')
-  //     } else {
-  //       navigate('/');
-  //     }
-  //   } catch (e) {
-  //     const err = e as Error;
-  //     console.log(err.message);
-  //     setStep(2);
-  //   }
-  // };
-
   const login = async () => {
+    try {
+      await setPersistence(auth, browserSessionPersistence);
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate('/');
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const signInWithGoogle = async () => {
     signInWithPopup(auth, providerGoogle)
@@ -62,6 +38,7 @@ const AuthEmail = () => {
         await updateProfile(res.user, {
           displayName: res.user.displayName,
           photoURL: res.user.photoURL,
+          // email: res.user.email;
         });
         await setDoc(doc(db, 'users', res.user.uid), {
           uid: res.user.uid,
@@ -79,36 +56,25 @@ const AuthEmail = () => {
 
   const onSubmitHandlerEmail = async () => {
     try {
-      await setPersistence(auth, browserSessionPersistence);
-      const res = await signInWithEmailAndPassword(auth, email, password);
-      await loginUser(res.user.uid)
-      console.log(res);
-      
-     // navigate('/');
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const onSubmitHandlerEmail = async () => {
-    try {
       const user = await createUserWithEmailAndPassword(auth, email, password);
-      const u = await checkUser(user.user.uid)      
+      const u = await checkUser(user.user.uid);
       if (!u && user.user.email) {
-        await createUserViaEmail({ email: user.user.email, uid: user.user.uid})
-        navigate('/register')
+        await createUserViaEmail({
+          email: user.user.email,
+          uid: user.user.uid,
+        });
+        navigate('/register');
       } else {
-        //navigate('/');
+        navigate('/');
       }
     } catch (e) {
       const err = e as Error;
       console.log(err.message);
-      
+
       if (err.message === 'Firebase: Error (auth/email-already-in-use).') {
         await login();
         navigate('/');
       }
-
     }
   };
   return (
@@ -139,47 +105,45 @@ const AuthEmail = () => {
             </svg>
           </Link>
         </div>
-          <StepOne
-            title="What’s your email and password?"
-            text="Insert your email and password"
-            onSubmit={onSubmitHandlerEmail}
-          >
-            <input
-              type="email"
-              className="input on-boarding__email"
-              required
-              placeholder="krambambulia@.com"
-              pattern="/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setEmail(e.target.value)
-              }
-            />
-            <input
-              type="password"
-              placeholder="Password should be more then 6 symbols"
-              className="input on-boarding__password"
-              pattern=".{6,}"
-              required
-              title="Enter a password consisting more then 6 symbols"
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setPassword(e.target.value)
-              }
-            />
-            <GoogleButton
-              type="light"
-              style={{
-                margin: '10px auto',
-                width: '75%',
-                borderRadius: '7px',
-              }}
-              onClick={signInWithGoogle}
-            />
-          </StepOne>
+        <StepOne
+          title="What’s your email and password?"
+          text="Insert your email and password"
+          onSubmit={onSubmitHandlerEmail}
+        >
+          <input
+            type="email"
+            className="input on-boarding__email"
+            required
+            placeholder="krambambulia@.com"
+            pattern="/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"
+            onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setEmail(e.target.value)
+            }
+          />
+          <input
+            type="password"
+            placeholder="Password should be more then 6 symbols"
+            className="input on-boarding__password"
+            pattern=".{6,}"
+            required
+            title="Enter a password consisting more then 6 symbols"
+            onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
+          />
+          <GoogleButton
+            type="light"
+            style={{
+              margin: '10px auto',
+              width: '75%',
+              borderRadius: '7px',
+            }}
+            onClick={signInWithGoogle}
+          />
+        </StepOne>
       </div>
     </div>
   );
 };
 
 export default AuthEmail;
-
-

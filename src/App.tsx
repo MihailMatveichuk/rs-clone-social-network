@@ -23,7 +23,7 @@ export function App() {
     }
     return <>{children}</>;
   };
-  
+
   useEffect(() => {
     const theme = window.sessionStorage.getItem('theme');
     if (theme && theme !== Themes.LIGHT) {
