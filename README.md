@@ -59,13 +59,13 @@ $ npm start
 ```
 **Open page with app in different incognito page and use both of they as different users and :fire:ENJOY:fire:.**
   
-## Tech Stack
+## 🧰 Tech Stack
 
 **Client:** React, TypeScript, SCSS, HTML, CSS
   
 **Server:** Firebase
 
-## Plans for the future
+## 🚀 Plans for the future
 
 We are planning to add more and more projects to this repository. For this, we need your help! Find out how to contribute below. 👇
 
