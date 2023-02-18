@@ -14,8 +14,6 @@ const Dislike = require('./assets/images/Dislike.png');
 
 
 const Message = ({ message }: IMessageProp) => {
-  console.log(message);
-  
   const { currentUser } = useContext(AuthContext);
   const [listUrl, setListUrl] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -38,10 +36,7 @@ const Message = ({ message }: IMessageProp) => {
       if (message.senderId !== currentUser!.uid) {
         const user = await checkUser(message.senderId)
         setPhoto(user!.photoUrl)
-      } else {
-        //chatUserPhoto = currentUser!.photoURL
       }
-      
     }
   }
   useEffect(() => {

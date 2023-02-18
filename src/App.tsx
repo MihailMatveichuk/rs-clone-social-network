@@ -2,12 +2,13 @@ import './assets/styles/style.scss';
 import { OnBoarding } from './pages/OnBoarding';
 import Error from './pages/Error';
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
-import Home from './components/Home';
+import ChatPage from './pages/Chat/ChatPage';
 import { PropsWithChildren, useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
 import { AuthEmail, AuthPhone } from './pages/Auth';
 import Launcher from './pages/Launcher';
 import Register from './components/Register';
+import MainPage from './pages/User/MainPage';
 
 export function App() {
   const { currentUser } = useContext(AuthContext);
@@ -30,7 +31,17 @@ export function App() {
             index
             element={
               <ProtectedRoute>
-                <Home />
+                <MainPage />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+        <Route path="/chats">
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <ChatPage />
               </ProtectedRoute>
             }
           />

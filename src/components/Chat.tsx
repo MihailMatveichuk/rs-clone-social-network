@@ -8,40 +8,17 @@ import ChatInfo from './UI/ChatInfo';
 const logoSrc = require('../assets/images/logo.png');
 const Chat = () => {
   const { data } = useContext(ChatContext);
-  const displayName =
-    auth.currentUser && auth.currentUser.phoneNumber
-      ? auth.currentUser.phoneNumber
-      : auth.currentUser?.displayName;
-  const photoURL =
-    auth.currentUser && auth.currentUser.photoURL
-      ? auth.currentUser.photoURL
-      : logoSrc;
 
-  // const displayName =
-  //   auth.currentUser && auth.currentUser.phoneNumber
-  //     ? auth.currentUser.phoneNumber
-  //     : ''
   return (
     <div className="chat">
       <div className="chat__content">
-        <ChatInfo photoURL={photoURL} displayName={displayName!} />
-        {/* <div className="userChat">
-
-            <div className="navChat">
-              <img
-                className="userChatImg"
-                src={data.user.photoURL || null || undefined}
-                alt=""
-              />
-              <span>{data.user?.displayName}</span>
-
-              <div className="userChatInfo">
-
-              </div>
-            </div>
-          </div> */}
-        <Messages />
-        <InputPanel />
+        {data.chatId && data.user &&
+          <>
+            <ChatInfo userRef={data.user} chatId={data.chatId} />
+            <Messages />
+            <InputPanel />
+          </>
+        }
       </div>
     </div>
   );

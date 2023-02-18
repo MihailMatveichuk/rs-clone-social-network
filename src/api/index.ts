@@ -20,7 +20,6 @@ export const checkUser = async (uid: string): Promise<DocumentData | null> => {
     const docRef = doc(db, "users", uid);
     const docSnap =  await getDoc(docRef);
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
       return docSnap.data();
     } else {
       return null;

@@ -11,8 +11,6 @@ type ChatCardProps = {
 
 
 const ChatCard:React.FC<ChatCardProps> = ({chat, handleSelect}) => {
-  console.log(chat);
-  
   const [user, setUser] = useState<DocumentData | null>(null)
   const getData = async () => {
     const unsub = onSnapshot(
@@ -20,8 +18,6 @@ const ChatCard:React.FC<ChatCardProps> = ({chat, handleSelect}) => {
       async (d) => {
         if (d && d.data()) {
           const data = d.data()
-          console.log(data);
-          
           if (data) {
             setUser(data)
           }

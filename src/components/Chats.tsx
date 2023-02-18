@@ -46,10 +46,8 @@ const Chats: React.FC<ChatsProps> = ({
   onUserSelect,
 }) => {
   const { dispatch } = useContext(ChatContext);
-  console.log(chats, loading);
 
   const handleSelect = (u: any) => {
-    console.log(u)
     dispatch({ type: ActionType.ChangeUser, payload: u });
   };
 
@@ -91,33 +89,6 @@ const Chats: React.FC<ChatsProps> = ({
                 handleSelect={handleSelect}
                 chat={chat}
               />
-              // <li
-              //   className="user-chat"
-              //   key={chat[0]}
-              //   onClick={() => handleSelect({
-              //     uid: chat[1].uid,
-              //     user: chat[1].user.uid
-              //   })}
-              //   role="presentation"
-              // >
-              //   <div className="container">
-              //     <div className="user-chat__inner">
-                  
-              //         <img
-              //           className="user-chat__img"
-              //           src={chat[1].user.photoUrl}
-              //           alt=""
-              //         />
-                    
-              //       <div className="user-chat__message">
-                      
-              //           <span>{chat[1].user.displayName}</span>
-                      
-              //         <div>{chat[1].lastMessage} <span>({chat[1].user.online.toString()})</span></div>
-              //       </div>
-              //     </div>
-              //   </div>
-              // </li>
             ))
         ) : (
           <div className="user-chat">

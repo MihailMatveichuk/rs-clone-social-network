@@ -17,7 +17,11 @@ const Leftsidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar__logo">
-        <img alt="nav-logo" src={logoSrc} />
+        <NavLink
+                to="/"
+          >
+            <img alt="nav-logo" src={logoSrc} />
+        </NavLink>
       </div>
       <nav className="nav">
         <ul className="nav__list">
@@ -80,7 +84,7 @@ const Leftsidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/chat">
+            <NavLink to="/chats">
               <svg
                 width="24"
                 height="24"
