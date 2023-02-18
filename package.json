@@ -76,6 +76,7 @@
     "dotenv": "^16.0.3",
     "emoji-picker-react": "^4.4.7",
     "firebase": "^9.16.0",
+    "formik": "^2.2.9",
     "http-proxy-middleware": "^2.0.6",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
@@ -95,6 +96,7 @@
     "rm-emoji-picker": "^1.0.0",
     "styled-components": "^5.3.6",
     "uuid": "^9.0.0",
-    "video-react": "^0.16.0"
+    "video-react": "^0.16.0",
+    "yup": "^1.0.0"
   }
 }

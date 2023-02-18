@@ -50,16 +50,16 @@
     cursor: pointer;
   }
 
-  &__email, &__password {
+  &__email,
+  &__password {
     width: 320px;
   }
 
-  &__form{
+  &__form {
     display: flex;
     flex-direction: column;
-    row-gap: 10px;
+    row-gap: 15px;
   }
-
 }
 
 .otp-group {
@@ -86,9 +86,8 @@
   }
 }
 
-
 @media screen and (hover: hover) {
-  .on-boarding__go-back:hover svg g path{
+  .on-boarding__go-back:hover svg g path {
     fill: $main-text;
   }
 }

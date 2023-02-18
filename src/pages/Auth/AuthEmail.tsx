@@ -94,30 +94,37 @@ const AuthEmail = () => {
         {step === 1 && (
           <StepOne
             title="What’s your email and password?"
-            text="We’ll send you a sign-in code"
+            text="Insert your email and password"
             onSubmit={onSubmitHandlerEmail}
           >
             <input
               type="email"
-              placeholder="email"
               className="input on-boarding__email"
               required
+              placeholder="krambambulia@.com"
+              pattern="/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"
               onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setEmail(e.target.value)
               }
             />
             <input
               type="password"
-              placeholder="password"
+              placeholder="Password should be more then 6 symbols"
               className="input on-boarding__password"
+              pattern=".{6,}"
               required
+              title="Enter a password consisting more then 6 symbols"
               onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setPassword(e.target.value)
               }
             />
             <GoogleButton
               type="light"
-              style={{ margin: '10px auto', width: '70%' }}
+              style={{
+                margin: '10px auto',
+                width: '75%',
+                borderRadius: '7px',
+              }}
               onClick={signInWithGoogle}
             />
           </StepOne>
