@@ -40,9 +40,7 @@ const Message = ({ message }: IMessageProp) => {
 
   const messageExst =
     message.text.split('.')[message.text.split('.').length - 1];
-
   const imageListRef = ref(storage, `images/${data.chatId}`);
-
   useEffect(() => {
     if (
       (messageExst == 'jpg' || messageExst == 'jpeg' || messageExst == 'png') &&
@@ -65,9 +63,15 @@ const Message = ({ message }: IMessageProp) => {
     }
   };
 
-  const arr = listUrl.find((item) =>
-    item.includes(message.text || message.text.replaceAll(/ /g, '%'))
-  );
+  const imgSrc = listUrl.find((item) => {
+    return item.includes(message.text || message.text.replaceAll(/ /g, '%'));
+  });
+
+  const videoSrc = listUrl.find((item) => {
+    return item;
+  });
+  const videoExtensions = ['mp4', 'm4v', 'webm', 'ogv', 'flv', 'mkv', 'avi'];
+
   return (
     <li
       className={`message ${
@@ -88,15 +92,28 @@ const Message = ({ message }: IMessageProp) => {
         </div>
         {loading && <ColorRing />}
         <span className="message-text">
-          {messageExst == 'jpg' ||
-          messageExst == 'jpeg' ||
-          messageExst == 'png' ? (
+          {videoExtensions.includes(messageExst) ? (
+            <video width="400px" src={videoSrc} controls>
+              <track
+                src={videoSrc}
+                kind="captions"
+                srcLang="en"
+                label="English"
+              ></track>
+            </video>
+          ) : messageExst == 'jpg' ||
+            messageExst == 'jpeg' ||
+            messageExst == 'png' ? (
             <img
               className="message__img"
-              src={arr}
+              src={imgSrc}
               alt=""
               onLoad={onImgLoadHandler}
             />
+          ) : message.text.includes('https://www') ? (
+            <a href={message.text} target="_blank" rel="noreferrer">
+              message.text
+            </a>
           ) : (
             message.text
           )}
