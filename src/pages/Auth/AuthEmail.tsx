@@ -6,21 +6,21 @@ import {
   setPersistence,
   // UserCredential,
   createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-  updateProfile,
+  // GoogleAuthProvider,
+  // signInWithPopup,
+  // updateProfile,
 } from 'firebase/auth';
-import { auth, db } from '../../firebase';
+import { auth } from '../../firebase';
 import { useNavigate, Link } from 'react-router-dom';
 import { checkUser, createUserViaEmail } from '../../api';
-import GoogleButton from 'react-google-button';
-import { doc, setDoc } from 'firebase/firestore';
+// import GoogleButton from 'react-google-button';
+// import { doc, setDoc } from 'firebase/firestore';
 
 const AuthEmail = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const providerGoogle = new GoogleAuthProvider();
+  // const providerGoogle = new GoogleAuthProvider();
 
   const login = async () => {
     try {
@@ -32,27 +32,37 @@ const AuthEmail = () => {
     }
   };
 
-  const signInWithGoogle = async () => {
-    signInWithPopup(auth, providerGoogle)
-      .then(async (res) => {
-        await updateProfile(res.user, {
-          displayName: res.user.displayName,
-          photoURL: res.user.photoURL,
-          // email: res.user.email;
-        });
-        await setDoc(doc(db, 'users', res.user.uid), {
-          uid: res.user.uid,
-          displayName: res.user.displayName,
-          email: res.user.email,
-          photoURL: res.user.photoURL,
-        });
-        await setDoc(doc(db, 'userChats', res.user.uid), {});
-        navigate('/');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const signInWithGoogle = async () => {
+  //   signInWithPopup(auth, providerGoogle)
+  //     .then(async (res) => {
+  //       try {
+  //         await set(res.user, {
+  //           displayName: res.user.displayName,
+  //           photoURL: res.user.photoURL,
+  //         });
+  //         await setDoc(doc(db, 'users', res.user.uid), {
+  //           uid: res.user.uid,
+  //           displayName: res.user.displayName,
+  //           email: res.user.email,
+  //           photoURL: res.user.photoURL,
+  //         });
+  //         // await setDoc(doc(db, 'userChats', res.user.uid), {});
+  //         navigate('/');
+  //       } catch (e) {
+  //         const err = e as Error;
+  //         console.log(err.message);
+
+  //         if (err.message === 'Firebase: Error (auth/email-already-in-use).') {
+  //           await login();
+  //           navigate('/');
+  //         }
+  //       }
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const onSubmitHandlerEmail = async () => {
     try {
@@ -131,7 +141,7 @@ const AuthEmail = () => {
               setPassword(e.target.value)
             }
           />
-          <GoogleButton
+          {/* <GoogleButton
             type="light"
             style={{
               margin: '10px auto',
@@ -139,7 +149,7 @@ const AuthEmail = () => {
               borderRadius: '7px',
             }}
             onClick={signInWithGoogle}
-          />
+          /> */}
         </StepOne>
       </div>
     </div>
