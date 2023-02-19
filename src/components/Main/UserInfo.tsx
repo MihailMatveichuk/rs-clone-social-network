@@ -29,7 +29,9 @@ const UserInfo: React.FC<UserInfoProps> = ({
       setUser(u);
     }
   };
-  const date = user ? user.createdAt.toDate().toLocaleString() : '-';
+  const date = user
+    ? user.createdAt && user.createdAt.toDate().toLocaleString()
+    : '-';
   const [isLinkCopied, setLinkCopied] = useState<boolean>(false);
 
   const copyLink = useCallback(() => {
