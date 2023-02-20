@@ -1,59 +1,67 @@
 .settings {
-    &__inner {
-        display: flex;
+  &__inner {
+    display: flex;
+  }
+  &__content {
+    display: flex;
+    gap: 50px;
+    padding: 40px;
+  }
+  .logo-choose {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    img {
+      width: 120px;
+      height: 120px;
     }
-    &__content {
-        display: flex;
-        gap: 50px;
-        padding: 40px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    column-gap: 3rem;
+    overflow: auto;
+    .form__left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: auto;
     }
-    .logo-choose {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-        img {
-            width: 120px;
-            height: 120px;
-        }
+  }
+  &__block {
+    &-title {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 32px;
+      letter-spacing: 0.36px;
+      margin-bottom: 20px;
     }
-    form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        overflow: auto;
+    &-content {
+      display: flex;
+      gap: 30px;
     }
-    &__block {
-        &-title {
-            font-weight: 700;
-            font-size: 24px;
-            line-height: 32px;
-            letter-spacing: 0.36px;
-            margin-bottom: 20px;
-        }
-        &-content {
-            display: flex;
-            gap: 30px;
-        }
+  }
+  &__button-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  textarea {
+    //resize: vertical;
+    background: var(--theme-input);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+    width: 448px;
+    height: 200px;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 24px;
+    color: var(--theme-main-text);
+    &::placeholder {
+      color: var(--theme-input-placeholder);
     }
-    &__button-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
-    textarea {
-        //resize: vertical;
-        background: var(--theme-input);
-        border-radius: 8px;
-        padding: 16px;
-        margin-bottom: 20px;
-        width: 448px;
-        height: 200px;
-        font-weight: 400;
-        font-size: 15px;
-        line-height: 24px;
-        color: var(--theme-main-text);
-        &::placeholder {
-            color: var(--theme-input-placeholder);
-        }
-    }
+  }
 }

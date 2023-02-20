@@ -2,10 +2,11 @@ import { getDownloadURL, ref, listAll } from 'firebase/storage';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/Chatcontext';
-import { storage } from '../firebase';
+import { auth, db, storage } from '../firebase';
 import { IMessageProp } from '../types';
 import { ColorRing } from 'react-loader-spinner';
 import '../assets/styles/style.scss';
+const Avatar = require('../assets/images/Avatar.png');
 
 const Like = require('./assets/images/Like.png');
 const Dislike = require('./assets/images/Dislike.png');
@@ -37,6 +38,7 @@ const Message = ({ message }: IMessageProp) => {
         ? currentUser.photoURL
         : data?.user?.photoURL;
   }
+  console.log(currentUser);
 
   const messageExst =
     message.text.split('.')[message.text.split('.').length - 1];

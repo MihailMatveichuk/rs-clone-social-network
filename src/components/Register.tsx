@@ -17,6 +17,7 @@ const Register = () => {
   }) => {
     e.preventDefault();
     const file = e.target[0].files[0];
+    console.log(file);
     const firstName: string = e.target[1].value;
     const lastName: string = e.target[2].value;
 
@@ -31,7 +32,6 @@ const Register = () => {
               photoURL: downloadURL,
             });
             const user = await checkUser(currentUser!.uid);
-            console.log(user);
             await updateDoc(doc(db, 'users', user!.uid), {
               ...user,
               displayName,
