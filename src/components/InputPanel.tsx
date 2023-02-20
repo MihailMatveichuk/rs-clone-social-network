@@ -24,46 +24,50 @@ const InputPanel = () => {
 
   const handleSend = async () => {
     setText('');
-    if (data.chatId) {
-      await uploadBytes(ImageRef, image!).then((snapshot) => {
-        getDownloadURL(snapshot.ref);
-      });
-      await updateDoc(doc(db, 'messages', data.chatId), {
-        messages: arrayUnion({
-          id: uuidv4(),
-          text,
-          senderId: currentUser!.uid,
-          date: Timestamp.now(),
-        }),
-      });
-      const docRef = doc(db, 'chats', currentUser!.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const chats = [...docSnap.data().chats];
-        const index = chats.findIndex((chat) => chat.memberId === data.user!);
-        chats[index] = {
-          ...chats[index],
-          lastMessage: text,
-        };
-        await updateDoc(docRef, {
-          chats,
+    if (text.trim()) {
+      if (data.chatId) {
+        await uploadBytes(ImageRef, image!).then((snapshot) => {
+          getDownloadURL(snapshot.ref);
         });
-      }
-      const docRef1 = doc(db, 'chats', data.user!);
-      const docSnap1 = await getDoc(docRef1);
-      if (docSnap1.exists()) {
-        const chats = [...docSnap1.data().chats];
-        const index = chats.findIndex(
-          (chat) => chat.memberId === currentUser!.uid
-        );
-        chats[index] = {
-          ...chats[index],
-          lastMessage: text,
-        };
-        await updateDoc(docRef1, {
-          chats,
+        await updateDoc(doc(db, 'messages', data.chatId), {
+          messages: arrayUnion({
+            id: uuidv4(),
+            text,
+            senderId: currentUser!.uid,
+            date: Timestamp.now(),
+          }),
         });
+        const docRef = doc(db, 'chats', currentUser!.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const chats = [...docSnap.data().chats];
+          const index = chats.findIndex((chat) => chat.memberId === data.user!);
+          chats[index] = {
+            ...chats[index],
+            lastMessage: text,
+          };
+          await updateDoc(docRef, {
+            chats,
+          });
+        }
+        const docRef1 = doc(db, 'chats', data.user!);
+        const docSnap1 = await getDoc(docRef1);
+        if (docSnap1.exists()) {
+          const chats = [...docSnap1.data().chats];
+          const index = chats.findIndex(
+            (chat) => chat.memberId === currentUser!.uid
+          );
+          chats[index] = {
+            ...chats[index],
+            lastMessage: text,
+          };
+          await updateDoc(docRef1, {
+            chats,
+          });
+        }
       }
+    } else {
+      return;
     }
   };
 

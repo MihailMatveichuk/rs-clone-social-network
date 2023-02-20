@@ -2,11 +2,11 @@
 @import 'mixins';
 
 :root.light {
-    @include spread-map($theme-map-light);
+  @include spread-map($theme-map-light);
 }
 :root.dark {
-    @include spread-map($theme-map-dark);
+  @include spread-map($theme-map-dark);
 }
 :root.northern {
-    @include spread-map($theme-map-northern);
+  @include spread-map($theme-map-northern);
 }
