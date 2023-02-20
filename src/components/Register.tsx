@@ -17,7 +17,6 @@ const Register = () => {
   }) => {
     e.preventDefault();
     const file = e.target[0].files[0];
-    console.log(file);
     const firstName: string = e.target[1].value;
     const lastName: string = e.target[2].value;
 

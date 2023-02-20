@@ -40,6 +40,8 @@ const SettingsPage = () => {
 
   const submitInfo = async (e: { target: any; preventDefault: () => void }) => {
     e.preventDefault();
+    const file = e.target[0].files[0];
+    console.log(file);
     const photo = document.querySelector('#input_img')?.getAttribute('src');
     onClear();
     try {
