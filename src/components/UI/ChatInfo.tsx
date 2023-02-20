@@ -37,7 +37,7 @@ const ChatInfo: React.FC<ChatInfoProps> = ({ userRef, chatId }) => {
           <div className="chat-info__description">
             {user && (
               <>
-                <img src={user.photoUrl ? user.photoURL : Avatar} alt="" />
+                <img src={user.photoUrl || Avatar} alt="" />
                 <div className="chat-info__name-container">
                   <span className="chat-info__name">{user.displayName}</span>
                   <span className="chat-info__online">
