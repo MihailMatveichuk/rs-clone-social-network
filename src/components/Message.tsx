@@ -2,11 +2,11 @@ import { getDownloadURL, ref, listAll } from 'firebase/storage';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/Chatcontext';
-import { auth, db, storage } from '../firebase';
+import { db, storage } from '../firebase';
 import { IMessageProp } from '../types';
 import { ColorRing } from 'react-loader-spinner';
 import '../assets/styles/style.scss';
-const Avatar = require('../assets/images/Avatar.png');
+import { doc, DocumentData, onSnapshot } from 'firebase/firestore';
 
 const Like = require('./assets/images/Like.png');
 const Dislike = require('./assets/images/Dislike.png');
@@ -20,11 +20,21 @@ const Message = ({ message }: IMessageProp) => {
   const [dislike, setDislike] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [isHeart, setIsDislike] = useState(false);
+  const [user, setUser] = useState<DocumentData | null>(null);
 
   const likeHandler = () => {
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
+
+  onSnapshot(doc(db, 'users', data.user), async (d) => {
+    if (d && d.data()) {
+      const data = d.data();
+      if (data) {
+        setUser(data);
+      }
+    }
+  });
 
   const dislikeHandler = () => {
     setDislike(isHeart ? dislike - 1 : dislike + 1);
@@ -36,9 +46,8 @@ const Message = ({ message }: IMessageProp) => {
     chatUserPhoto =
       message.senderId === currentUser.uid
         ? currentUser.photoURL
-        : data?.user?.photoURL;
+        : user?.photoUrl;
   }
-  console.log(currentUser);
 
   const messageExst =
     message.text.split('.')[message.text.split('.').length - 1];
