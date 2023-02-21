@@ -6,6 +6,7 @@ import { AuthContext } from '../../context/AuthContext';
 const phoneSrc = require('../../assets/images/phone.svg');
 const emailSrc = require('../../assets/images/mail.svg');
 const joinedSrc = require('../../assets/images/joined.svg');
+const Avatar = require('../../assets/images/Avatar.png');
 
 type UserInfoProps = {
   userUid: string;
@@ -49,7 +50,7 @@ const UserInfo: React.FC<UserInfoProps> = ({
         <div className="user-info__content">
           <div className="user-info__content-left">
             <div className="user-info__info">
-              <img src={user.photoUrl} alt="photoURL" />
+              <img src={user.photoUrl || Avatar} alt="photoURL" />
               <h2>{user.displayName}</h2>
               {!isMain && (
                 <>

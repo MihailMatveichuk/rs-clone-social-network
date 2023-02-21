@@ -31,7 +31,6 @@ const Register = () => {
               photoURL: downloadURL,
             });
             const user = await checkUser(currentUser!.uid);
-            console.log(user);
             await updateDoc(doc(db, 'users', user!.uid), {
               ...user,
               displayName,

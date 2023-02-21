@@ -69,7 +69,7 @@ const Chats: React.FC<ChatsProps> = ({
                     <img
                       className="user-chat__img"
                       src={user.photoURL}
-                      alt=""
+                      alt="hi"
                     />
                   )}
                   <div className="user-chat__message">

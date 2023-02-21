@@ -35,7 +35,7 @@ const InputFile = () => {
         onChange={onFileLoad}
       />
       <label htmlFor="file">
-        <img src={src} alt="file" />
+        <img src={src} alt="file" id="input_img" />
       </label>
     </div>
   );

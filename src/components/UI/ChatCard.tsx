@@ -1,6 +1,7 @@
 import { doc, DocumentData, onSnapshot } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { db } from '../../firebase';
+const Avatar = require('../../assets/images/Avatar.png');
 
 type ChatCardProps = {
   chat: DocumentData;
@@ -42,7 +43,11 @@ const ChatCard: React.FC<ChatCardProps> = ({ chat, handleSelect }) => {
         <div className="container">
           <div className="user-chat__inner">
             <div className="user-chat__img-wrapper">
-              <img className="user-chat__img" src={user.photoUrl} alt="" />
+              <img
+                className="user-chat__img"
+                src={user.photoUrl || Avatar}
+                alt=""
+              />
               {user.online && <div className="user-chat__online"></div>}
             </div>
 
