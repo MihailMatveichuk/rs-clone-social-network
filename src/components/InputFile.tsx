@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-const logoSrc = require('../assets/images/Avatar.png');
 
-const InputFile = () => {
-  const [src, setSrc] = useState(logoSrc);
+type InputFileProps = {
+  src: string  | ArrayBuffer,
+  onChange: (val: string | ArrayBuffer) => void
+}
+const InputFile: React.FC<InputFileProps> = ({src, onChange}) => {
   const fileReader = new FileReader();
 
   const changePhoto = () => {
     if (!fileReader.result) return;
-    setSrc(fileReader.result);
+    onChange(fileReader.result);
   };
   fileReader.addEventListener('load', changePhoto);
   fileReader.onabort = (e) => console.log(e);
@@ -35,7 +37,7 @@ const InputFile = () => {
         onChange={onFileLoad}
       />
       <label htmlFor="file">
-        <img src={src} alt="file" id="input_img" />
+        <img src={src as string} alt="file" id="input_img" />
       </label>
     </div>
   );

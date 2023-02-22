@@ -11,6 +11,7 @@ import StepOne from '../../components/OnBoarding/StepOne';
 import OtpInput from '../../components/OnBoarding/OtpInput';
 import { useNavigate } from 'react-router-dom';
 import { doc, setDoc } from 'firebase/firestore';
+import { checkUser, createUserViaPhone } from '../../api';
 
 const AuthPhone = () => {
   const [step, setStep] = useState<number>(1);
@@ -70,15 +71,18 @@ const AuthPhone = () => {
     try {
       await setPersistence(auth, browserSessionPersistence);
       const res = await confirmRes.confirm(otp);
-      const user = res.user;
-      await setDoc(doc(db, 'users', res.user.uid), {
-        uid: res.user.uid,
-        displayName: user.phoneNumber,
-        phoneNumber: res.user.phoneNumber,
-      });
-
-      await setDoc(doc(db, 'userChats', res.user.uid), {});
-      navigate('/');
+      console.log(res.user);
+      
+      const user = await checkUser(res.user.uid)
+      if (!user) {
+        await createUserViaPhone({
+          uid: res.user.uid,
+          phone: res.user.phoneNumber!
+        })
+        navigate('/register');
+      } else {
+        navigate('/');
+      }
     } catch (err) {
       console.log('onCodeSubmitHandler', err);
     }
@@ -95,6 +99,7 @@ const AuthPhone = () => {
         if (!rec) return;
         await setPersistence(auth, browserSessionPersistence);
         const res = await signInWithPhoneNumber(auth, phone, rec);
+        window.confirmationResult = res
         setConfirmRes(res);
         startTimer();
         setStep(2);
@@ -107,6 +112,7 @@ const AuthPhone = () => {
   return (
     <div className="on-boarding">
       <div className="on-boarding__inner">
+      <div id="recaptcha-container"></div>
         <div className="on-boarding__top">
           <button
             title="button"
@@ -143,7 +149,6 @@ const AuthPhone = () => {
             onSubmit={onSignInSubmit}
             id={'sign-in-button'}
           >
-            <div id="recaptcha-container"></div>
             <input
               type="text"
               placeholder="phone"

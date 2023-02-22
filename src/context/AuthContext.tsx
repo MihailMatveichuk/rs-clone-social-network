@@ -22,6 +22,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
         }
       } else {
         setCurrentUser(null);
+        changeTheme(Themes.LIGHT);
       }
     });
     return () => {

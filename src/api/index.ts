@@ -23,6 +23,11 @@ type createUserWithEmail = {
   uid: string;
 };
 
+type createUserWithPhone = {
+  phone: string;
+  uid: string;
+};
+
 export const checkUser = async (uid: string): Promise<DocumentData | null> => {
   if (!uid) return null;
   const docRef = doc(db, 'users', uid);
@@ -49,6 +54,23 @@ export const createUserViaEmail = async ({
     about: '',
     createdAt: Timestamp.now(),
   });
+}
+
+  export const createUserViaPhone = async ({
+    phone,
+    uid,
+  }: createUserWithPhone) => {
+    await setDoc(doc(usersRef, uid), {
+      photoUrl: '',
+      uid,
+      online: true,
+      email: '',
+      phone,
+      displayName: phone,
+      lastSeen: null,
+      about: '',
+      createdAt: Timestamp.now(),
+    });
 
   await setDoc(doc(userChatsRef, uid), {
     chats: [],

@@ -12,7 +12,7 @@ import {
 } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useNavigate, Link } from 'react-router-dom';
-import { checkUser, createUserViaEmail } from '../../api';
+import { checkUser, createUserViaEmail, loginUser } from '../../api';
 // import GoogleButton from 'react-google-button';
 // import { doc, setDoc } from 'firebase/firestore';
 
@@ -25,7 +25,8 @@ const AuthEmail = () => {
   const login = async () => {
     try {
       await setPersistence(auth, browserSessionPersistence);
-      await signInWithEmailAndPassword(auth, email, password);
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      await loginUser(res.user.uid)
       navigate('/');
     } catch (err) {
       console.log(err);
