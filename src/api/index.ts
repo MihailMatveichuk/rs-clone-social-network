@@ -54,6 +54,9 @@ export const createUserViaEmail = async ({
     about: '',
     createdAt: Timestamp.now(),
   });
+  await setDoc(doc(userChatsRef, uid), {
+    chats: [],
+  });
 }
 
   export const createUserViaPhone = async ({
