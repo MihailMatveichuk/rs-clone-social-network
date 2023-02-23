@@ -6,6 +6,7 @@ import { auth, db, storage } from '../firebase';
 import { IMessageProp } from '../types';
 import { ColorRing } from 'react-loader-spinner';
 import '../assets/styles/style.scss';
+import { checkUser } from '../api';
 const Avatar = require('../assets/images/Avatar.png');
 
 const Like = require('./assets/images/Like.png');
@@ -20,6 +21,19 @@ const Message = ({ message }: IMessageProp) => {
   const [dislike, setDislike] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [isHeart, setIsDislike] = useState(false);
+  const [photo, setPhoto] = useState(currentUser!.photoURL);
+  
+  const getPhoto = async () => {
+    if (currentUser != null && currentUser.photoURL != null) {
+      if (message.senderId !== currentUser!.uid) {
+        const user = await checkUser(message.senderId)
+        setPhoto(user!.photoUrl)
+      }
+    }
+  }
+  useEffect(() => {
+    getPhoto()
+  },[])
 
   const likeHandler = () => {
     setLike(isLiked ? like - 1 : like + 1);
@@ -31,15 +45,7 @@ const Message = ({ message }: IMessageProp) => {
     setIsDislike(!isHeart);
   };
 
-  let chatUserPhoto: string | undefined;
-  if (currentUser != null && currentUser.photoURL != null) {
-    chatUserPhoto =
-      message.senderId === currentUser.uid
-        ? currentUser.photoURL
-        : data?.user?.photoURL;
-  }
-  console.log(currentUser);
-
+  const date = message.date.toDate().toLocaleString();
   const messageExst =
     message.text.split('.')[message.text.split('.').length - 1];
   const imageListRef = ref(storage, `images/${data.chatId}`);
@@ -59,8 +65,8 @@ const Message = ({ message }: IMessageProp) => {
     });
   }, []);
 
-  const onImgLoadHandler = (e: { target: { complete: any } }) => {
-    if (e.target.complete) {
+  const onImgLoadHandler = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    if (e.currentTarget.complete) {
       setLoading(false);
     }
   };
@@ -81,7 +87,7 @@ const Message = ({ message }: IMessageProp) => {
       }`}
     >
       <div className="message__user-photo">
-        <img src={chatUserPhoto} alt="" />
+        <img src={photo!} alt="" />
       </div>
       <div className="message-content">
         <span style={{ fontSize: '14px', fontWeight: 700 }}>
@@ -89,7 +95,7 @@ const Message = ({ message }: IMessageProp) => {
         </span>
         <div className="message-info">
           <div className="message-info-time">
-            {new Date(message.date.seconds).toLocaleString()}
+            {date}
           </div>
         </div>
         {loading && <ColorRing />}
