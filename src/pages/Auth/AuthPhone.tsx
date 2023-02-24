@@ -141,6 +141,7 @@ const AuthPhone = () => {
               type="text"
               placeholder="Insert mobile phone"
               required
+              pattern="^([+]{1}[0-9]{11,20})?$"
               className="input on-boarding__email"
               onInput={changePhone}
             />
