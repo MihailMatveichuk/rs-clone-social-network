@@ -26,7 +26,6 @@ const Message = ({ message }: IMessageProp) => {
   const [isHeart, setIsDislike] = useState(false);
   const [photo, setPhoto] = useState(currentUser!.photoURL);
   const messageExst = getExtension(message.text)
-  console.log(messageExst);
   
   const getPhoto = async () => {
       if (message.senderId !== currentUser!.uid) {
@@ -73,35 +72,40 @@ const Message = ({ message }: IMessageProp) => {
       setLoading(true);
     }
     listAll(imageListRef).then((res) => {
+      
       res.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
-          setListUrl((prev) => [...prev, url]);
+          console.log(url);
+          
+          setListUrl((prev) => [...prev, url]);          
         });
-      });
+      });      
     });
   }, []);
 
   const onImgLoadHandler = (
     e: React.SyntheticEvent<HTMLImageElement, Event>
-  ) => {
-    console.log(e);
-    
+  ) => {    
     if (e.currentTarget.complete) {
       setLoading(false);
     }
   };
-console.log(listUrl);
 
   const imgSrc = listUrl.find((item) => {
-    const text = message.text.split(' ').join('%20')
+    const text = encodeURI(message.text).replaceAll(',','%2C')
     return item.includes(text || text.replaceAll(/ /g, '%'));
   });
-  console.log(imgSrc, message.text);
   
 
   const videoSrc = listUrl.find((item) => {
-    return item;
+    const path =  encodeURI(message.text).replaceAll(',','%2C')
+    if (message.text.includes('Смешное')) {
+      console.log(path);
+      
+    }
+    return item.includes(path)
   });
+  const audioSrc = listUrl.find((item) => item.includes(message.text));
 
   return (
     <li
@@ -143,6 +147,11 @@ console.log(listUrl);
             <a href={message.text} target="_blank" rel="noreferrer">
               message.text
             </a>
+          }
+          {messageExst === 'audio' &&
+            <div className="audio-player">
+              <audio src={audioSrc} controls></audio>
+            </div>
           }
           {messageExst === 'text' &&
               message.text
