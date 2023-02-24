@@ -36,7 +36,7 @@ const Register = () => {
             await updateDoc(doc(db, 'users', user!.uid), {
               ...user,
               displayName,
-              photoUrl: downloadURL,
+              photoURL: downloadURL,
             });
             navigate('/');
           } catch (err) {

@@ -26,18 +26,17 @@ const Message = ({ message }: IMessageProp) => {
   const [photo, setPhoto] = useState(currentUser!.photoURL);
 
   const getPhoto = async () => {
-    if (currentUser != null && currentUser.photoURL != null) {
       if (message.senderId !== currentUser!.uid) {
         const user = await checkUser(message.senderId);
-        console.log(user);
-        setPhoto(user!.photoUrl || Avatar);
-      }
+        setPhoto(user!.photoURL || Avatar);
+      } else {
+        setPhoto(currentUser!.photoURL || Avatar);
     }
   };
+
   useEffect(() => {
     getPhoto();
   }, []);
-  // const [user, setUser] = useState<DocumentData | null>(null);
 
   const likeHandler = () => {
     setLike(isLiked ? like - 1 : like + 1);
@@ -59,13 +58,6 @@ const Message = ({ message }: IMessageProp) => {
   };
 
   const date = message.date.toDate().toLocaleString();
-  // let chatUserPhoto: string | undefined;
-  // if (currentUser != null && currentUser.photoURL != null) {
-  //   chatUserPhoto =
-  //     message.senderId === currentUser.uid
-  //       ? currentUser.photoURL
-  //       : user?.photoUrl;
-  // }
   const messageExst =
     message.text.split('.')[message.text.split('.').length - 1];
 
