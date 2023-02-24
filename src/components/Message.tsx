@@ -2,15 +2,14 @@ import { getDownloadURL, ref, listAll } from 'firebase/storage';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/Chatcontext';
-import { db, storage } from '../firebase';
+import { storage } from '../firebase';
 import { IMessageProp } from '../types';
 import { ColorRing } from 'react-loader-spinner';
 import '../assets/styles/style.scss';
 
 import { checkUser } from '../api';
 const Avatar = require('../assets/images/Avatar.png');
-import { doc, DocumentData, onSnapshot } from 'firebase/firestore';
-
+// import { doc, DocumentData, onSnapshot } from 'firebase/firestore';
 
 const Like = require('./assets/images/Like.png');
 const Dislike = require('./assets/images/Dislike.png');
@@ -25,35 +24,34 @@ const Message = ({ message }: IMessageProp) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isHeart, setIsDislike] = useState(false);
   const [photo, setPhoto] = useState(currentUser!.photoURL);
-  
+
   const getPhoto = async () => {
     if (currentUser != null && currentUser.photoURL != null) {
       if (message.senderId !== currentUser!.uid) {
-        const user = await checkUser(message.senderId)
+        const user = await checkUser(message.senderId);
         console.log(user);
-        
-        setPhoto(user!.photoUrl)
+        setPhoto(user!.photoUrl || Avatar);
       }
     }
-  }
+  };
   useEffect(() => {
-    getPhoto()
-  },[])
-  const [user, setUser] = useState<DocumentData | null>(null);
+    getPhoto();
+  }, []);
+  // const [user, setUser] = useState<DocumentData | null>(null);
 
   const likeHandler = () => {
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
 
-  onSnapshot(doc(db, 'users', data.user), async (d) => {
-    if (d && d.data()) {
-      const data = d.data();
-      if (data) {
-        setUser(data);
-      }
-    }
-  });
+  // onSnapshot(doc(db, 'users', data.user), async (d) => {
+  //   if (d && d.data()) {
+  //     const data = d.data();
+  //     if (data) {
+  //       setUser(data);
+  //     }
+  //   }
+  // });
 
   const dislikeHandler = () => {
     setDislike(isHeart ? dislike - 1 : dislike + 1);
@@ -61,18 +59,17 @@ const Message = ({ message }: IMessageProp) => {
   };
 
   const date = message.date.toDate().toLocaleString();
-  let chatUserPhoto: string | undefined;
-  if (currentUser != null && currentUser.photoURL != null) {
-    chatUserPhoto =
-      message.senderId === currentUser.uid
-        ? currentUser.photoURL
-        : user?.photoUrl;
-  }
+  // let chatUserPhoto: string | undefined;
+  // if (currentUser != null && currentUser.photoURL != null) {
+  //   chatUserPhoto =
+  //     message.senderId === currentUser.uid
+  //       ? currentUser.photoURL
+  //       : user?.photoUrl;
+  // }
   const messageExst =
     message.text.split('.')[message.text.split('.').length - 1];
 
   const imageListRef = ref(storage, `images/${data.chatId}`);
-
 
   useEffect(() => {
     if (
@@ -90,7 +87,9 @@ const Message = ({ message }: IMessageProp) => {
     });
   }, []);
 
-  const onImgLoadHandler = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  const onImgLoadHandler = (
+    e: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
     if (e.currentTarget.complete) {
       setLoading(false);
     }
@@ -119,9 +118,7 @@ const Message = ({ message }: IMessageProp) => {
           {message.img && <img src={message.img} alt="" />}
         </span>
         <div className="message-info">
-          <div className="message-info-time">
-            {date}
-          </div>
+          <div className="message-info-time">{date}</div>
         </div>
         {loading && <ColorRing />}
         <span className="message-text">

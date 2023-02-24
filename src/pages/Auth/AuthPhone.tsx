@@ -6,11 +6,10 @@ import {
   signInWithPhoneNumber,
   ConfirmationResult,
 } from 'firebase/auth';
-import { auth, db } from '../../firebase';
+import { auth } from '../../firebase';
 import StepOne from '../../components/OnBoarding/StepOne';
 import OtpInput from '../../components/OnBoarding/OtpInput';
 import { useNavigate } from 'react-router-dom';
-import { doc, setDoc } from 'firebase/firestore';
 import { checkUser, createUserViaPhone } from '../../api';
 
 const AuthPhone = () => {
@@ -36,7 +35,7 @@ const AuthPhone = () => {
       } catch (e) {
         console.log(e);
       }
-    } 
+    }
   }, []);
 
   const setRecaptchaVerifier = async () => {
@@ -61,12 +60,12 @@ const AuthPhone = () => {
     try {
       await setPersistence(auth, browserSessionPersistence);
       const res = await confirmRes.confirm(otp);
-      const user = await checkUser(res.user.uid)
+      const user = await checkUser(res.user.uid);
       if (!user) {
         await createUserViaPhone({
           uid: res.user.uid,
-          phone: res.user.phoneNumber!
-        })
+          phone: res.user.phoneNumber!,
+        });
         navigate('/register');
       } else {
         navigate('/');
@@ -84,14 +83,14 @@ const AuthPhone = () => {
     if (phone) {
       try {
         console.log(rec);
-        
+
         if (!rec) return;
         await setPersistence(auth, browserSessionPersistence);
         const res = await signInWithPhoneNumber(auth, phone, rec);
-        window.confirmationResult = res
+        window.confirmationResult = res;
         setConfirmRes(res);
         setStep(2);
-        document.getElementById('recaptcha-container')!.style.display = 'none'
+        document.getElementById('recaptcha-container')!.style.display = 'none';
       } catch (e) {
         console.log('signInWithPhoneNumber', e);
       }
@@ -101,7 +100,7 @@ const AuthPhone = () => {
   return (
     <div className="on-boarding">
       <div className="on-boarding__inner">
-      <div id="recaptcha-container"></div>
+        <div id="recaptcha-container"></div>
         <div className="on-boarding__top">
           <button
             title="button"
@@ -140,7 +139,7 @@ const AuthPhone = () => {
           >
             <input
               type="text"
-              placeholder="phone"
+              placeholder="Insert mobile phone"
               required
               className="input on-boarding__email"
               onInput={changePhone}
