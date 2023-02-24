@@ -27,6 +27,8 @@ const Message = ({ message }: IMessageProp) => {
     if (currentUser != null && currentUser.photoURL != null) {
       if (message.senderId !== currentUser!.uid) {
         const user = await checkUser(message.senderId)
+        console.log(user);
+        
         setPhoto(user!.photoUrl)
       }
     }
@@ -48,7 +50,10 @@ const Message = ({ message }: IMessageProp) => {
   const date = message.date.toDate().toLocaleString();
   const messageExst =
     message.text.split('.')[message.text.split('.').length - 1];
+
   const imageListRef = ref(storage, `images/${data.chatId}`);
+
+
   useEffect(() => {
     if (
       (messageExst == 'jpg' || messageExst == 'jpeg' || messageExst == 'png') &&
