@@ -75,3 +75,6 @@ export interface IMessageProp {
 //   type: string;
 //   webkitRelativePath: string;
 // }
+
+
+export type MessageType = 'text' | 'img' | 'audio' | 'video' | 'url';

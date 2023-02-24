@@ -12,6 +12,7 @@ import { uuidv4 } from '@firebase/util';
 import { db, storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import EmojiPicker from 'emoji-picker-react';
+import AudioRecorder from './UI/AudioRecorder';
 
 const InputPanel = () => {
   const { currentUser } = useContext(AuthContext);
@@ -167,6 +168,7 @@ const InputPanel = () => {
           >
             {showPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
           </div>
+          <AudioRecorder/>
           <button title="button" onClick={handleSend}>
             <svg
               width="24"
