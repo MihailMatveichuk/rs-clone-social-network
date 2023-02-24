@@ -86,8 +86,8 @@ const Navbar = () => {
     console.log(val);
     const q = query(
       collection(db, 'users'),
-      where('displayName', '>=', val)
-      ,where('displayName', '<=', val+ '\uf8ff')
+      where('displayName', '>=', val),
+      where('displayName', '<=', val + '\uf8ff')
       //where('displayName', 'in', val)
     );
     try {

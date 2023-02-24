@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 type InputFileProps = {
-  src: string  | ArrayBuffer,
-  onChange: (val: string | ArrayBuffer) => void
-}
-const InputFile: React.FC<InputFileProps> = ({src, onChange}) => {
+  src: string | ArrayBuffer;
+  onChange: (val: string | ArrayBuffer) => void;
+};
+const InputFile: React.FC<InputFileProps> = ({ src, onChange }) => {
   const fileReader = new FileReader();
 
   const changePhoto = () => {

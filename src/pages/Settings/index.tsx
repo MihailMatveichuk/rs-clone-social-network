@@ -114,7 +114,7 @@ const SettingsPage = () => {
               <h4 className="settings__block-title">Edit profile</h4>
               <div className="settings__block-content">
                 <form onSubmit={submitInfo}>
-                <InputFile 
+                  <InputFile
                     src={image}
                     onChange={(image: string | ArrayBuffer) => setImage(image)}
                   />

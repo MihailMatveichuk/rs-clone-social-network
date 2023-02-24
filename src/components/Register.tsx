@@ -54,7 +54,7 @@ const Register = () => {
       <div className="form-wrapper">
         <span className="title">Introduce yourself</span>
         <form className="registra-form" onSubmit={handleSubmit}>
-          <InputFile 
+          <InputFile
             src={image}
             onChange={(image: string | ArrayBuffer) => setImage(image)}
           />

@@ -26,7 +26,7 @@ const AuthEmail = () => {
     try {
       await setPersistence(auth, browserSessionPersistence);
       const res = await signInWithEmailAndPassword(auth, email, password);
-      await loginUser(res.user.uid)
+      await loginUser(res.user.uid);
       navigate('/');
     } catch (err) {
       console.log(err);

@@ -4,15 +4,20 @@ type InputProps = {
   value: string;
   placeholder: string;
   onChange: (val: string) => void;
-}
+};
 
-const CustomInput:React.FC<InputProps> = ({errorText, value, placeholder, onChange}) => {
+const CustomInput: React.FC<InputProps> = ({
+  value,
+  placeholder,
+  onChange,
+}) => {
   return (
     <div className="input-container">
-      <input  type="text"
-              value={value}
-              placeholder={placeholder}
-              onChange={(e) => onChange(e.target.value)}
+      <input
+        type="text"
+        value={value}
+        placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value)}
       />
     </div>
   );
