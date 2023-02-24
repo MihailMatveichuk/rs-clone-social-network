@@ -4,6 +4,10 @@ import { auth } from '../firebase';
 import { ContextUser } from '../types';
 import { changeTheme, Themes } from '../utlis/theme';
 
+interface userWithTheme extends User {
+  theme?: string;
+}
+
 export const AuthContext = createContext<ContextUser>({
   currentUser: null,
 });
@@ -13,7 +17,7 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
   console.log('currentUser: ', currentUser);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
+    const unsub = onAuthStateChanged(auth, (user: userWithTheme | null) => {
       if (user) {
         setCurrentUser(user);
         const theme = user.theme;
