@@ -10,6 +10,7 @@ import InputFile from '../../components/InputFile';
 import { db, storage } from '../../firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { updateProfile } from 'firebase/auth';
+const logoSrc = require('../../assets/images/Avatar.png');
 
 const SettingsPage = () => {
   const { currentUser } = useContext(AuthContext);
@@ -19,6 +20,7 @@ const SettingsPage = () => {
   const [email, setEmail] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
+  const [image, setImage] = useState<string | ArrayBuffer>(logoSrc);
 
   useEffect(() => {
     getUser();
@@ -36,6 +38,7 @@ const SettingsPage = () => {
     setLastName('');
     setName('');
     setPhone('');
+    setImage(logoSrc);
   };
 
   const submitInfo = async (e: { target: any; preventDefault: () => void }) => {
@@ -111,7 +114,10 @@ const SettingsPage = () => {
               <h4 className="settings__block-title">Edit profile</h4>
               <div className="settings__block-content">
                 <form onSubmit={submitInfo}>
-                  <InputFile />
+                <InputFile 
+                    src={image}
+                    onChange={(image: string | ArrayBuffer) => setImage(image)}
+                  />
                   <div className="form__left">
                     <CustomInput
                       placeholder="First name"

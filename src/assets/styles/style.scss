@@ -13,6 +13,13 @@ body,
   height: 100%;
 }
 
+#recaptcha-container {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 html,
 body {
   background: var(--theme-bg);

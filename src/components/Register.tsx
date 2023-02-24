@@ -4,13 +4,15 @@ import { db, storage } from '../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { checkUser } from '../api';
+const logoSrc = require('../assets/images/Avatar.png');
 
 const Register = () => {
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
+  const [image, setImage] = useState<string | ArrayBuffer>(logoSrc);
   const handleSubmit = async (e: {
     target: any;
     preventDefault: () => void;
@@ -52,7 +54,10 @@ const Register = () => {
       <div className="form-wrapper">
         <span className="title">Introduce yourself</span>
         <form className="registra-form" onSubmit={handleSubmit}>
-          <InputFile />
+          <InputFile 
+            src={image}
+            onChange={(image: string | ArrayBuffer) => setImage(image)}
+          />
           <input type="text" placeholder="First name" />
           <input type="text" placeholder="Last Name" />
           <button className="btn btn--primary">Go</button>
