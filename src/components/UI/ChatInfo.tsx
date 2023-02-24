@@ -4,7 +4,7 @@ import { db } from '../../firebase';
 import { getLastSeenText } from '../../utlis/lastSeen';
 const Avatar = require('../../assets/images/Avatar.png');
 
-type ChatInfoProps = {
+export type ChatInfoProps = {
   userRef: string;
   chatId: string;
 };
