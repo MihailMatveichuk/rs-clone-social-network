@@ -53,7 +53,6 @@ const Navbar = () => {
   };
 
   const onEnterHandler = async (val: string) => {
-    console.log(val);
     const q = query(
       collection(db, 'users'),
       where('displayName', '>=', val),
@@ -61,12 +60,9 @@ const Navbar = () => {
     );
     try {
       const querySnapshot = await getDocs(q);
-      console.log(querySnapshot);
 
       const arr: DocumentData = [];
       querySnapshot.forEach((doc) => {
-        console.log(doc.data);
-
         arr.push(doc.data());
       });
       setUsers(arr);

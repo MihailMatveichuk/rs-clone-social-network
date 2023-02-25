@@ -43,7 +43,6 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({ onRecord }) => {
     } as MediaRecorderOptions);
 
     mediaRecorder.current = media;
-    console.log(mediaRecorder.current);
 
     mediaRecorder.current.start();
 
@@ -60,16 +59,11 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({ onRecord }) => {
 
   const stopRecording = () => {
     setRecordingStatus('inactive');
-    console.log('stop');
-    console.log(mediaRecorder.current);
 
     if (mediaRecorder.current) {
       mediaRecorder.current.stop();
-      console.log('stop1');
 
       mediaRecorder.current.onstop = () => {
-        console.log('stop2');
-
         const audioBlob = new Blob(audioChunks, { type: mimeType });
         onRecord(audioBlob);
         setAudioChunks([]);

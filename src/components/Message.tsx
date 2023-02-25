@@ -39,22 +39,23 @@ const Message = ({ message }: IMessageProp) => {
   }, []);
 
   const likeHandler = async () => {
-    const liked = !message.like;
-    const docRefMessages = doc(db, 'messages', data.chatId!);
-    const id = message.id;
-    const docSnapMessages = await getDoc(docRefMessages);
-    if (docSnapMessages.exists()) {
-      const messages = [...docSnapMessages.data().messages];
-      const index = messages.findIndex((message) => message.id === id);
-      messages[index] = {
-        ...messages[index],
-        like: liked,
-      };
-      await updateDoc(docRefMessages, {
-        messages,
-      });
+    if (message.senderId != currentUser?.uid) {
+      const liked = !message.like;
+      const docRefMessages = doc(db, 'messages', data.chatId!);
+      const id = message.id;
+      const docSnapMessages = await getDoc(docRefMessages);
+      if (docSnapMessages.exists()) {
+        const messages = [...docSnapMessages.data().messages];
+        const index = messages.findIndex((message) => message.id === id);
+        messages[index] = {
+          ...messages[index],
+          like: liked,
+        };
+        await updateDoc(docRefMessages, {
+          messages,
+        });
+      }
     }
-
   };
 
   // onSnapshot(doc(db, 'users', data.user), async (d) => {
@@ -67,20 +68,22 @@ const Message = ({ message }: IMessageProp) => {
   // });
 
   const dislikeHandler = async () => {
-    const disliked = !message.dislike;
-    const docRefMessages = doc(db, 'messages', data.chatId!);
-    const id = message.id;
-    const docSnapMessages = await getDoc(docRefMessages);
-    if (docSnapMessages.exists()) {
-      const messages = [...docSnapMessages.data().messages];
-      const index = messages.findIndex((message) => message.id === id);
-      messages[index] = {
-        ...messages[index],
-        dislike: disliked,
-      };
-      await updateDoc(docRefMessages, {
-        messages,
-      });
+    if (message.senderId != currentUser?.uid) {
+      const disliked = !message.dislike;
+      const docRefMessages = doc(db, 'messages', data.chatId!);
+      const id = message.id;
+      const docSnapMessages = await getDoc(docRefMessages);
+      if (docSnapMessages.exists()) {
+        const messages = [...docSnapMessages.data().messages];
+        const index = messages.findIndex((message) => message.id === id);
+        messages[index] = {
+          ...messages[index],
+          dislike: disliked,
+        };
+        await updateDoc(docRefMessages, {
+          messages,
+        });
+      }
     }
   };
 
