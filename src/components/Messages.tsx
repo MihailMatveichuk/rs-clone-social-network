@@ -11,7 +11,6 @@ const Messages = () => {
   const { data } = useContext(ChatContext);
   const refs = useRef<HTMLLIElement>(null);
   useEffect(() => {
-    //if (messages.length === 0) return;
     refs.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 

@@ -1,17 +1,7 @@
-import React from 'react';
 import { TailSpin } from 'react-loader-spinner';
 
 const Loading = () => {
   return (
-    // <ColorRing
-    //   visible={true}
-    //   height="50"
-    //   width="50"
-    //   ariaLabel="blocks-loading"
-    //   wrapperStyle={{}}
-    //   wrapperClass="blocks-wrapper"
-    //   color='#C8C9CC'
-    // />
     <TailSpin
       height="40"
       width="40"

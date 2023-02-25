@@ -25,14 +25,14 @@ const Message = ({ message }: IMessageProp) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isHeart, setIsDislike] = useState(false);
   const [photo, setPhoto] = useState(currentUser!.photoURL);
-  const messageExst = getExtension(message.text)
-  
+  const messageExst = getExtension(message.text);
+
   const getPhoto = async () => {
-      if (message.senderId !== currentUser!.uid) {
-        const user = await checkUser(message.senderId);
-        setPhoto(user!.photoURL || Avatar);
-      } else {
-        setPhoto(currentUser!.photoURL || Avatar);
+    if (message.senderId !== currentUser!.uid) {
+      const user = await checkUser(message.senderId);
+      setPhoto(user!.photoURL || Avatar);
+    } else {
+      setPhoto(currentUser!.photoURL || Avatar);
     }
   };
 
@@ -61,49 +61,42 @@ const Message = ({ message }: IMessageProp) => {
 
   const date = message.date.toDate().toLocaleString();
 
-
   const imageListRef = ref(storage, `images/${data.chatId}`);
 
   useEffect(() => {
-    if (
-      messageExst === 'img' &&
-      !loading
-    ) {
+    if (messageExst === 'img' && !loading) {
       setLoading(true);
     }
     listAll(imageListRef).then((res) => {
-      
       res.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
           console.log(url);
-          
-          setListUrl((prev) => [...prev, url]);          
+
+          setListUrl((prev) => [...prev, url]);
         });
-      });      
+      });
     });
   }, []);
 
   const onImgLoadHandler = (
     e: React.SyntheticEvent<HTMLImageElement, Event>
-  ) => {    
+  ) => {
     if (e.currentTarget.complete) {
       setLoading(false);
     }
   };
 
   const imgSrc = listUrl.find((item) => {
-    const text = encodeURI(message.text).replaceAll(',','%2C')
+    const text = encodeURI(message.text).replaceAll(',', '%2C');
     return item.includes(text || text.replaceAll(/ /g, '%'));
   });
-  
 
   const videoSrc = listUrl.find((item) => {
-    const path =  encodeURI(message.text).replaceAll(',','%2C')
+    const path = encodeURI(message.text).replaceAll(',', '%2C');
     if (message.text.includes('Смешное')) {
       console.log(path);
-      
     }
-    return item.includes(path)
+    return item.includes(path);
   });
   const audioSrc = listUrl.find((item) => item.includes(message.text));
 
@@ -125,7 +118,7 @@ const Message = ({ message }: IMessageProp) => {
         </div>
         {loading && <ColorRing />}
         <span className="message-text">
-          {messageExst === 'video' &&
+          {messageExst === 'video' && (
             <video width="400px" src={videoSrc} controls>
               <track
                 src={videoSrc}
@@ -134,28 +127,28 @@ const Message = ({ message }: IMessageProp) => {
                 label="English"
               ></track>
             </video>
-          }
-          {messageExst === 'img' &&
+          )}
+          {messageExst === 'img' && (
             <img
               className="message__img"
               src={imgSrc}
               alt=""
               onLoad={onImgLoadHandler}
             />
-          }
-          {messageExst === 'url' &&
+          )}
+          {messageExst === 'url' && (
             <a href={message.text} target="_blank" rel="noreferrer">
               message.text
             </a>
-          }
-          {messageExst === 'audio' &&
+          )}
+          {messageExst === 'audio' && (
             <div className="audio-player">
-              <audio src={audioSrc} controls></audio>
+              <audio src={audioSrc} controls>
+                <track kind="captions" />
+              </audio>
             </div>
-          }
-          {messageExst === 'text' &&
-              message.text
-          }
+          )}
+          {messageExst === 'text' && message.text}
         </span>
         <div className="reaction">
           <img

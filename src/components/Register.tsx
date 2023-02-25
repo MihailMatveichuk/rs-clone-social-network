@@ -41,7 +41,6 @@ const Register = () => {
             navigate('/');
           } catch (err) {
             console.log(err);
-            // setError(true);
           }
         });
       });

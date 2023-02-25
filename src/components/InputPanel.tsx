@@ -24,10 +24,10 @@ const InputPanel = () => {
   const ImageRef = ref(storage, `images/${data.chatId}/${image?.name}`);
   const onVoiceRecord = async (record: Blob) => {
     const audioUrl = URL.createObjectURL(record);
-    const splitted = audioUrl.split('/')
-    const id = splitted[splitted.length - 1]    
+    const splitted = audioUrl.split('/');
+    const id = splitted[splitted.length - 1];
     const AudioRef = ref(storage, `images/${data.chatId}/voice-${id}`);
-    await uploadBytes(AudioRef, record).then((snapshot) => {      
+    await uploadBytes(AudioRef, record).then((snapshot) => {
       getDownloadURL(snapshot.ref);
     });
 
@@ -69,7 +69,7 @@ const InputPanel = () => {
         });
       }
     }
-  }
+  };
 
   const handleSend = async () => {
     setText('');
