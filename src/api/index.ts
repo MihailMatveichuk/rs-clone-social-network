@@ -64,7 +64,7 @@ export const createUserViaPhone = async ({
   uid,
 }: createUserWithPhone) => {
   await setDoc(doc(usersRef, uid), {
-    photoURL: '',
+    photoUrl: '',
     uid,
     online: true,
     email: '',
@@ -85,7 +85,9 @@ export const getChat = async (uid: string, uid2: string) => {
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     const chats = docSnap.data().chats;
-    const chat = chats.filter((chat) => chat.memberId === uid2);
+    const chat = chats.filter(
+      (chat: { memberId: string }) => chat.memberId === uid2
+    );
     return chat.length === 0 ? null : chat;
   } else {
     return null;

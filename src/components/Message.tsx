@@ -2,16 +2,17 @@ import { getDownloadURL, ref, listAll } from 'firebase/storage';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/Chatcontext';
-import { storage } from '../firebase';
+import { db, storage } from '../firebase';
 import { IMessageProp } from '../types';
 import { ColorRing } from 'react-loader-spinner';
 import '../assets/styles/style.scss';
-
 import { checkUser } from '../api';
-import { getExtension } from '../utlis/getExtension';
-const Avatar = require('../assets/images/Avatar.png');
-// import { doc, DocumentData, onSnapshot } from 'firebase/firestore';
 
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+
+import { getExtension } from '../utlis/getExtension';
+
+const Avatar = require('../assets/images/Avatar.png');
 const Like = require('./assets/images/Like.png');
 const Dislike = require('./assets/images/Dislike.png');
 
@@ -20,11 +21,8 @@ const Message = ({ message }: IMessageProp) => {
   const [listUrl, setListUrl] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const { data } = useContext(ChatContext);
-  const [like, setLike] = useState(0);
-  const [dislike, setDislike] = useState(0);
-  const [isLiked, setIsLiked] = useState(false);
-  const [isHeart, setIsDislike] = useState(false);
   const [photo, setPhoto] = useState(currentUser!.photoURL);
+
   const messageExst = getExtension(message.text);
 
   const getPhoto = async () => {
@@ -40,9 +38,23 @@ const Message = ({ message }: IMessageProp) => {
     getPhoto();
   }, []);
 
-  const likeHandler = () => {
-    setLike(isLiked ? like - 1 : like + 1);
-    setIsLiked(!isLiked);
+  const likeHandler = async () => {
+    const liked = !message.like;
+    const docRefMessages = doc(db, 'messages', data.chatId!);
+    const id = message.id;
+    const docSnapMessages = await getDoc(docRefMessages);
+    if (docSnapMessages.exists()) {
+      const messages = [...docSnapMessages.data().messages];
+      const index = messages.findIndex((message) => message.id === id);
+      messages[index] = {
+        ...messages[index],
+        like: liked,
+      };
+      await updateDoc(docRefMessages, {
+        messages,
+      });
+    }
+
   };
 
   // onSnapshot(doc(db, 'users', data.user), async (d) => {
@@ -54,9 +66,22 @@ const Message = ({ message }: IMessageProp) => {
   //   }
   // });
 
-  const dislikeHandler = () => {
-    setDislike(isHeart ? dislike - 1 : dislike + 1);
-    setIsDislike(!isHeart);
+  const dislikeHandler = async () => {
+    const disliked = !message.dislike;
+    const docRefMessages = doc(db, 'messages', data.chatId!);
+    const id = message.id;
+    const docSnapMessages = await getDoc(docRefMessages);
+    if (docSnapMessages.exists()) {
+      const messages = [...docSnapMessages.data().messages];
+      const index = messages.findIndex((message) => message.id === id);
+      messages[index] = {
+        ...messages[index],
+        dislike: disliked,
+      };
+      await updateDoc(docRefMessages, {
+        messages,
+      });
+    }
   };
 
   const date = message.date.toDate().toLocaleString();
@@ -155,14 +180,14 @@ const Message = ({ message }: IMessageProp) => {
             onClickCapture={dislikeHandler}
             alt=""
           />
-          <span className="post__like__counter">{dislike}</span>
+          <span className="post__like__counter">{message.dislike ? 1 : 0}</span>
           <img
             style={{ width: '25px' }}
             src={Like}
             onClickCapture={likeHandler}
             alt=""
           />
-          <span className="post__like__counter">{like}</span>
+          <span className="post__like__counter">{message.like ? 1 : 0}</span>
         </div>
       </div>
     </li>

@@ -1,4 +1,3 @@
-import React from 'react';
 const logoSrc = require('../assets/images/logo.png');
 
 const Launcher = () => {

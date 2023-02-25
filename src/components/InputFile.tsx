@@ -22,8 +22,9 @@ const InputFile: React.FC<InputFileProps> = ({ src, onChange }) => {
     };
   }, []);
 
-  const onFileLoad = (e) => {
-    const [file] = e.target.files;
+  const onFileLoad = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = Array.from(e.target.files as ArrayLike<File>);
+    const [file] = fileList;
     if (file && file.type.includes('image')) {
       fileReader.readAsDataURL(file);
     }
