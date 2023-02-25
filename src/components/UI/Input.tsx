@@ -16,6 +16,7 @@ const CustomInput: React.FC<InputProps> = ({
       <input
         type="text"
         value={value}
+        required
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
       />

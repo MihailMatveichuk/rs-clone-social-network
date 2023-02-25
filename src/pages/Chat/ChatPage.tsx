@@ -1,4 +1,3 @@
-import React from 'react';
 import Aside from '../../components/Aside';
 import Chat from '../../components/Chat';
 import Layout from '../Layout';

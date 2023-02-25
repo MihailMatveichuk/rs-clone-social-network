@@ -1,19 +1,4 @@
-import React, { useContext, useState } from 'react';
-// import { AuthContext } from '../../context/AuthContext';
-// import {
-//   collection,
-//   query,
-//   where,
-//   getDocs,
-//   setDoc,
-//   updateDoc,
-//   doc,
-//   serverTimestamp,
-//   getDoc,
-//   DocumentData,
-// } from 'firebase/firestore';
-// import { db } from '../../firebase';
-// import { User } from 'firebase/auth';
+import React, { useState } from 'react';
 
 type SearchInputProps = {
   placeholder: string;
@@ -26,6 +11,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
   value = '',
   placeholder,
 }) => {
+
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = e;
@@ -42,15 +28,6 @@ const SearchInput: React.FC<SearchInputProps> = ({
         placeholder={placeholder}
         value={value}
       />
-      {/* {err && <span>User not found</span>} */}
-      {/* {user && (
-        <button className="userChat" onClick={handleSelect}>
-          <img className="userChatImg" src={user.photoURL || ''} alt="" />
-          <div className="userChatInfo">
-            <span className="user-name">{user?.displayName}</span>
-          </div>
-        </button>
-      )} */}
     </div>
   );
 };

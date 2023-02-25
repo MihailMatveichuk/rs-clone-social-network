@@ -15,7 +15,6 @@ const ChatInfo: React.FC<ChatInfoProps> = ({ userRef, chatId }) => {
     const unsub = onSnapshot(doc(db, 'users', userRef), async (d) => {
       if (d && d.data()) {
         const data = d.data();
-        console.log(data);
 
         if (data) {
           setUser(data);

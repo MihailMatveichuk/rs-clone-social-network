@@ -14,21 +14,22 @@ export type ContextUser = {
 };
 
 export type UserBD = {
-  photoURL: string,
+  photoURL: string;
   uid: string;
-  online: boolean,
-  email: string,
-  phone: string,
-  displayName: string,
-  lastSeen: Timestamp,
-  about: string,
-  createdAt: Timestamp,
-}
+  online: boolean;
+  email: string;
+  phone: string;
+  displayName: string;
+  lastSeen: Timestamp;
+  about: string;
+  createdAt: Timestamp;
+};
 
 export type authUser = {
   displayName: string;
   photoURL: string;
   uid: string;
+  user: string;
 };
 
 export interface IChatContext {
@@ -62,6 +63,8 @@ export interface IMessageFirebase {
   img: string;
   text: string;
   date: Timestamp;
+  like?: boolean;
+  dislike?: boolean;
 }
 export interface IMessageProp {
   message: IMessageFirebase;
@@ -75,6 +78,5 @@ export interface IMessageProp {
 //   type: string;
 //   webkitRelativePath: string;
 // }
-
 
 export type MessageType = 'text' | 'img' | 'audio' | 'video' | 'url';

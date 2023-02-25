@@ -1,4 +1,3 @@
-// import { User } from 'firebase/auth';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import {
@@ -6,12 +5,8 @@ import {
   query,
   where,
   getDocs,
-  setDoc,
-  updateDoc,
   doc,
-  serverTimestamp,
   onSnapshot,
-  getDoc,
   DocumentData,
 } from 'firebase/firestore';
 import Chats from './Chats';
@@ -19,7 +14,7 @@ import SearchInput from './UI/SearchInput';
 import { db } from '../firebase';
 import { ActionType, authUser } from '../types';
 import { ChatContext } from '../context/Chatcontext';
-import { createChat, getChat, checkUser } from '../api';
+import { createChat, getChat } from '../api';
 
 type AsideProps = {
   title: string,
