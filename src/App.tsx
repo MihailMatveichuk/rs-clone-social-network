@@ -11,6 +11,7 @@ import Register from './components/Register';
 import MainPage from './pages/User/MainPage';
 import SettingsPage from './pages/Settings';
 import { Themes, changeTheme } from './utlis/theme';
+import ContactsPage from './pages/User/ContactsPage';
 
 export function App() {
   const { currentUser } = useContext(AuthContext);
@@ -60,6 +61,16 @@ export function App() {
             element={
               <ProtectedRoute>
                 <SettingsPage />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+        <Route path="/users">
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <ContactsPage />
               </ProtectedRoute>
             }
           />

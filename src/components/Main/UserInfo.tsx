@@ -1,8 +1,9 @@
-import { DocumentData } from 'firebase/firestore';
+import { DocumentData, Timestamp } from 'firebase/firestore';
 import React, { useCallback, useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { checkUser } from '../../api';
 import { AuthContext } from '../../context/AuthContext';
+import { getLastSeenText } from '../../utlis/lastSeen';
 const phoneSrc = require('../../assets/images/phone.svg');
 const emailSrc = require('../../assets/images/mail.svg');
 const joinedSrc = require('../../assets/images/joined.svg');
@@ -11,21 +12,22 @@ const Avatar = require('../../assets/images/Avatar.png');
 type UserInfoProps = {
   userUid: string;
   isMain: boolean;
+  onSendMessage?: () => void;
 };
 
 const UserInfo: React.FC<UserInfoProps> = ({
-  // userUid = '',
+  userUid,
   isMain = false,
+  onSendMessage
 }) => {
-  const { currentUser } = useContext(AuthContext);
   const [user, setUser] = useState<DocumentData | null>(null);
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [userUid]);
 
   const getUser = async () => {
-    const u = await checkUser(currentUser!.uid);
+    const u = await checkUser(userUid);
     if (u) {
       setUser(u);
     }
@@ -55,10 +57,10 @@ const UserInfo: React.FC<UserInfoProps> = ({
               {!isMain && (
                 <>
                   <div className="user-info__last-seen">
-                    last seen 3 minutes ago
+                    {user.online ? 'online' : getLastSeenText(user.lastSeen)}
                   </div>
                   <div className="user-info__btn-container">
-                    <button className="btn btn--primary">Send message</button>
+                    <button className="btn btn--primary" onClick={onSendMessage}>Send message</button>
                     <button className="btn btn--grey">Add to contacts</button>
                   </div>
                 </>
@@ -160,10 +162,6 @@ const UserInfo: React.FC<UserInfoProps> = ({
                 if you already have chats, <Link to="/chats">go and chat!</Link>
               </div>
             )}
-            <div className="changeTheme">
-              <button>Dark</button>
-              <button>Telegram</button>
-            </div>
           </div>
         </div>
       )}

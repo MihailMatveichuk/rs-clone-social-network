@@ -21,95 +21,18 @@ import { ActionType, authUser } from '../types';
 import { ChatContext } from '../context/Chatcontext';
 import { createChat, getChat, checkUser } from '../api';
 
-const Navbar = () => {
-  const { currentUser } = useContext(AuthContext);
-  const { dispatch } = useContext(ChatContext);
+type AsideProps = {
+  title: string,
+  children: React.ReactNode | undefined,
+} 
 
-  // const [userName, setUserName] = useState('');
 
-  const [chats, setChats] = useState<DocumentData | undefined>([]);
-  // const [userInfoChanged, setUserInfoChanged] = useState<boolean>(false);
-  const [users, setUsers] = useState<DocumentData | undefined>([]);
-  // const [user, setUser] = useState<User | null | undefined | DocumentData>(
-  //   null
-  // );
-  const [err, setError] = useState(false);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const gtChats = () => {
-    setLoading(true);
-    const unsub = onSnapshot(doc(db, 'chats', currentUser!.uid), async (d) => {
-      if (d && d.data()) {
-        const data = d.data();
-        if (data) {
-          setChats(data.chats);
-
-          // for (let i = 0; i < data.chats.length; i++) {
-          //   const docRef = doc(db, 'users',data.chats[i].memberId);
-          //   onSnapshot(docRef, (newDoc) => {
-          //     console.log(newDoc);
-
-          //    //gtChats()
-          //   })
-          //   const docSnap =  await getDoc(docRef);
-          //   console.log(docSnap.data());
-
-          //   //const user = await checkUser(data.chats[i].memberId)
-          //   arr.push({
-          //     ...data.chats[i],
-          //     user: docSnap.data()
-          //   })
-          // }
-        }
-      }
-      setLoading(false);
-    });
-    return () => {
-      unsub();
-    };
-  };
-
-  useEffect(() => {
-    currentUser?.uid && gtChats();
-  }, [currentUser?.uid]);
-
-  const handleSelect = async (user: authUser) => {
-    const chat = await getChat(currentUser!.uid, user.uid);
-    if (!chat) {
-      await createChat(currentUser!.uid, user.uid);
-      setUsers([]);
-    }
-    dispatch({ type: ActionType.ChangeUser, payload: user });
-  };
-
-  const onEnterHandler = async (val: string) => {
-    console.log(val);
-    const q = query(
-      collection(db, 'users'),
-      where('displayName', '>=', val),
-      where('displayName', '<=', val + '\uf8ff')
-      //where('displayName', 'in', val)
-    );
-    try {
-      const querySnapshot = await getDocs(q);
-      console.log(querySnapshot);
-
-      const arr: DocumentData = [];
-      querySnapshot.forEach((doc) => {
-        console.log(doc.data);
-
-        arr.push(doc.data());
-      });
-      setUsers(arr);
-    } catch (err) {
-      setError(true);
-    }
-  };
+const Aside: React.FC<AsideProps> = ({title, children}) => {
   return (
     <div className="aside">
       <div className="container">
         <div className="aside__top">
-          <h3>Chats</h3>
+          <h3>{title}</h3>
           <div className="navbar_top_right">
             <svg
               width="33"
@@ -154,20 +77,9 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <div className="container">
-        <SearchInput
-          onEnterClick={onEnterHandler}
-          placeholder="Chats, messages and more"
-        />
-      </div>
-      <Chats
-        chats={chats}
-        loading={loading}
-        users={users}
-        onUserSelect={handleSelect}
-      />
+      {children}
     </div>
   );
 };
 
-export default Navbar;
+export default Aside;
