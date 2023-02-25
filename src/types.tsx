@@ -50,6 +50,8 @@ export interface IMessageFirebase {
   img: string;
   text: string;
   date: Timestamp;
+  like?: boolean;
+  dislike?: boolean;
 }
 export interface IMessageProp {
   message: IMessageFirebase;
