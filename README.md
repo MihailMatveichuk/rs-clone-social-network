@@ -35,7 +35,9 @@ Project has the following **🎯 Features**:
 | Showing a list of chats of your friends :book                 |         ✔️        |
 | Awesome, modern UI 🎨                                        |         ✔️         |
 | Page with all information about users 📃                     |         ✔️         |
-| Sending text and with image context message 📨               |         ✔️         |
+| Sending text message 📨                                      |         ✔️         |
+| Sending image context message :art:                          |         ✔️         |
+| Sending audio context message 🔉                             |         ✔️         |
 | Choosing smile pop up 🙂                                     |         ✔️         |
 | Showing up loading for image ⏲️                              |         ✔️         |
 | Opportunity of logging out from user's chat ❌               |         ✔️         |
