@@ -2,27 +2,21 @@ import React, { useState } from 'react';
 
 type SearchInputProps = {
   placeholder: string;
-  onEnterClick: (val: string) => void;
+  value: string;
+  onChange: (val: string) => void;
 };
 
 const SearchInput: React.FC<SearchInputProps> = ({
-  onEnterClick,
+  onChange,
+  value = '',
   placeholder,
 }) => {
-  const [userName, setUserName] = useState('');
 
-  const handleKey = async (e: {
-    code: string;
-    target: unknown;
-    preventDefault: () => void;
-  }) => {
-    userName !== '' ? e.code === 'Enter' && onEnterClick(userName) : null;
-  };
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = e;
     if (target instanceof HTMLInputElement) {
-      setUserName(target.value);
+      onChange(target.value);
     }
   };
 
@@ -32,7 +26,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         type="text"
         onChange={onInputChange}
         placeholder={placeholder}
-        onKeyDown={handleKey}
+        value={value}
       />
     </div>
   );

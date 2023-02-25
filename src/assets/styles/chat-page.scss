@@ -34,6 +34,7 @@
 
 .chat {
   flex: 1;
+
   &__messages-container {
     display: flex;
     flex-direction: column;
@@ -296,8 +297,23 @@
 
 .chats {
   padding: 20px 0px;
-  overflow: hidden;
+  max-height: calc(100% - 101px);
+  overflow-y: auto;
+  overflow-x: visible;
   flex: 1;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: var(--theme-scrollbar-track);
+    border-radius: 2px;
+    background-clip: content-box;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--theme-primary);
+    border-radius: 2px;
+    height: 40px !important;
+  }
 }
 
 .user-chat {

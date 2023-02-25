@@ -16,65 +16,18 @@ import { ActionType, authUser } from '../types';
 import { ChatContext } from '../context/Chatcontext';
 import { createChat, getChat } from '../api';
 
-const Navbar = () => {
-  const { currentUser } = useContext(AuthContext);
-  const { dispatch } = useContext(ChatContext);
-  const [chats, setChats] = useState<DocumentData | undefined>([]);
-  const [users, setUsers] = useState<DocumentData | undefined>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+type AsideProps = {
+  title: string,
+  children: React.ReactNode | undefined,
+} 
 
-  const gtChats = () => {
-    setLoading(true);
-    const unsub = onSnapshot(doc(db, 'chats', currentUser!.uid), async (d) => {
-      if (d && d.data()) {
-        const data = d.data();
-        if (data) {
-          setChats(data.chats);
-        }
-      }
-      setLoading(false);
-    });
-    return () => {
-      unsub();
-    };
-  };
 
-  useEffect(() => {
-    currentUser?.uid && gtChats();
-  }, [currentUser?.uid]);
-
-  const handleSelect = async (user: authUser) => {
-    const chat = await getChat(currentUser!.uid, user.uid);
-    if (!chat) {
-      await createChat(currentUser!.uid, user.uid);
-      setUsers([]);
-    }
-    dispatch({ type: ActionType.ChangeUser, payload: user });
-  };
-
-  const onEnterHandler = async (val: string) => {
-    const q = query(
-      collection(db, 'users'),
-      where('displayName', '>=', val),
-      where('displayName', '<=', val + '\uf8ff')
-    );
-    try {
-      const querySnapshot = await getDocs(q);
-
-      const arr: DocumentData = [];
-      querySnapshot.forEach((doc) => {
-        arr.push(doc.data());
-      });
-      setUsers(arr);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+const Aside: React.FC<AsideProps> = ({title, children}) => {
   return (
     <div className="aside">
       <div className="container">
         <div className="aside__top">
-          <h3>Chats</h3>
+          <h3>{title}</h3>
           <div className="navbar_top_right">
             <svg
               width="33"
@@ -119,20 +72,9 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <div className="container">
-        <SearchInput
-          onEnterClick={onEnterHandler}
-          placeholder="Chats, messages and more"
-        />
-      </div>
-      <Chats
-        chats={chats}
-        loading={loading}
-        users={users}
-        onUserSelect={handleSelect}
-      />
+      {children}
     </div>
   );
 };
 
-export default Navbar;
+export default Aside;

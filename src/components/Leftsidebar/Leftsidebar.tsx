@@ -59,7 +59,7 @@ const Leftsidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/user">
+            <NavLink to="/users">
               <svg
                 width="24"
                 height="24"

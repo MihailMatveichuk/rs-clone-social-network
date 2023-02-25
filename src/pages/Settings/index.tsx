@@ -47,29 +47,52 @@ const SettingsPage = () => {
     const photo = document.querySelector('#input_img')?.getAttribute('src');
     onClear();
     try {
+      const defaultImage = await getDownloadURL(ref(storage, 'logo.png'))    
       const displayName = `${name} ${lastName}`;
-      const storageRef = ref(storage, displayName);
-      await uploadBytesResumable(storageRef, file).then(async () => {
-        getDownloadURL(storageRef).then(async (downloadURL) => {
-          try {
-            await updateProfile(currentUser!, {
-              displayName,
-              photoURL: downloadURL,
-            });
-            const user = await checkUser(currentUser!.uid);
-            await updateDoc(doc(db, 'users', user!.uid), {
-              ...user,
-              displayName,
-              photoURL: photo,
-              about,
-              phone,
-              email,
-            });
-          } catch (err) {
-            console.log(err);
-          }
+      const storageRef = ref(storage, currentUser!.uid);
+      if (file) {
+        await uploadBytesResumable(storageRef, file).then(async () => {
+          getDownloadURL(storageRef).then(async (downloadURL) => {
+            try {
+              console.log(downloadURL)
+              await updateProfile(currentUser!, {
+                displayName,
+                photoURL: downloadURL,
+              });
+              const user = await checkUser(currentUser!.uid);
+              await updateDoc(doc(db, 'users', user!.uid), {
+                ...user,
+                displayName,
+                photoURL: downloadURL,
+                about,
+                phone,
+                email,
+              });
+              const user1 = await checkUser(currentUser!.uid);
+
+              console.log(user1);
+              
+            } catch (err) {
+              console.log(err);
+            }
+          });
         });
-      });
+      } else {
+        await updateProfile(currentUser!, {
+          displayName,
+          photoURL: defaultImage,
+        });
+        const user = await checkUser(currentUser!.uid);
+        await updateDoc(doc(db, 'users', user!.uid), {
+          ...user,
+          displayName,
+          photoURL: defaultImage,
+          about,
+          phone,
+          email,
+        });
+      }
+
     } catch (err) {
       console.log(err);
     }

@@ -21,6 +21,7 @@ import {
 import Loading from './UI/Loading';
 // import { getDownloadURL, ref } from 'firebase/storage';
 import ChatCard from './UI/ChatCard';
+import { useSearchParams } from 'react-router-dom';
 
 <ColorRing
   visible={true}
@@ -46,9 +47,13 @@ const Chats: React.FC<ChatsProps> = ({
   onUserSelect,
 }) => {
   const { dispatch } = useContext(ChatContext);
+  let [params, setParams] = useSearchParams();
 
   const handleSelect = (u: any) => {
     dispatch({ type: ActionType.ChangeUser, payload: u });
+    setParams({
+      chat:  u.user
+    })
   };
 
   return (
@@ -80,7 +85,7 @@ const Chats: React.FC<ChatsProps> = ({
               </div>
             </li>
           ))}
-        {chats != undefined ? (
+        {chats != undefined && 
           chats
             ?.sort(
               (a: { date: number }, b: { date: number }) => b.date - a.date
@@ -88,45 +93,9 @@ const Chats: React.FC<ChatsProps> = ({
             .map((chat: DocumentData, i: Key | null | undefined) => (
               <ChatCard handleSelect={handleSelect} chat={chat} key={i} />
             ))
-        ) : (
-          <div className="user-chat">
-            <div className="container">
-              <h1>Search your contacts | </h1>
-            </div>
-          </div>
-        )}
+        }
       </ul>
     </div>
-
-    /*    <>
-      {chats?.length == 0 ? (
-        <ColorRing />
-      ) : (
-        <div className="chats">
-          {Object.entries(chats!)
-            ?.sort((a, b) => b[1].date - a[1].date)
-            .map((chat) => (
-              <div
-                className="userChat"
-                key={chat[0]}
-                onClick={() => handleSelect(chat[1].userInfo)}
-                role="presentation"
-              >
-                <img
-                  className="userChatImg"
-                  src={chat[1].userInfo.photoURL}
-                  alt=""
-                />
-                <div className="userChatInfo">
-                  <span>{chat[1].userInfo.displayName}</span>
-                  <p>{chat[1].lastMessage?.text}</p>
-                </div>
-              </div>
-            ))}
-        </div>
-      )}
-    </>
-*/
   );
 };
 

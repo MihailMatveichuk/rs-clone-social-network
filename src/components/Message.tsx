@@ -118,11 +118,8 @@ const Message = ({ message }: IMessageProp) => {
   });
 
   const videoSrc = listUrl.find((item) => {
-    const path = encodeURI(message.text).replaceAll(',', '%2C');
-    if (message.text.includes('Смешное')) {
-      console.log(path);
-    }
-    return item.includes(path);
+    const path =  encodeURI(message.text).replaceAll(',','%2C')
+    return item.includes(path)
   });
   const audioSrc = listUrl.find((item) => item.includes(message.text));
 

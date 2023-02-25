@@ -28,6 +28,8 @@ export const ChatContextProvider = ({ children }: PropsWithChildren) => {
   const chatReducer = (state: IChatState, action: IChangeUserAction) => {
     switch (action.type) {
       case ActionType.ChangeUser:
+        console.log(action.payload, 'payload');
+        
         return {
           user: action.payload.user,
           chatId: action.payload.uid,
