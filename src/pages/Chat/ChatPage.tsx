@@ -29,8 +29,10 @@ const ChatPage = () => {
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
   const [chats, setChats] = useState<DocumentData | undefined>([]);
-  const [users, setUsers] = useState<DocumentData | undefined>([]);
+  const [filteredChats, setFilteredChats] = useState<DocumentData | undefined>([]);
   const [err, setError] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+
   const [loading, setLoading] = useState<boolean>(true);
   const [params] = useSearchParams();
   const gtChats = () => {
@@ -40,6 +42,7 @@ const ChatPage = () => {
         const data = d.data();
         if (data) {
           setChats(data.chats);
+          setFilteredChats(data.chats);
         }
       }
       setLoading(false);
@@ -60,6 +63,33 @@ const ChatPage = () => {
        handleSelect(user as authUser);
     }
   }
+  const onSearchHandler = async (val: string) => {
+    setSearchValue(val);
+    setLoading(true)
+    setFilteredChats([])
+    const users = []
+    const usersInChat = chats!.map(chat => chat.memberId)
+    const querySnapshot = await getDocs(query(collection(db, "users"), where('uid', 'in', usersInChat)));    
+    querySnapshot.forEach((doc) => {
+      users.push(doc.data())
+    });
+    
+    if (val === '') {
+        setFilteredChats(chats);
+        setLoading(false);
+    } else {
+        const filtered = chats!.filter(chat => {
+          const user = users.find(user => user.uid === chat.memberId)
+          console.log(user);
+          
+          if (!user) return false;
+          return (user.displayName && user.displayName.toLowerCase().includes(val.toLowerCase())) ||
+         (chat.lastMessage && chat.lastMessage.toLowerCase().includes(val.toLowerCase()))
+        })
+        setFilteredChats(filtered);
+        setLoading(false);
+    }
+  }
 
   useEffect(() => {
     if (params && currentUser) {
@@ -76,7 +106,6 @@ const ChatPage = () => {
     
     if (!chat) {
       await createChat(currentUser!.uid, user.uid);
-      setUsers([]);
     }
     const newChat = await getChat(currentUser!.uid, user.uid);
     dispatch({ type: ActionType.ChangeUser, payload: {
@@ -85,24 +114,7 @@ const ChatPage = () => {
     } });
   };
 
-  const onEnterHandler = async (val: string) => {
-    const q = query(
-      collection(db, 'users'),
-      where('displayName', '>=', val),
-      where('displayName', '<=', val + '\uf8ff')
-      //where('displayName', 'in', val)
-    );
-    try {
-      const querySnapshot = await getDocs(q);
-      const arr: DocumentData = [];
-      querySnapshot.forEach((doc) => {
-        arr.push(doc.data());
-      });
-      setUsers(arr);
-    } catch (err) {
-      setError(true);
-    }
-  };
+
 
 
 
@@ -113,12 +125,13 @@ const ChatPage = () => {
       >
       <div className="container">
         <SearchInput
-          onEnterClick={onEnterHandler}
+          onChange={onSearchHandler}
           placeholder="Chats, messages and more"
+          value={searchValue}
         />
       </div>
       <Chats
-        chats={chats}
+        chats={filteredChats}
         loading={loading}
         users={undefined}
         onUserSelect={handleSelect}

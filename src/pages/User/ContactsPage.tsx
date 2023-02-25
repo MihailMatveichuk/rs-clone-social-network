@@ -17,9 +17,12 @@ const MainPage = () => {
   const navigate = useNavigate()
   const { dispatch } = useContext(ChatContext);
   const [users, setUsers] = useState<DocumentData | undefined>([]);
+  const [filteredUsers, setFilteredUsers] = useState<DocumentData | undefined>([]);
+
   const [chosenUser, setChosenUser] = useState<DocumentData | null>(null);
   const [err, setError] = useState(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const [searchValue, setSearchValue] = useState('');
 
   const gtChats = () => {
     setLoading(true);
@@ -31,6 +34,7 @@ const MainPage = () => {
             }
         });
         setUsers(ppl)
+        setFilteredUsers(ppl)
         setLoading(false);
     });
     return () => {
@@ -42,8 +46,14 @@ const MainPage = () => {
     setChosenUser(user)
   };
 
-  const onEnterHandler = async () => {
-
+  const onSearchHandler = (val: string) => {
+    setSearchValue(val);
+    if (val === '') {
+        setFilteredUsers(users)
+    } else {
+        const filtered = users!.filter(user => user.displayName.toLowerCase().includes(val.toLowerCase()))
+        setFilteredUsers(filtered);
+    }
   }
 
   const handleSendMessage = async () => {
@@ -75,14 +85,15 @@ const MainPage = () => {
       >
       <div className="container">
         <SearchInput
-          onEnterClick={onEnterHandler}
+          onChange={onSearchHandler}
+          value={searchValue}
           placeholder="Find user"
         />
       </div>
       <Chats
         chats={undefined}
         loading={loading}
-        users={users}
+        users={filteredUsers}
         onUserSelect={handleSelect}
       />
       </Aside>
