@@ -70,8 +70,6 @@ const Message = ({ message }: IMessageProp) => {
     listAll(imageListRef).then((res) => {
       res.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
-          console.log(url);
-
           setListUrl((prev) => [...prev, url]);
         });
       });

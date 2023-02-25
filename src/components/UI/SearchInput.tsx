@@ -16,7 +16,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
     target: unknown;
     preventDefault: () => void;
   }) => {
-    e.code === 'Enter' && onEnterClick(userName);
+    userName !== '' ? e.code === 'Enter' && onEnterClick(userName) : null;
   };
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
