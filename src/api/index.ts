@@ -57,23 +57,23 @@ export const createUserViaEmail = async ({
   await setDoc(doc(userChatsRef, uid), {
     chats: [],
   });
-}
+};
 
-  export const createUserViaPhone = async ({
-    phone,
+export const createUserViaPhone = async ({
+  phone,
+  uid,
+}: createUserWithPhone) => {
+  await setDoc(doc(usersRef, uid), {
+    photoURL: '',
     uid,
-  }: createUserWithPhone) => {
-    await setDoc(doc(usersRef, uid), {
-      photoURL: '',
-      uid,
-      online: true,
-      email: '',
-      phone,
-      displayName: phone,
-      lastSeen: null,
-      about: '',
-      createdAt: Timestamp.now(),
-    });
+    online: true,
+    email: '',
+    phone,
+    displayName: phone,
+    lastSeen: null,
+    about: '',
+    createdAt: Timestamp.now(),
+  });
 
   await setDoc(doc(userChatsRef, uid), {
     chats: [],
