@@ -12,6 +12,9 @@
    <a href="https://console.firebase.google.com/u/0/">
    <img src="https://img.shields.io/badge/firebase-database-yellow"
      alt="firebase">
+    <a href="https://ru.reactjs.org/">
+   <img src="https://img.shields.io/badge/React-%20v18.2.0-blue"
+     alt="react">
   <a href="https://github.com/MihailMatveichuk/rs-clone-social-network/issues">
   <img src="https://img.shields.io/github/issues-raw/ArmynC/ArminC-AutoExec.svg?style=flat-square&logo=github&logoColor=white"
          alt="GitHub issues">
