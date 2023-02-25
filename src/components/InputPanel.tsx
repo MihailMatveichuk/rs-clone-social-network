@@ -12,6 +12,7 @@ import { uuidv4 } from '@firebase/util';
 import { db, storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import EmojiPicker from 'emoji-picker-react';
+import AudioRecorder from './UI/AudioRecorder';
 
 const InputPanel = () => {
   const { currentUser } = useContext(AuthContext);
@@ -21,6 +22,54 @@ const InputPanel = () => {
   const [image, setImage] = useState<File | null>(null);
 
   const ImageRef = ref(storage, `images/${data.chatId}/${image?.name}`);
+  const onVoiceRecord = async (record: Blob) => {
+    const audioUrl = URL.createObjectURL(record);
+    const splitted = audioUrl.split('/')
+    const id = splitted[splitted.length - 1]    
+    const AudioRef = ref(storage, `images/${data.chatId}/voice-${id}`);
+    await uploadBytes(AudioRef, record).then((snapshot) => {      
+      getDownloadURL(snapshot.ref);
+    });
+
+    if (data.chatId) {
+      await updateDoc(doc(db, 'messages', data.chatId), {
+        messages: arrayUnion({
+          id: uuidv4(),
+          text: `voice-${id}`,
+          senderId: currentUser!.uid,
+          date: Timestamp.now(),
+        }),
+      });
+      const docRef = doc(db, 'chats', currentUser!.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const chats = [...docSnap.data().chats];
+        const index = chats.findIndex((chat) => chat.memberId === data.user!);
+        chats[index] = {
+          ...chats[index],
+          lastMessage: 'Голосовое',
+        };
+        await updateDoc(docRef, {
+          chats,
+        });
+      }
+      const docRef1 = doc(db, 'chats', data.user!);
+      const docSnap1 = await getDoc(docRef1);
+      if (docSnap1.exists()) {
+        const chats = [...docSnap1.data().chats];
+        const index = chats.findIndex(
+          (chat) => chat.memberId === currentUser!.uid
+        );
+        chats[index] = {
+          ...chats[index],
+          lastMessage: 'Голосовое',
+        };
+        await updateDoc(docRef1, {
+          chats,
+        });
+      }
+    }
+  }
 
   const handleSend = async () => {
     setText('');
@@ -167,6 +216,7 @@ const InputPanel = () => {
           >
             {showPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
           </div>
+          <AudioRecorder onRecord={onVoiceRecord} />
           <button title="button" onClick={handleSend}>
             <svg
               width="24"

@@ -8,6 +8,7 @@ import { ColorRing } from 'react-loader-spinner';
 import '../assets/styles/style.scss';
 
 import { checkUser } from '../api';
+import { getExtension } from '../utlis/getExtension';
 const Avatar = require('../assets/images/Avatar.png');
 // import { doc, DocumentData, onSnapshot } from 'firebase/firestore';
 
@@ -24,20 +25,20 @@ const Message = ({ message }: IMessageProp) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isHeart, setIsDislike] = useState(false);
   const [photo, setPhoto] = useState(currentUser!.photoURL);
-
+  const messageExst = getExtension(message.text)
+  
   const getPhoto = async () => {
-    if (currentUser != null && currentUser.photoURL != null) {
       if (message.senderId !== currentUser!.uid) {
         const user = await checkUser(message.senderId);
-        console.log(user);
-        setPhoto(user!.photoUrl || Avatar);
-      }
+        setPhoto(user!.photoURL || Avatar);
+      } else {
+        setPhoto(currentUser!.photoURL || Avatar);
     }
   };
+
   useEffect(() => {
     getPhoto();
   }, []);
-  // const [user, setUser] = useState<DocumentData | null>(null);
 
   const likeHandler = () => {
     setLike(isLiked ? like - 1 : like + 1);
@@ -59,50 +60,52 @@ const Message = ({ message }: IMessageProp) => {
   };
 
   const date = message.date.toDate().toLocaleString();
-  // let chatUserPhoto: string | undefined;
-  // if (currentUser != null && currentUser.photoURL != null) {
-  //   chatUserPhoto =
-  //     message.senderId === currentUser.uid
-  //       ? currentUser.photoURL
-  //       : user?.photoUrl;
-  // }
-  const messageExst =
-    message.text.split('.')[message.text.split('.').length - 1];
+
 
   const imageListRef = ref(storage, `images/${data.chatId}`);
 
   useEffect(() => {
     if (
-      (messageExst == 'jpg' || messageExst == 'jpeg' || messageExst == 'png') &&
+      messageExst === 'img' &&
       !loading
     ) {
       setLoading(true);
     }
     listAll(imageListRef).then((res) => {
+      
       res.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
-          setListUrl((prev) => [...prev, url]);
+          console.log(url);
+          
+          setListUrl((prev) => [...prev, url]);          
         });
-      });
+      });      
     });
   }, []);
 
   const onImgLoadHandler = (
     e: React.SyntheticEvent<HTMLImageElement, Event>
-  ) => {
+  ) => {    
     if (e.currentTarget.complete) {
       setLoading(false);
     }
   };
 
   const imgSrc = listUrl.find((item) => {
-    return item.includes(message.text || message.text.replaceAll(/ /g, '%'));
+    const text = encodeURI(message.text).replaceAll(',','%2C')
+    return item.includes(text || text.replaceAll(/ /g, '%'));
   });
+  
 
   const videoSrc = listUrl.find((item) => {
-    return item;
+    const path =  encodeURI(message.text).replaceAll(',','%2C')
+    if (message.text.includes('Смешное')) {
+      console.log(path);
+      
+    }
+    return item.includes(path)
   });
-  const videoExtensions = ['mp4', 'm4v', 'webm', 'ogv', 'flv', 'mkv', 'avi'];
+  const audioSrc = listUrl.find((item) => item.includes(message.text));
 
   return (
     <li
@@ -122,7 +125,7 @@ const Message = ({ message }: IMessageProp) => {
         </div>
         {loading && <ColorRing />}
         <span className="message-text">
-          {videoExtensions.includes(messageExst) ? (
+          {messageExst === 'video' &&
             <video width="400px" src={videoSrc} controls>
               <track
                 src={videoSrc}
@@ -131,22 +134,28 @@ const Message = ({ message }: IMessageProp) => {
                 label="English"
               ></track>
             </video>
-          ) : messageExst == 'jpg' ||
-            messageExst == 'jpeg' ||
-            messageExst == 'png' ? (
+          }
+          {messageExst === 'img' &&
             <img
               className="message__img"
               src={imgSrc}
               alt=""
               onLoad={onImgLoadHandler}
             />
-          ) : message.text.includes('https://www') ? (
+          }
+          {messageExst === 'url' &&
             <a href={message.text} target="_blank" rel="noreferrer">
               message.text
             </a>
-          ) : (
-            message.text
-          )}
+          }
+          {messageExst === 'audio' &&
+            <div className="audio-player">
+              <audio src={audioSrc} controls></audio>
+            </div>
+          }
+          {messageExst === 'text' &&
+              message.text
+          }
         </span>
         <div className="reaction">
           <img

@@ -45,7 +45,7 @@ const ChatCard: React.FC<ChatCardProps> = ({ chat, handleSelect }) => {
             <div className="user-chat__img-wrapper">
               <img
                 className="user-chat__img"
-                src={user.photoUrl || Avatar}
+                src={user.photoURL || Avatar}
                 alt=""
               />
               {user.online && <div className="user-chat__online"></div>}

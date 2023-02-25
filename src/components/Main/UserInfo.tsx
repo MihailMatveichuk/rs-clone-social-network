@@ -50,7 +50,7 @@ const UserInfo: React.FC<UserInfoProps> = ({
         <div className="user-info__content">
           <div className="user-info__content-left">
             <div className="user-info__info">
-              <img src={user.photoUrl || Avatar} alt="photoURL" />
+              <img src={user.photoURL || Avatar} alt="photoURL" />
               <h2>{user.displayName}</h2>
               {!isMain && (
                 <>
