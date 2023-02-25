@@ -32,7 +32,7 @@ Project has the following **🎯 Features**:
 | **Features**                                                  |  **Openland 🦄**   |
 | ------------------------------------------------------------- | :----------------: | 
 | Authorization by email📧                                      |         ✔️        |
-| Showing a list of chats of your friends :book                 |         ✔️        |
+| Showing a list of chats of your friends 📖                   |         ✔️        |
 | Awesome, modern UI 🎨                                        |         ✔️         |
 | Page with all information about users 📃                     |         ✔️         |
 | Sending text message 📨                                      |         ✔️         |
