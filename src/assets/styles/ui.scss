@@ -1,3 +1,25 @@
+.audio-controls {
+    button {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &__active {
+        background: var(--theme-primary) !important;
+        &:hover svg path {
+            fill: #fff !important;
+        }
+        .svgFill {
+            fill: #fff;
+        }
+    }
+}
+
+
 .input-container {
     background: var(--theme-input);
     border-radius: 8px;

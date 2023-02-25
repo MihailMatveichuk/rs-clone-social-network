@@ -44,7 +44,7 @@ export const createUserViaEmail = async ({
   uid,
 }: createUserWithEmail) => {
   await setDoc(doc(usersRef, uid), {
-    photoUrl: '',
+    photoURL: '',
     uid,
     online: true,
     email,

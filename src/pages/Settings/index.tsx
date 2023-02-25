@@ -61,7 +61,7 @@ const SettingsPage = () => {
             await updateDoc(doc(db, 'users', user!.uid), {
               ...user,
               displayName,
-              photoUrl: photo,
+              photoURL: photo,
               about,
               phone,
               email,

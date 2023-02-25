@@ -1,4 +1,3 @@
-// import { User } from 'firebase/auth';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import {
@@ -6,12 +5,8 @@ import {
   query,
   where,
   getDocs,
-  setDoc,
-  updateDoc,
   doc,
-  serverTimestamp,
   onSnapshot,
-  getDoc,
   DocumentData,
 } from 'firebase/firestore';
 import Chats from './Chats';
@@ -19,21 +14,13 @@ import SearchInput from './UI/SearchInput';
 import { db } from '../firebase';
 import { ActionType, authUser } from '../types';
 import { ChatContext } from '../context/Chatcontext';
-import { createChat, getChat, checkUser } from '../api';
+import { createChat, getChat } from '../api';
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
-
-  // const [userName, setUserName] = useState('');
-
   const [chats, setChats] = useState<DocumentData | undefined>([]);
-  // const [userInfoChanged, setUserInfoChanged] = useState<boolean>(false);
   const [users, setUsers] = useState<DocumentData | undefined>([]);
-  // const [user, setUser] = useState<User | null | undefined | DocumentData>(
-  //   null
-  // );
-  const [err, setError] = useState(false);
   const [loading, setLoading] = useState<boolean>(true);
 
   const gtChats = () => {
@@ -43,23 +30,6 @@ const Navbar = () => {
         const data = d.data();
         if (data) {
           setChats(data.chats);
-
-          // for (let i = 0; i < data.chats.length; i++) {
-          //   const docRef = doc(db, 'users',data.chats[i].memberId);
-          //   onSnapshot(docRef, (newDoc) => {
-          //     console.log(newDoc);
-
-          //    //gtChats()
-          //   })
-          //   const docSnap =  await getDoc(docRef);
-          //   console.log(docSnap.data());
-
-          //   //const user = await checkUser(data.chats[i].memberId)
-          //   arr.push({
-          //     ...data.chats[i],
-          //     user: docSnap.data()
-          //   })
-          // }
         }
       }
       setLoading(false);
@@ -88,7 +58,6 @@ const Navbar = () => {
       collection(db, 'users'),
       where('displayName', '>=', val),
       where('displayName', '<=', val + '\uf8ff')
-      //where('displayName', 'in', val)
     );
     try {
       const querySnapshot = await getDocs(q);
@@ -102,7 +71,7 @@ const Navbar = () => {
       });
       setUsers(arr);
     } catch (err) {
-      setError(true);
+      console.log(err);
     }
   };
   return (

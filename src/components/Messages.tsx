@@ -11,14 +11,12 @@ const Messages = () => {
   const { data } = useContext(ChatContext);
   const refs = useRef<HTMLLIElement>(null);
   useEffect(() => {
-    //if (messages.length === 0) return;
     refs.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   useEffect(() => {
     if (data.chatId != null) {
       const unSub = onSnapshot(doc(db, 'messages', data.chatId), (doc) => {
-        console.log(doc.exists());
         if (doc.exists()) {
           setMessages(doc.data().messages);
         } else {

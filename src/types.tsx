@@ -13,10 +13,23 @@ export type ContextUser = {
   currentUser: User | null | undefined;
 };
 
+export type UserBD = {
+  photoURL: string;
+  uid: string;
+  online: boolean;
+  email: string;
+  phone: string;
+  displayName: string;
+  lastSeen: Timestamp;
+  about: string;
+  createdAt: Timestamp;
+};
+
 export type authUser = {
   displayName: string;
   photoURL: string;
   uid: string;
+  user: string;
 };
 
 export interface IChatContext {
@@ -65,3 +78,5 @@ export interface IMessageProp {
 //   type: string;
 //   webkitRelativePath: string;
 // }
+
+export type MessageType = 'text' | 'img' | 'audio' | 'video' | 'url';

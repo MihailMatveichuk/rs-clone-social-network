@@ -7,7 +7,10 @@ import { IMessageProp } from '../types';
 import { ColorRing } from 'react-loader-spinner';
 import '../assets/styles/style.scss';
 import { checkUser } from '../api';
+
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+
+import { getExtension } from '../utlis/getExtension';
 
 const Avatar = require('../assets/images/Avatar.png');
 const Like = require('./assets/images/Like.png');
@@ -19,18 +22,22 @@ const Message = ({ message }: IMessageProp) => {
   const [loading, setLoading] = useState(false);
   const { data } = useContext(ChatContext);
   const [photo, setPhoto] = useState(currentUser!.photoURL);
+
+  const messageExst = getExtension(message.text);
+
   const getPhoto = async () => {
-    if (currentUser != null && currentUser.photoURL != null) {
-      if (message.senderId !== currentUser!.uid) {
-        const user = await checkUser(message.senderId);
-        console.log(user);
-        setPhoto(user!.photoUrl || Avatar);
-      }
+    if (message.senderId !== currentUser!.uid) {
+      const user = await checkUser(message.senderId);
+      setPhoto(user!.photoURL || Avatar);
+    } else {
+      setPhoto(currentUser!.photoURL || Avatar);
     }
   };
+
   useEffect(() => {
     getPhoto();
   }, []);
+
   const likeHandler = async () => {
     const liked = !message.like;
     const docRefMessages = doc(db, 'messages', data.chatId!);
@@ -47,6 +54,7 @@ const Message = ({ message }: IMessageProp) => {
         messages,
       });
     }
+
   };
 
   // onSnapshot(doc(db, 'users', data.user), async (d) => {
@@ -77,28 +85,18 @@ const Message = ({ message }: IMessageProp) => {
   };
 
   const date = message.date.toDate().toLocaleString();
-  // let chatUserPhoto: string | undefined;
-  // if (currentUser != null && currentUser.photoURL != null) {
-  //   chatUserPhoto =
-  //     message.senderId === currentUser.uid
-  //       ? currentUser.photoURL
-  //       : user?.photoUrl;
-  // }
-  const messageExst =
-    message.text.split('.')[message.text.split('.').length - 1];
 
   const imageListRef = ref(storage, `images/${data.chatId}`);
 
   useEffect(() => {
-    if (
-      (messageExst == 'jpg' || messageExst == 'jpeg' || messageExst == 'png') &&
-      !loading
-    ) {
+    if (messageExst === 'img' && !loading) {
       setLoading(true);
     }
     listAll(imageListRef).then((res) => {
       res.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
+          console.log(url);
+
           setListUrl((prev) => [...prev, url]);
         });
       });
@@ -114,13 +112,18 @@ const Message = ({ message }: IMessageProp) => {
   };
 
   const imgSrc = listUrl.find((item) => {
-    return item.includes(message.text || message.text.replaceAll(/ /g, '%'));
+    const text = encodeURI(message.text).replaceAll(',', '%2C');
+    return item.includes(text || text.replaceAll(/ /g, '%'));
   });
 
   const videoSrc = listUrl.find((item) => {
-    return item;
+    const path = encodeURI(message.text).replaceAll(',', '%2C');
+    if (message.text.includes('Смешное')) {
+      console.log(path);
+    }
+    return item.includes(path);
   });
-  const videoExtensions = ['mp4', 'm4v', 'webm', 'ogv', 'flv', 'mkv', 'avi'];
+  const audioSrc = listUrl.find((item) => item.includes(message.text));
 
   return (
     <li
@@ -140,7 +143,7 @@ const Message = ({ message }: IMessageProp) => {
         </div>
         {loading && <ColorRing />}
         <span className="message-text">
-          {videoExtensions.includes(messageExst) ? (
+          {messageExst === 'video' && (
             <video width="400px" src={videoSrc} controls>
               <track
                 src={videoSrc}
@@ -149,22 +152,28 @@ const Message = ({ message }: IMessageProp) => {
                 label="English"
               ></track>
             </video>
-          ) : messageExst == 'jpg' ||
-            messageExst == 'jpeg' ||
-            messageExst == 'png' ? (
+          )}
+          {messageExst === 'img' && (
             <img
               className="message__img"
               src={imgSrc}
               alt=""
               onLoad={onImgLoadHandler}
             />
-          ) : message.text.includes('https://www') ? (
+          )}
+          {messageExst === 'url' && (
             <a href={message.text} target="_blank" rel="noreferrer">
               message.text
             </a>
-          ) : (
-            message.text
           )}
+          {messageExst === 'audio' && (
+            <div className="audio-player">
+              <audio src={audioSrc} controls>
+                <track kind="captions" />
+              </audio>
+            </div>
+          )}
+          {messageExst === 'text' && message.text}
         </span>
         <div className="reaction">
           <img
