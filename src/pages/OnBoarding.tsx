@@ -1,5 +1,8 @@
 const logoSrc = require('../assets/images/logo.png');
 import { Link } from 'react-router-dom';
+const gitHub = require('../assets/images/github.png');
+const rsLogo = require('../assets/images/RS_logo.png');
+import '../assets/styles/info_page.scss';
 
 export const OnBoarding = () => {
   return (
@@ -20,6 +23,47 @@ export const OnBoarding = () => {
               Continue with email
             </Link>
           </div>
+        </div>
+      </div>
+      <div className="bottom_part">
+        <div className="team_logo">
+          <a href="https://github.com/MihailMatveichuk">
+            <img
+              src={gitHub}
+              alt=""
+              title="Mikhail Matveichuk"
+              width={30}
+              height={30}
+            />
+          </a>
+
+          <a href="https://github.com/wlladislaw">
+            <img
+              src={gitHub}
+              alt=""
+              title="Vlad Stepanov"
+              width={30}
+              height={30}
+            />
+          </a>
+
+          <a href="https://github.com/KashinGen">
+            <img
+              src={gitHub}
+              alt=""
+              title="Gennady Kashin"
+              width={30}
+              height={30}
+            />
+          </a>
+        </div>
+        <div className="year">
+          <span>2023</span>
+        </div>
+        <div className="rs_logo">
+          <a href="https://rs.school/js/">
+            <img src={rsLogo} alt="" width={70} height={30} title="RS" />
+          </a>
         </div>
       </div>
     </div>
