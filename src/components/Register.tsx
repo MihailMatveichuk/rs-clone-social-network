@@ -1,7 +1,12 @@
 import InputFile from './InputFile';
 import { updateProfile } from 'firebase/auth';
 import { db, storage } from '../firebase';
-import { ref, uploadBytesResumable, getDownloadURL, getBlob } from 'firebase/storage';
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  getBlob,
+} from 'firebase/storage';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
@@ -18,8 +23,8 @@ const Register = () => {
     preventDefault: () => void;
   }) => {
     e.preventDefault();
-    const defaultImage = await getDownloadURL(ref(storage, 'logo.png'))    
-    const file = e.target[0].files[0]
+    const defaultImage = await getDownloadURL(ref(storage, 'logo.png'));
+    const file = e.target[0].files[0];
     const firstName: string = e.target[1].value;
     const lastName: string = e.target[2].value;
 
@@ -65,7 +70,6 @@ const Register = () => {
           // setError(true);
         }
       }
-
     } catch (err) {
       console.log(err);
     }
@@ -79,8 +83,8 @@ const Register = () => {
             src={image}
             onChange={(image: string | ArrayBuffer) => setImage(image)}
           />
-          <input type="text" placeholder="First name" />
-          <input type="text" placeholder="Last Name" />
+          <input type="text" placeholder="First name" required />
+          <input type="text" placeholder="Last Name" required />
           <button className="btn btn--primary">Go</button>
         </form>
       </div>
