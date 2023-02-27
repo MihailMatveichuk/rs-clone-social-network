@@ -9,7 +9,6 @@ import { ChatContext } from '../../context/Chatcontext';
 import { collection, doc, DocumentData, onSnapshot } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { ActionType, authUser } from '../../types';
-import { createChat, getChat } from '../../api';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 
 const MainPage = () => {
@@ -56,16 +55,7 @@ const MainPage = () => {
     }
   }
 
-  const handleSendMessage = async () => {
-    const chat = await getChat(currentUser!.uid, chosenUser!.uid);
-    if (!chat) {
-      await createChat(currentUser!.uid, chosenUser!.uid);
-    }
-    const newChat = await getChat(currentUser!.uid, chosenUser!.uid);        
-    dispatch({ type: ActionType.ChangeUser, payload: {
-        uid: newChat[0]!.id,
-        user: chosenUser!.uid
-    } });    
+  const handleSendMessage = async () => {  
     navigate({
         pathname: "/chats",
         search: createSearchParams({

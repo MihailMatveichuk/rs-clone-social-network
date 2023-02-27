@@ -48,7 +48,8 @@ const Chats: React.FC<ChatsProps> = ({
 }) => {
   const { dispatch } = useContext(ChatContext);
   let [params, setParams] = useSearchParams();
-
+  console.log(chats, 'Chats');
+  
   const handleSelect = (u: any) => {
     dispatch({ type: ActionType.ChangeUser, payload: u });
     setParams({
@@ -91,7 +92,7 @@ const Chats: React.FC<ChatsProps> = ({
               (a: { date: number }, b: { date: number }) => b.date - a.date
             )
             .map((chat: DocumentData, i: Key | null | undefined) => (
-              <ChatCard handleSelect={handleSelect} chat={chat} key={i} />
+              <ChatCard handleSelect={handleSelect} chat={chat} key={chat.uid} />
             ))
         }
       </ul>

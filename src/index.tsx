@@ -11,9 +11,9 @@ const root = createRoot(rootElement!);
 root.render(
   <AuthContextProvider>
     <ChatContextProvider>
-      <React.StrictMode>
+      {/* <React.StrictMode> */}
         <App />
-      </React.StrictMode>
+      {/* </React.StrictMode> */}
     </ChatContextProvider>
   </AuthContextProvider>
 );

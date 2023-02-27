@@ -17,7 +17,7 @@ import {
   DocumentData,
 } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { ActionType, authUser } from '../../types';
+import { ActionType, authUser, UserBD } from '../../types';
 import { ChatContext } from '../../context/Chatcontext';
 import { createChat, getChat, checkUser } from '../../api';
 import SearchInput from '../../components/UI/SearchInput';
@@ -40,6 +40,8 @@ const ChatPage = () => {
       if (d && d.data()) {
         const data = d.data();
         if (data) {
+          console.log(data.chats, 'data');
+          
           setChats(data.chats);
           setFilteredChats(data.chats);
         }
@@ -56,12 +58,7 @@ const ChatPage = () => {
   }, [currentUser?.uid]);
 
 
-  const getChatById = async (uid: string) => {
-    const user = await checkUser(uid);
-    if (user) {
-       handleSelect(user as authUser);
-    }
-  }
+
   const onSearchHandler = async (val: string) => {
     setSearchValue(val);
     setLoading(true)
@@ -89,28 +86,44 @@ const ChatPage = () => {
         setLoading(false);
     }
   }
+  const memberId = params.get('chat')
 
-  useEffect(() => {
-    if (params && currentUser) {
-      const memberId = params.get('chat')
-      if (memberId) {
-        getChatById(memberId)
+  useEffect( () => {
+    const getChatById = async (uid: string) => {
+      const user = await checkUser(uid);
+      if (user) {
+        await handleSelect(user);
       }
+    } 
+    if (memberId && currentUser) {
+      console.log(memberId);
+      
+        getChatById(memberId)
     }
-  }, [params]);
+  }, [memberId]);
 
-  const handleSelect = async (user: authUser) => {
+  const handleSelect = async (user: DocumentData) => {
     const chat = await getChat(currentUser!.uid, user.uid);
-    console.log(user);
-    
     if (!chat) {
-      await createChat(currentUser!.uid, user.uid);
+      await createChat(currentUser!.uid, user.uid)
+      const newChat = await getChat(currentUser!.uid, user.uid);
+      dispatch({ type: ActionType.ChangeUser, payload: {
+        user: user.uid,
+        uid: newChat[0].uid
+
+      } });
+      console.log(chat, newChat);
+
+    }   else {
+      dispatch({ type: ActionType.ChangeUser, payload: {
+        user: user.uid,
+        uid: chat[0].uid
+      } });
+      console.log(chat);
+
+      
     }
-    const newChat = await getChat(currentUser!.uid, user.uid);
-    dispatch({ type: ActionType.ChangeUser, payload: {
-      user: user.uid,
-      uid: newChat[0]!.id
-    } });
+
   };
 
 

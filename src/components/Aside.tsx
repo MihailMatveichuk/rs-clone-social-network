@@ -14,7 +14,6 @@ import SearchInput from './UI/SearchInput';
 import { db } from '../firebase';
 import { ActionType, authUser } from '../types';
 import { ChatContext } from '../context/Chatcontext';
-import { createChat, getChat } from '../api';
 
 type AsideProps = {
   title: string,

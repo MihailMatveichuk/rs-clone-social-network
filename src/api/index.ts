@@ -84,11 +84,12 @@ export const getChat = async (uid: string, uid2: string) => {
   const docRef = doc(db, `chats`, uid);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
-    const chats = docSnap.data().chats;
+    const chats = docSnap.data().chats;    
     const chat = chats.filter(
       (chat: { memberId: string }) => chat.memberId === uid2
     );
     return chat.length === 0 ? null : chat;
+    
   } else {
     return null;
   }
@@ -98,6 +99,8 @@ export const createChat = async (uid: string, uid2: string) => {
   const uidChat = uuidv4();
   const user1 = await checkUser(uid);
   const user2 = await checkUser(uid2);
+  console.log(user1, user2);
+  
   await updateDoc(doc(db, 'chats', uid), {
     chats: arrayUnion({
       uid: uidChat,
