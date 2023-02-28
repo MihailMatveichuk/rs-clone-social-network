@@ -95,6 +95,31 @@ an array of arrays of array objects or something like that + as mentioned above 
 - variables, although in regular CSS they also have 
 - mixins and placeholders make life easier
 
+**Firebase advantages:**
+- Reliable and Extensive Database:
+
+Google’s Firebase database offers robust capabilities for web and mobile application development. Some popularFirebases include the Realtime Database, Cloud Storage Services like Crashlytics, or Analytics with features such as Single Sign-On.
+- Swift and secure hosting:
+
+An intriguing feature of Firebase is its safe and quick hosting services. All content categories, including web applications, dynamic and static material, are supported by Firebase hosting. Furthermore, whether you want to host your Express.js microservices, HTML, CSS, or APIs, Firebase’s hosting support is always available. It signifies that Firebase hosts a wide range of content.
+- Best Testing Service:
+
+Another advantage of using Firebase is its testing services, so developers prefer to utilize this software development platform. Firebase provides its users with a variety of testing services rather than just one.
+- Firebase Authentication:
+
+The importance of user identity in application security cannot be overstated. One of the most compelling features of this platform in the current hard online security environment is Google-backed Firebase Authentication. It provides simple-to-integrate SDKs, UI frameworks, and server-side services for verifying users before they use a specific Firebase application. Firebase Authentication not only accepts emails, passwords, and phone numbers for authentication but also supports federated identity sources.
+- Google Analytics:
+
+Google Analytics works with iOS, Android, Web, C++, and Unity environments. This free analytic tool informs developers on how users interact with their mobile and web applications. Firebase Analytics may also help you enhance user retention and engagement rates for your application.
+
+**Firebase disadvantages:**
+- Data storage is not convenient:
+
+Typically, you’ll use the Realtime Database as your primary store, which isn’t necessarily a good thing. The fundamental issue is a lack of querying capabilities. You can’t query for more than one key at a time, and there’s no method to filter your data. The entire database is a JSON file, which is nothing like SQL’s storage format. The format also eliminates the possibility of modeling the data.
+- Reduced data migration: 
+
+With the growing popularity of cloud services like Firebase, it is important for developers to be mindful about how their data will transfer between platforms. If users do not have easy access or control over updating certain parts within an app due to its backend being hosted externally, then there could potentially arise problems with no way around this issue other than starting over again, which many people don’t wish to.
+
 ## 🚀 Plans for the future
 
 We are planning to add more and more projects to this repository. For this, we need your help! Find out how to contribute below. 👇
