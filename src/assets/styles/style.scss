@@ -1,0 +1,255 @@
+// @import 'variables';
+@import 'themes';
+@import 'reset';
+@import 'on-boarding';
+@import 'chat-page';
+@import 'user';
+@import 'ui';
+@import 'settings';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+#recaptcha-container {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+html,
+body {
+  background: var(--theme-bg);
+  color: var(--theme-main-text);
+}
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+.form-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form-wrapper,
+.registra-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.registra-form {
+  margin-top: 30px;
+  gap: 30px;
+  input {
+    background: var(--theme-input);
+    border-radius: 8px;
+    border: none;
+    width: 320px;
+    height: 56px;
+    padding-left: 10px;
+    outline: none;
+  }
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10%;
+    color: var(--theme-main-text);
+    font-size: small;
+  }
+}
+
+.svgFill {
+  fill: var(--svg-fill);
+}
+
+.blocks-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  & svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+.container {
+  margin: 0 auto;
+  //width: 100%;
+  padding: 0 16px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  text-align: center;
+  letter-spacing: 0.36px;
+  color: var(--theme-main-text);
+}
+
+.text {
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: -0.24px;
+  color: var(--theme-grey-text);
+}
+
+.btn {
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 24px;
+  text-align: center;
+  letter-spacing: -0.24px;
+  transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  border: none;
+  outline: none;
+  padding: 8px 24px;
+  text-decoration: none;
+
+  &--primary {
+    background-color: var(--theme-primary);
+    color: var(--chat-info-bg);
+    &.active {
+      background-color: var(--theme-primary-active);
+    }
+  }
+
+  &--grey {
+    color: var(--theme-grey-text);
+    background-color: var(--theme-grey-background);
+
+    &:active {
+      background-color: var(--theme-grey-background-active);
+    }
+  }
+}
+
+.input {
+  background: var(--theme-input);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: -0.24px;
+  &::placeholder {
+    color: var(--theme-input-placeholder);
+  }
+}
+
+.input:focus:invalid {
+  border: rgba(214, 27, 27, 0.6) solid 0.1px;
+}
+
+.input:focus:valid {
+  border: rgba(18, 147, 18, 0.64) solid 0.1px;
+}
+
+.launcher {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__logo {
+    width: 96px;
+    height: 96px;
+    animation: pulse 4s infinite;
+  }
+}
+
+.error {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__logo {
+    width: 320px;
+    height: 200px;
+    margin-bottom: 16px;
+  }
+  &__title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+    letter-spacing: 0.36px;
+    color: var(--theme-main-text);
+    margin-bottom: 8px;
+  }
+  &__text {
+    font-size: 15px;
+    line-height: 24px;
+    text-align: center;
+    letter-spacing: -0.24px;
+    color: var(--theme-grey-text);
+    margin-bottom: 32px;
+  }
+}
+
+@media screen and (hover: hover) {
+  .btn {
+    &--primary:hover {
+      background-color: var(--theme-primary-hovered);
+    }
+
+    &--grey:hover {
+      background-color: var(--theme-grey-background-hovered);
+    }
+  }
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+  }
+  25% {
+    -webkit-transform: scale(1.1);
+  }
+  50% {
+    -webkit-transform: scale(1);
+  }
+  75% {
+    -webkit-transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+  }
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

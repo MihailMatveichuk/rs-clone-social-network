@@ -1,0 +1,133 @@
+.audio-controls {
+    button {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &__active {
+        background: var(--theme-primary) !important;
+        &:hover svg path {
+            fill: #fff !important;
+        }
+        .svgFill {
+            fill: #fff;
+        }
+    }
+}
+
+
+.input-container {
+    background: var(--theme-input);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+    width: 448px;
+    input {
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 24px;
+        width: 100%;
+        color: var(--theme-main-text);
+        &::placeholder {
+            color: var(--theme-input-placeholder);
+        }
+    }
+}
+
+
+.logo-choose {
+    img {
+        width: 96px;
+        height: 96px;
+        object-fit: cover;
+        object-position: top center;
+        border-radius: 50%;
+    }
+}
+
+.search-input {
+    position: relative;
+    background: var(--theme-input);
+    border-radius: 8px;
+    position: relative;
+    &::before {
+        position: absolute;
+        content: "";
+        top: 12px;
+        left: 12px;
+        width: 16px;
+        height: 16px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M11 6.75C11 9.09721 9.09721 11 6.75 11C4.40279 11 2.5 9.09721 2.5 6.75C2.5 4.40279 4.40279 2.5 6.75 2.5C9.09721 2.5 11 4.40279 11 6.75ZM10.251 11.3117C9.28141 12.0569 8.06745 12.5 6.75 12.5C3.57436 12.5 1 9.92564 1 6.75C1 3.57436 3.57436 1 6.75 1C9.92564 1 12.5 3.57436 12.5 6.75C12.5 8.06745 12.0569 9.28141 11.3117 10.251L14.5303 13.4697C14.8232 13.7626 14.8232 14.2374 14.5303 14.5303C14.2374 14.8232 13.7626 14.8232 13.4697 14.5303L10.251 11.3117Z' fill='%239D9FA3'/%3E%3C/svg%3E%0A");
+    }
+    input {
+        width: 100%;
+        padding: 8px 12px 8px 36px;
+        font-size: 15px;
+        line-height: 24px;
+        letter-spacing: -0.24px;
+        &::placeholder {
+            color: var(--theme-input-placeholder);
+        }
+    }
+}
+
+.input-panel {
+    height: 72px;
+    position: relative;
+    &__inner {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        padding: 0 20px;
+        gap: 24px;
+    }
+
+    label, button {
+        cursor: pointer;
+    }
+    &__input-container {
+        flex: 1;
+        position: relative;
+        background: var(--theme-input);
+        border-radius: 8px;
+        input {
+            width: 100%;
+            padding: 8px 76px 8px 16px;
+            font-size: 15px;
+            line-height: 24px;
+            &::placeholder {
+                color: var(--theme-input-placeholder);
+            }
+            color: var(--theme-main-color);
+        }
+        svg {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+    }
+
+
+}
+
+@media screen and (hover:hover) {
+    .input-panel {
+        label:hover,
+        button:hover {
+            svg path {
+                fill: var(--theme-primary);
+            }
+        }
+        &__input-container svg:hover path {
+            fill: var(--theme-primary);
+        }
+    }
+}

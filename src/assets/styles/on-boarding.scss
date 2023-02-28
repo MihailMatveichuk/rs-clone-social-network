@@ -1,0 +1,93 @@
+.on-boarding {
+  height: 95%;
+
+  &__inner {
+    height: 100%;
+  }
+
+  &__top {
+    height: 72px;
+    padding: 12px;
+  }
+
+  &__logo {
+    width: 128px;
+    height: 128px;
+    margin-bottom: 16px;
+  }
+
+  &__title {
+    margin-bottom: 8px;
+  }
+
+  &__text {
+    margin-bottom: 32px;
+    width: 320px;
+    text-align: center;
+  }
+
+  &__btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__step {
+    height: calc(100% - 72px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  &__go-back {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  &__email,
+  &__password {
+    width: 320px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+  }
+}
+
+.otp-group {
+  display: flex;
+  width: 100%;
+  max-width: 360px;
+  column-gap: 10px;
+  margin-bottom: 32px;
+}
+
+.otp-input {
+  width: 100%;
+  height: 56px;
+  border-radius: 5px;
+  text-align: center;
+  background: rgba(201, 204, 209, 0.24);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: 0.36px;
+  &:focus-within {
+    background: rgba(148, 155, 168, 0.24);
+  }
+}
+
+@media screen and (hover: hover) {
+  .on-boarding__go-back:hover svg g path {
+    fill: var(--main-text);
+  }
+}
