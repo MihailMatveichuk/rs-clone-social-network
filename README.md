@@ -64,9 +64,36 @@ $ npm start
   
 ## 🧰 Tech Stack
 
-**Client:** React, TypeScript, SCSS, HTML, CSS
+**Client:** React JS, TypeScript, SASS, HTML, CSS, Eslint Airbnb, Webpack
   
 **Server:** Firebase
+
+**Webpack disadvantages:**       
+- the names of modules and variables change too often in the end when you find solutions to what you need to do 
+it is deprecated in 90% of cases and does not work 
+- every plugin, service or rule has its own syntax, different from other similar entities, this syntax always overcomplicated: 
+an array of arrays of array objects or something like that + as mentioned above this syntax is constantly changing from version to version 
+      
+**Webpack advantages:** no   
+      
+**TypeScript disadvantages:**       
+ - some kind of confused documentation 
+      
+**TypeScript advantages**: no   
+      
+**Eslint Airbnb disadvantages:**      
+- a lot of disparate information, most of it is outdated, it is difficult to find and understand which configs to use 
+      
+**Eslint Airbnb advantages:** no 
+      
+**SASS disadvantages:**       
+- it takes too much time, especially splitting according to the 7-1 
+- pattern mixins and placeholders - cool, but almost are immediately forgotten and if you return to the project after some time, then you no longer remember them and start writing with ordinary code where you could use them 
+      
+**SASS advantages:**    
+- it is quite convenient to write nested styles 
+- variables, although in regular CSS they also have 
+- mixins and placeholders make life easier
 
 ## 🚀 Plans for the future
 
